@@ -91,23 +91,27 @@ public class Enclosure {
 
 
 	public void showCreaturesCaracteristics() {
+		System.out.println("Creatures Caracteristics in the " + this.name + " : ");
+		for (int i = 0;i <= presentCreatures.size();i++) {
+			System.out.println("Creatures Caracteristics : " + presentCreatures.get(i).toString());
+		}
 		
 	}
 	
 	public void addCreature(Creature newCreature) {
-		
+		System.out.println("A new creature " + newCreature.toString() + "was added in the" + this.getName());
 	}
 	
 	public Creature removeCreature(int indexCreature) {
-		
+		System.out.println("A new creature " + this.presentCreatures.get(indexCreature).getName()+ "was remove in the" + this.getName());
 	}
 	
 	public void feedCreatures() {
-		
+		System.out.println("The creature in the " + this.getName() + " was feeded");
 	}
 	
 	public void clean() {
-		
+		System.out.println("The enclosure " + this.getName() + " was cleaned !");
 	}
 	
 }

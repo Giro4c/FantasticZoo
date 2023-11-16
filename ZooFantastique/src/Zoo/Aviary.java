@@ -24,7 +24,7 @@ public class Aviary extends Enclosure {
 
 	@Override
 	public void clean() {
-		 
+		System.out.println("The aviary " + this.getName() + " was cleaned !");
 	}
 	
 }

@@ -35,7 +35,7 @@ public class Aquarium extends Enclosure {
 
 	@Override
 	public void clean() {
-		
+		System.out.println("The aquarium " + this.getName() + " was cleaned !");
 	}
 
 }
