@@ -34,7 +34,8 @@ public class Egg {
 	}
 
 	public Creature hatch() {
-		
+		System.out.println("An eggs as hatch a new creature is born !");
+		System.out.println("Creature caractèristique : " + newBorn.toString());
 	}
 	
 }

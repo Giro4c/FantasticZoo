@@ -35,7 +35,7 @@ public class Mammal extends Creature {
 
 
 	public Creature giveBirth() {
-		
+		System.out.println("A " + this.getSpecie() + " give a birth !");
 	}
 	
 }

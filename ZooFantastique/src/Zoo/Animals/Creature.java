@@ -149,27 +149,27 @@ public class Creature {
 	}
 	
 	public void emitSound() {
-		
+		System.out.println("The creature " + this.name + "emit a sound !");
 	}
 	
 	public void heal() {
-		
+		System.out.println("The creature " + this.name + " is healing" );
 	}
 	
 	public void sleep() {
-		
+		System.out.println("The creature " + this.name + " is sleeping" );
 	}
 	
 	public void wake() {
-		
+		System.out.println("The creature " + this.name + " is awake" );
 	}
 	
 	public void getOlder() {
-		
+		System.out.println("The creature " + this.name + " is getting older" );
 	}
 	
 	public void die() {
-		
+		System.out.println("The creature " + this.name + " is dead ahahahahaha he suck" );
 	}
 
 }
