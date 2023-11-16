@@ -99,7 +99,7 @@ public class Enclosure {
 	}
 	
 	public Creature removeCreature(int indexCreature) {
-		
+		return null;
 	}
 	
 	public void feedCreatures() {

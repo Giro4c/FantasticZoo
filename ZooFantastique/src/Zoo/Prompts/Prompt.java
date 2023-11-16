@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Zoo.Enclosure;
 import Zoo.FantasticZoo;
+import Zoo.Animals.Creature;
 
 public class Prompt {
 	
@@ -21,6 +22,7 @@ public class Prompt {
 	 * </p>
 	 */
 	private int situationIndicator;
+	private int subSituationIndicator;
 
 	public int getSituationIndicator() {
 		return situationIndicator;
@@ -28,34 +30,50 @@ public class Prompt {
 
 	public void setSituationIndicator(int situationIndicator) {
 		this.situationIndicator = situationIndicator;
+		this.subSituationIndicator = 0;
+	}	
+	
+	public int getSubSituationIndicator() {
+		return subSituationIndicator;
 	}
 	
+	public void setSubSituationIndicator(int subSituationIndicator) {
+		this.subSituationIndicator = subSituationIndicator;
+	}
+
 	public Prompt(int situationIndicator) {
 		super();
 		this.situationIndicator = situationIndicator;
+		this.subSituationIndicator = 0;
 	}
 	
-	public ArrayList<String> getFullPrompt(FantasticZoo zoo, Enclosure enclosure){
-		
+	public String getChoicePrompt(FantasticZoo zoo, Enclosure enclosure){
+		String promptChoice = "";
 		if (this.situationIndicator == 1) {
-			return this.getPromptZoo();
+			promptChoice = "What do you want to do ?\n";
+			for (String action : this.getPromptZoo()) {
+				promptChoice = promptChoice + "\n\t" + action;
+			}
 		}
 		else if (this.situationIndicator == 2) {
-			return this.getPromptEnclosure();
+			promptChoice = "What do you want to do ?\n";
+			for (String action : this.getPromptEnclosure()) {
+				promptChoice = promptChoice + "\n\t" + action;
+			}
 		}
 		else if (this.situationIndicator == 3) {
-			return this.getPromptTransfert();
+			promptChoice = this.getSubSituationString(this.getPromptTransfert(enclosure, zoo));
 		}
 		else if (this.situationIndicator == 4) {
-			return this.getPromptRemove();
+			promptChoice = this.getSubSituationString(this.getPromptRemove(enclosure));
 		}
 		else if (this.situationIndicator == 5) {
-			return this.getPromptHeal();
+			promptChoice = this.getSubSituationString(this.getPromptHeal(enclosure));
 		}
 		else if (this.situationIndicator == 6) {
 			
 		}
-		return null;
+		return promptChoice;
 	}
 	
 	public ArrayList<String> getPromptZoo(){
@@ -83,31 +101,55 @@ public class Prompt {
 		return prompt;
 	}
 	
-	public ArrayList<String> getPromptTransfert(){
+	public ArrayList<String> getPromptTransfert(Enclosure currentEnclosure, FantasticZoo zoo){
 		ArrayList<String> prompt = new ArrayList<String>();
-		prompt.add("Which creature to transfer ?");
-		prompt.add("Available :");
-		prompt.add("Send to which enclosure ?");
-		prompt.add("Available :");
+		String actionPrompt = "Which creature to transfer ?\nAvailable :";
+		for (Creature creature : currentEnclosure.getPresentCreatures()) {
+			actionPrompt = actionPrompt + "\n\t- " + creature.getName();
+		}
+		prompt.add(actionPrompt);
+		actionPrompt = "Send to which enclosure ?\\nAvailable :";
+		for (Enclosure enclosure : zoo.getExistingEnclosures()) {
+			actionPrompt = actionPrompt + "\n\t- " + enclosure.getName();
+		}
+		prompt.add(actionPrompt);
 		prompt.add("Cancel");
 		return prompt;
 	}
 	
-	public ArrayList<String> getPromptRemove(){
+	public ArrayList<String> getPromptRemove(Enclosure currentEnclosure){
 		ArrayList<String> prompt = new ArrayList<String>();
-		prompt.add("Which creature to remove from the zoo ?");
-		prompt.add("Available :");
+		String actionPrompt = "Which creature to remove from the zoo ?\nAvailable :";
+		for (Creature creature : currentEnclosure.getPresentCreatures()) {
+			actionPrompt = actionPrompt + "\n\t- " + creature.getName();
+		}
+		prompt.add(actionPrompt);
 		prompt.add("Are you sure ? Yes/No");
 		prompt.add("Cancel");
 		return prompt;
 	}
 	
-	public ArrayList<String> getPromptHeal(){
+	public ArrayList<String> getPromptHeal(Enclosure currentEnclosure){
 		ArrayList<String> prompt = new ArrayList<String>();
-		prompt.add("Which creature to heal ?");
-		prompt.add("Available :");
+		String actionPrompt = "Which creature to heal ?\nAvailable :";
+		for (Creature creature : currentEnclosure.getPresentCreatures()) {
+			actionPrompt = actionPrompt + "\n\t- " + creature.getName();
+		}
+		prompt.add(actionPrompt);
 		prompt.add("Cancel");
 		return prompt;
+	}
+	
+	private String getSubSituationString(ArrayList<String> promptList) {
+		String str = "";
+		if (this.subSituationIndicator < promptList.size()-1) {
+			str = promptList.get(subSituationIndicator);
+		}
+		else {
+			str = promptList.get(promptList.size()-2);
+		}
+		str = str + promptList.get(promptList.size()-1);
+		return str;
 	}
 
 }
