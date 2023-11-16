@@ -37,5 +37,9 @@ public class Mammal extends Creature {
 	public Creature giveBirth() {
 		
 	}
-	
+	public void reproduction(){
+		if(isMale()==false){
+			this.gestationProgress = 0;
+		}
+	}
 }

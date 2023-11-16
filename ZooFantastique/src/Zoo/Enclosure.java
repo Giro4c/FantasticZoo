@@ -109,5 +109,38 @@ public class Enclosure {
 	public void clean() {
 		
 	}
-	
+	public void reproduction(){
+		//Vérifie si le nombre de créatures est strictement inférieur au nombre de créatures maximum dans l'enclos.
+		if(currentNumberCreatures<maxNumberCreatures){
+			bool theresmale = false;
+			ArrayList<Creature> females = new ArrayList<>();
+			Random rand;
+			//On parcours toutes les créatures dans l'enclos
+			for (int i = 0; i < currentNumberCreatures; i++) {
+				Creature currentCreature = getPresentCreatures().get(i);
+				//Si dans les créatures il y a minimum 1 male
+				if (currentCreature.isMale()==true) {
+					theresmale = true;
+				}
+				//Met toutes les femelles dans une liste
+				if(currentCreature.isMale()==false){
+					females.add(currentCreature);
+
+				}
+				//Si le nombre de femelles est strictement supérieur à 0
+				if (theresfemale.size>0 && theresmale) {
+					int randomIndex = random.nextInt(females.size());
+					//On récupère une femelle aléatoire dans la liste
+					Creature pregnantFemale = females.get(randomIndex);
+					//La femelle choisis aléatoirement devient enceinte
+					pregnantFemale.reproduction();
+					//On augmente le nombre de créatures dans l'enclos de 1
+					++currentNumberCreatures;
+				}
+			}
+		}
+		else{
+			System.out.printerr("Trop d'animaux dans l'enclos, la reproduction ne peut pas avoir lieu !");
+		}
+	}
 }
