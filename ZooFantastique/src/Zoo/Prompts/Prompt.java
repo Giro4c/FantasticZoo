@@ -63,6 +63,9 @@ public class Prompt {
 		prompt.add("Show info Zoo");
 		prompt.add("Show info ZooMaster");
 		prompt.add("Go to enclosure");
+		prompt.add("New enclosure");
+		prompt.add("New aquarium");
+		prompt.add("New aviary");
 		return prompt;
 	}
 	
