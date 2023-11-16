@@ -10,15 +10,14 @@ public class Oviparous extends Creature {
 	}
 
 	public Egg layEgg() {
-		Random random = new Random();
-		boolean randomBoolean = random.nextBoolean();
-		int randomheight = random.nextInt(6) + 25;
-		int randomWeight = random.nextInt(1001) + 1500;
-		Egg egg = new Egg(this.getSpecie(), "name", randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.incubationTime, null);
-	}
-	public void reproduction(){
 		if (this.isMale()==False) {	
-			layEgg(null);
+			Random random = new Random();
+			boolean randomBoolean = random.nextBoolean();
+			int randomheight = random.nextInt(6) + 25;
+			int randomWeight = random.nextInt(1001) + 1500;
+			return new Egg(this.getSpecie(), "name", randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.incubationTime, null);
 		}
+		return null;
 	}
+	
 }

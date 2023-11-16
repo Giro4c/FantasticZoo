@@ -15,6 +15,13 @@ public class Creature {
 	private String indicatorHunger;
 	private boolean isSleeping;
 	private String indicatorHealth;
+
+	// Height
+	private int heightMin = 0;
+
+	public void setHeightMin(int min){
+		heightMin = min;
+	}
 	
 	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
 		boolean isSleeping, String indicatorHealth) {

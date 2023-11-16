@@ -2,6 +2,7 @@ package Zoo;
 
 import java.util.ArrayList;
 import Zoo.Animals.Creature;
+import Zoo.Animals.Oviparous;
 
 public class Enclosure {
 
@@ -95,7 +96,7 @@ public class Enclosure {
 	}
 	
 	public void addCreature(Creature newCreature) {
-		
+		presentCreatures.add(newCreature);
 	}
 	
 	public Creature removeCreature(int indexCreature) {
@@ -133,9 +134,18 @@ public class Enclosure {
 					//On récupère une femelle aléatoire dans la liste
 					Creature pregnantFemale = females.get(randomIndex);
 					//La femelle choisis aléatoirement devient enceinte
-					pregnantFemale.reproduction();
-					//On augmente le nombre de créatures dans l'enclos de 1
-					++currentNumberCreatures;
+					
+					if(Oviparous.class.isAssignableFrom(pregnantFemale.class)){
+						Oviparous female = (Oviparous) pregnantFemale;
+						this.addCreature(female.layEgg());
+					}
+					if(Mammal.class.isAssignableFrom(pregnantFemale.class)){
+						Mammal female = (Mammal) pregnantFemale;
+						female.reproduction();
+						//On augmente le nombre de créatures dans l'enclos de 1
+						++currentNumberCreatures;
+					}
+					
 				}
 			}
 		}
