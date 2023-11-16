@@ -1,6 +1,6 @@
 package Zoo;
 
-public class Aquarium extends Enclosure {
+public class Aquarium extends Enclosure implements Runnable {
 	
 	private int depth;
 	private int salinity;
@@ -10,6 +10,12 @@ public class Aquarium extends Enclosure {
 		super(name, surface, maxNumberCreatures, cleanness);
 		this.depth = depth;
 		this.salinity = salinity;
+	}
+	
+	@Override
+	public void run() {
+		
+		
 	}
 
 
@@ -37,5 +43,6 @@ public class Aquarium extends Enclosure {
 	public void clean() {
 		System.out.println("The aquarium " + this.getName() + " was cleaned !");
 	}
+
 
 }

@@ -2,15 +2,19 @@ package Zoo;
 
 import java.util.ArrayList;
 import Zoo.Animals.Creature;
+import java.util.Random;
 
-public class Enclosure {
+public class Enclosure implements Runnable{
+	
+	public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
 
 	private String name;
 	private int surface;
 	private final int maxNumberCreatures;
 	private int currentNumberCreatures;
 	private ArrayList<Creature> presentCreatures;
-	private String cleanness;
+	private int indexcleanness = 0;
+	private String cleanness = CLEANNESS_STATES[indexcleanness];
 	
 	public Enclosure(String name, int surface, int maxNumberCreatures, String cleanness) {
 		super();
@@ -22,7 +26,27 @@ public class Enclosure {
 		this.currentNumberCreatures = this.presentCreatures.size();
 	}
 	
-	
+	@Override
+	public void run() {
+		Random random = new Random();
+		while(true) {
+			try {
+				synchronized (this) {
+					this.wait(10000);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println(this.cleanness);
+			int RandomNumber = random.nextInt(100);
+			if ( RandomNumber < 15) {
+				if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
+					this.setIndexcleanness(this.getIndexcleanness()+1);
+					System.out.println("L'enclo " + this.getName() + " se salit !");
+				}
+			}
+		}
+	}
 
 	public String getName() {
 		return name;
@@ -35,6 +59,10 @@ public class Enclosure {
 	}
 
 
+
+	public int getIndexcleanness() {
+		return indexcleanness;
+	}
 
 	public int getSurface() {
 		return surface;
@@ -88,6 +116,10 @@ public class Enclosure {
 		return maxNumberCreatures;
 	}
 
+	private void setIndexcleanness(int indexcleanness) {
+		 this.indexcleanness = indexcleanness;
+		 this.cleanness = CLEANNESS_STATES[indexcleanness];
+	}
 
 
 	public void showCreaturesCaracteristics() {
@@ -113,5 +145,9 @@ public class Enclosure {
 	public void clean() {
 		System.out.println("The enclosure " + this.getName() + " was cleaned !");
 	}
+
+
+
+
 	
 }

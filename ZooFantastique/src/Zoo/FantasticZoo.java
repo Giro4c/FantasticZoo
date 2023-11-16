@@ -7,8 +7,9 @@ import Zoo.Animals.Creature;
 public class FantasticZoo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Enclosure Encl = new Enclosure("test",20,12,"Clean");
+		Thread t1 = new Thread(Encl);
+		t1.start();
 	}
 	
 	public FantasticZoo(String name, ZooMaster zooMaster, int maxNumberEnclosures) {
