@@ -4,73 +4,39 @@ import java.util.ArrayList;
 
 import Zoo.Enclosure;
 import Zoo.FantasticZoo;
+import Zoo.GameEngine;
 import Zoo.Animals.Creature;
 
 public class Prompt {
-	
-	/**
-	 * <p>
-	 * A variable that acts as an situation indicator : 
-	 * <ul>
-	 * 	<li>1 -> ZooMaster is in the Zoo Lobby </li>
-	 * 	<li>2 -> ZooMaster is focused on a specific enclosure</li>
-	 * 	<li>3 -> Transfer interface</li>
-	 * 	<li>4 -> Remove creature interface</li>
-	 * 	<li>5 -> Heal creature interface</li>
-	 * 	<li>6 -> </li>
-	 * </ul>
-	 * </p>
-	 */
-	private int situationIndicator;
-	private int subSituationIndicator;
 
-	public int getSituationIndicator() {
-		return situationIndicator;
-	}
-
-	public void setSituationIndicator(int situationIndicator) {
-		this.situationIndicator = situationIndicator;
-		this.subSituationIndicator = 0;
-	}	
-	
-	public int getSubSituationIndicator() {
-		return subSituationIndicator;
-	}
-	
-	public void setSubSituationIndicator(int subSituationIndicator) {
-		this.subSituationIndicator = subSituationIndicator;
-	}
-
-	public Prompt(int situationIndicator) {
+	public Prompt() {
 		super();
-		this.situationIndicator = situationIndicator;
-		this.subSituationIndicator = 0;
 	}
 	
-	public String getChoicePrompt(FantasticZoo zoo, Enclosure enclosure){
+	public String getChoicePrompt(GameEngine game){
 		String promptChoice = "";
-		if (this.situationIndicator == 1) {
+		if (game.getSituationIndicator() == 1) {
 			promptChoice = "What do you want to do ?\n";
 			for (String action : this.getPromptZoo()) {
 				promptChoice = promptChoice + "\n\t" + action;
 			}
 		}
-		else if (this.situationIndicator == 2) {
+		else if (game.getSituationIndicator() == 2) {
 			promptChoice = "What do you want to do ?\n";
 			for (String action : this.getPromptEnclosure()) {
 				promptChoice = promptChoice + "\n\t" + action;
 			}
 		}
-		else if (this.situationIndicator == 3) {
-			promptChoice = this.getSubSituationString(this.getPromptTransfert(enclosure, zoo));
+		else if (game.getSituationIndicator() == 3) {
+			promptChoice = this.getSubSituationString(this.getPromptTransfert(game.getCurrentEnclosure(), game.getZoo()), game.getSubSituationIndicator());
 		}
-		else if (this.situationIndicator == 4) {
-			promptChoice = this.getSubSituationString(this.getPromptRemove(enclosure));
+		else if (game.getSituationIndicator() == 4) {
+			promptChoice = this.getSubSituationString(this.getPromptRemove(game.getCurrentEnclosure()), game.getSubSituationIndicator());
 		}
-		else if (this.situationIndicator == 5) {
-			promptChoice = this.getSubSituationString(this.getPromptHeal(enclosure));
+		else if (game.getSituationIndicator() == 5) {
+			promptChoice = this.getSubSituationString(this.getPromptHeal(game.getCurrentEnclosure()), game.getSubSituationIndicator());
 		}
-		else if (this.situationIndicator == 6) {
+		else if (game.getSituationIndicator() == 6) {
 			
 		}
 		return promptChoice;
@@ -140,9 +106,9 @@ public class Prompt {
 		return prompt;
 	}
 	
-	private String getSubSituationString(ArrayList<String> promptList) {
+	private String getSubSituationString(ArrayList<String> promptList, int subSituationIndicator) {
 		String str = "";
-		if (this.subSituationIndicator < promptList.size()-1) {
+		if (subSituationIndicator < promptList.size()-1) {
 			str = promptList.get(subSituationIndicator);
 		}
 		else {
