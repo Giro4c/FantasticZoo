@@ -1,7 +1,11 @@
 package Zoo;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import Zoo.Animals.Creature;
+import Zoo.Animals.Egg;
+import Zoo.Animals.Mammal;
 import Zoo.Animals.Oviparous;
 
 public class Enclosure {
@@ -12,7 +16,7 @@ public class Enclosure {
 	private int currentNumberCreatures;
 	private ArrayList<Creature> presentCreatures;
 	private String cleanness;
-	
+	private ArrayList<Egg> eggs;
 	public Enclosure(String name, int surface, int maxNumberCreatures, String cleanness) {
 		super();
 		this.name = name;
@@ -21,6 +25,7 @@ public class Enclosure {
 		this.cleanness = cleanness;
 		this.presentCreatures = new ArrayList<Creature>();
 		this.currentNumberCreatures = this.presentCreatures.size();
+		this.eggs = new ArrayList<Egg>();
 	}
 	
 	
@@ -29,7 +34,9 @@ public class Enclosure {
 		return name;
 	}
 
-
+	public ArrayList<Egg> getEggs(){
+		return this.eggs;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -50,7 +57,7 @@ public class Enclosure {
 
 
 	public int getCurrentNumberCreatures() {
-		return currentNumberCreatures;
+		return this.presentCreatures.size();
 	}
 
 
@@ -95,8 +102,9 @@ public class Enclosure {
 		
 	}
 	
-	public void addCreature(Creature newCreature) {
-		presentCreatures.add(newCreature);
+	public void addCreature(Creature c) {
+		presentCreatures.add(c);
+		++currentNumberCreatures;
 	}
 	
 	public Creature removeCreature(int indexCreature) {
@@ -110,15 +118,17 @@ public class Enclosure {
 	public void clean() {
 		
 	}
+	public void removeEgg(Egg egg) {
+		eggs.remove(egg);
+	}
 	public void reproduction(){
 		//Vérifie si le nombre de créatures est strictement inférieur au nombre de créatures maximum dans l'enclos.
 		if(currentNumberCreatures<maxNumberCreatures){
-			bool theresmale = false;
+			Boolean theresmale = false;
 			ArrayList<Creature> females = new ArrayList<>();
-			Random rand;
+			Random rand = new Random();
 			//On parcours toutes les créatures dans l'enclos
-			for (int i = 0; i < currentNumberCreatures; i++) {
-				Creature currentCreature = getPresentCreatures().get(i);
+			for (Creature currentCreature : presentCreatures) {
 				//Si dans les créatures il y a minimum 1 male
 				if (currentCreature.isMale()==true) {
 					theresmale = true;
@@ -129,28 +139,28 @@ public class Enclosure {
 
 				}
 				//Si le nombre de femelles est strictement supérieur à 0
-				if (theresfemale.size>0 && theresmale) {
-					int randomIndex = random.nextInt(females.size());
+				if (females.size()>0 && theresmale) {
+					int randomIndex = rand.nextInt(females.size());
 					//On récupère une femelle aléatoire dans la liste
 					Creature pregnantFemale = females.get(randomIndex);
 					//La femelle choisis aléatoirement devient enceinte
 					
-					if(Oviparous.class.isAssignableFrom(pregnantFemale.class)){
+					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
 						Oviparous female = (Oviparous) pregnantFemale;
-						this.addCreature(female.layEgg());
+						eggs.add(female.layEgg());
+						++currentNumberCreatures;
 					}
-					if(Mammal.class.isAssignableFrom(pregnantFemale.class)){
+					if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
 						Mammal female = (Mammal) pregnantFemale;
 						female.reproduction();
 						//On augmente le nombre de créatures dans l'enclos de 1
 						++currentNumberCreatures;
 					}
-					
 				}
 			}
 		}
 		else{
-			System.out.printerr("Trop d'animaux dans l'enclos, la reproduction ne peut pas avoir lieu !");
+			System.out.println("Trop d'animaux dans l'enclos, la reproduction ne peut pas avoir lieu !");
 		}
 	}
 }
