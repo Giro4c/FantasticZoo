@@ -107,8 +107,10 @@ public class Enclosure {
 		++currentNumberCreatures;
 	}
 	
-	public Creature removeCreature(int indexCreature) {
-		
+	public void removeCreature(Creature creature) {
+	    if (presentCreatures != null) {
+	        presentCreatures.remove(creature);
+	    }
 	}
 	
 	public void feedCreatures() {
