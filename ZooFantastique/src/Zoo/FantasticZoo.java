@@ -2,13 +2,21 @@ package Zoo;
 
 import java.util.ArrayList;
 
+import Zoo.Prompts.CommandHandler;
+import Zoo.Prompts.Message;
+
 public class FantasticZoo {
 
 	public static void main(String[] args) {
 		GameEngine game = new GameEngine();
-//		while (true) {
+		while (true) {
 			game.showChoices();
-//		}
+			try {
+				CommandHandler.executeCommand(Message.registerCommand(4), game);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
 
 	}
 	

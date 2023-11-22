@@ -43,6 +43,10 @@ public class GameEngine {
 		return currentEnclosure;
 	}
 	
+	public void setCurrentEnclosure(Enclosure currentEnclosure) {
+		this.currentEnclosure = currentEnclosure;
+	}
+
 	public int getSituationIndicator() {
 		return situationIndicator;
 	}

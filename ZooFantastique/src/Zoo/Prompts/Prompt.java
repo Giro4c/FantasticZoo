@@ -44,12 +44,12 @@ public class Prompt {
 	
 	public ArrayList<String> getPromptZoo(){
 		ArrayList<String> prompt = new ArrayList<String>();
-		prompt.add("Show info Zoo");
-		prompt.add("Show info ZooMaster");
-		prompt.add("Go to enclosure");
-		prompt.add("New enclosure");
-		prompt.add("New aquarium");
-		prompt.add("New aviary");
+		prompt.add("Show info Zoo"); 		// 0
+		prompt.add("Show info ZooMaster");	// 1
+		prompt.add("Go to enclosure");		// 2
+		prompt.add("New enclosure");		// 3
+		prompt.add("New aquarium");			// 4
+		prompt.add("New aviary");			// 5
 		return prompt;
 	}
 	
@@ -74,7 +74,7 @@ public class Prompt {
 			actionPrompt = actionPrompt + "\n\t- " + creature.getName();
 		}
 		prompt.add(actionPrompt);
-		actionPrompt = "Send to which enclosure ?\\nAvailable :";
+		actionPrompt = "Send to which enclosure ?\nAvailable :";
 		for (Enclosure enclosure : zoo.getExistingEnclosures()) {
 			actionPrompt = actionPrompt + "\n\t- " + enclosure.getName();
 		}
@@ -89,6 +89,7 @@ public class Prompt {
 		for (Creature creature : currentEnclosure.getPresentCreatures()) {
 			actionPrompt = actionPrompt + "\n\t- " + creature.getName();
 		}
+		
 		prompt.add(actionPrompt);
 		prompt.add("Are you sure ? Yes/No");
 		prompt.add("Cancel");
