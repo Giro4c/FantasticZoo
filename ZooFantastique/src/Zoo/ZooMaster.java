@@ -43,19 +43,20 @@ public class ZooMaster {
 	}
 
 	public void examineEnclosure(Enclosure enclosure) {
-		
+		System.out.println("The ZooMaster " + this.name + " examine the " + enclosure.getName() + enclosure.toString());
 	}
 	
 	public void cleanEnclosure(Enclosure enclosure) {
-		
+		System.out.println("The ZooMaster " + this.name + " is cleaning the " + enclosure.getName());
 	}
 	
 	public void feedCreaturesInEnclosure(Enclosure enclosure) {
-		
+		System.out.println("The ZooMaster " + this.name + " is feeding the creature in the" + enclosure.getName());
 	}
 	
 	public void tranfertCreature(Enclosure prevEnclosure, int indexInEnclosure, Enclosure newEnclosure) {
-		
+		System.out.println("The ZooMaster " + this.name + " is mooving a creature of the " + 
+				prevEnclosure.getName() + " to the " + newEnclosure.getName());
 	}
 	
 	

@@ -44,11 +44,11 @@ public class CommandHandler {
 		else if (command.length == 3) {
 			if (command[0].toLowerCase().equals("show") && command[1].toLowerCase().equals("info")) {
 				if (command[2].toLowerCase().equals("zoo")) {
-					gameEngine.getZoo().toString();
+					System.out.println(gameEngine.getZoo().toString());
 					return true;
 				}
 				else if (command[2].toLowerCase().equals("zoomaster")) {
-					gameEngine.getZoo().getZooMaster().toString();
+					System.out.println(gameEngine.getZoo().getZooMaster().toString());
 					return true;
 				}
 			}
@@ -106,11 +106,11 @@ public class CommandHandler {
 		else if (command.length == 3) {
 			if (command[0].toLowerCase().equals("show")) {
 				if (command[1].toLowerCase().equals("info") && command[2].toLowerCase().equals("zoomaster")) {
-					gameEngine.getZoo().getZooMaster().toString();
+					System.out.println(gameEngine.getZoo().getZooMaster().toString());
 					return true;
 				}
 				else if (command[1].toLowerCase().equals("enclosure") && command[2].toLowerCase().equals("details")) {
-					gameEngine.getCurrentEnclosure().toString();
+					System.out.println(gameEngine.getCurrentEnclosure().toString());
 					return true;
 				}
 			}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Zoo.Prompts.CommandHandler;
 import Zoo.Prompts.Message;
+import Zoo.Animals.Creature;
 
 public class FantasticZoo {
 
@@ -68,21 +69,35 @@ public class FantasticZoo {
 		return "FantasticZoo [name=" + name + ", zooMaster=" + zooMaster + ", maxNumberEnclosures="
 				+ maxNumberEnclosures + ", existingEnclosures=" + existingEnclosures + "]";
 	}
+	public int Comptcreature() {
+		int NumberAnimals = 0; 
+		for (Enclosure enclo : existingEnclosures) {
+			for (Creature creatur : enclo.getPresentCreatures()) {
+				NumberAnimals += 1;
+			}
+		}
+		return NumberAnimals;
+	}
 
 	public void showTotalCreatures() {
-		
-	}
+		System.out.println("In the FantasticZoo " + this.getName() + " there is " + this.Comptcreature() + " creature");
+	} 
 	
 	public void showAllCreatures(){
-		
+		System.out.println("All creature atribute :");
+		for (Enclosure enclo : existingEnclosures) {
+			for (Creature creatur : enclo.getPresentCreatures()) {
+				System.out.println(creatur.toString());
+			}
+		}
 	}
 	
 	public void addNewEnclosure(Enclosure newEnclosure) {
-		
+		System.out.println("The new enclosure " + newEnclosure.getName() + " was added in the FantasticZoo");
 	}
 	
 	public void removeEnclosure(Enclosure oldEnclosure) {
-		
+		System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
 	}
 	
 	/* ------------------------------------------------- */

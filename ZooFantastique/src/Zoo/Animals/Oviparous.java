@@ -9,7 +9,7 @@ public class Oviparous extends Creature {
 	}
 
 	public Egg layEgg() {
-		
+		System.out.println("A " + this.getSpecie() + "lay an egg !");
 	}
 	
 }

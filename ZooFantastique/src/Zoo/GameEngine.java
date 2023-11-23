@@ -27,8 +27,9 @@ public class GameEngine {
 	public GameEngine() {
 		super();
 		this.promptGenerator = new Prompt();
-		this.zoo = new FantasticZoo("Zoo", new ZooMaster("Camille", false, 19), 3);
+		this.zoo = new FantasticZoo("Zoo", new ZooMaster("Camille", false, 19), 5);
 		this.currentEnclosure = null;
+		this.setSituationIndicator(1);
 	}
 
 	public Prompt getPromptGenerator() {
@@ -66,6 +67,18 @@ public class GameEngine {
 
 	public void showChoices() {
 		System.out.println(this.promptGenerator.getChoicePrompt(this));
+	}
+	
+	/* ------------------- SET UP FOR TESTING ----------------- */
+	
+	public void initForTests() {
+		// Initialize enclosures
+		this.zoo.getExistingEnclosures().add(new Enclosure("Enclosure 1", 100, 15, "ok"));
+		this.zoo.getExistingEnclosures().add(new Aviary("Aviary 2", 100, 15, "ok", 20));
+		this.zoo.getExistingEnclosures().add(new Aquarium("Aquarium 3", 100, 15, "ok", 15, 30));
+		this.zoo.getExistingEnclosures().add(new Enclosure("Enclosure 4", 100, 15, "ok"));
+		// Initialize some creatures
+		
 	}
 	
 }
