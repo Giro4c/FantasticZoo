@@ -18,117 +18,106 @@ public class CommandHandler {
 	public static boolean executeCommand(String[] command, GameEngine gameEngine) throws Exception {
 		
 		if (gameEngine.getSituationIndicator() == 1) {
-			
+			return executeCommandZoo(command, gameEngine);
 		}
 		else if (gameEngine.getSituationIndicator() == 2) {
-			
-		}
-		else if (gameEngine.getSituationIndicator() == 3) {
-			
-		}
-		else if (gameEngine.getSituationIndicator() == 4) {
-			
-		}
-		else if (gameEngine.getSituationIndicator() == 5) {
-			
-		}
-		else if (gameEngine.getSituationIndicator() == 6) {
-			
+			return executeCommandEnclosure(command, gameEngine);
 		}
 		
-		else {
-			Message.notRecognized();
-		}
-		
-		
-		return true;
+		throw new Exception("Unknown situation");
 	}
 	
 	private static boolean executeCommandZoo(String[] command, GameEngine gameEngine) throws Exception {
-		if (command.length == 0) {
-			throw new Exception(Message.notRecognized());
+
+		if (command.length == 2) {
+			if (command[0].toLowerCase().equals("new")) {
+				if(command[1].toLowerCase().equals("enclosure") 
+						|| command[1].toLowerCase().equals("aquarium") 
+						|| command[1].toLowerCase().equals("aviary")) {
+					return handleNewEnclosure(gameEngine, command[1].toLowerCase());					
+				}
+				else throw new Exception(Message.notExists("New element type"));
+			}
+			else throw new Exception(Message.notSpecified("New element type"));
 		}
-		else {
-			if (command.length == 2) {
-				if (command[0].toLowerCase().equals("new")) {
-					if(command[1].toLowerCase().equals("enclosure") 
-							|| command[1].toLowerCase().equals("aquarium") 
-							|| command[1].toLowerCase().equals("aviary")) {
-						handleNewEnclosure(gameEngine, command[1].toLowerCase());					
-					}
-					else throw new Exception(Message.notExists("New element type"));
+		
+		else if (command.length == 3) {
+			if (command[0].toLowerCase().equals("show") && command[1].toLowerCase().equals("info")) {
+				if (command[2].toLowerCase().equals("zoo")) {
+					gameEngine.getZoo().toString();
+					return true;
 				}
-				else throw new Exception(Message.notSpecified("New element type"));
-			}
-			else if (command.length == 3) {
-				if (command[0].toLowerCase().equals("show") && command[1].toLowerCase().equals("info")) {
-					if (command[2].toLowerCase().equals("zoo")) {
-						gameEngine.getZoo().toString();
-					}
-					else if (command[2].toLowerCase().equals("zoomaster")) {
-						gameEngine.getZoo().getZooMaster().toString();
-					}
-				}
-			}
-			else if (command.length == 4) {
-				if (command[0].toLowerCase().equals("go") && command[1].toLowerCase().equals("to") && command[2].toLowerCase().equals("enclosure")) {
-					for (Enclosure enclosure : gameEngine.getZoo().getExistingEnclosures()) {
-						if (command[3].equals(enclosure.getName())) {
-							gameEngine.setCurrentEnclosure(enclosure);
-							gameEngine.setSituationIndicator(2);
-							break;
-						}
-					}
+				else if (command[2].toLowerCase().equals("zoomaster")) {
+					gameEngine.getZoo().getZooMaster().toString();
+					return true;
 				}
 			}
 		}
-		return true;
+		
+		else if (command.length == 4) {
+			if (command[0].toLowerCase().equals("go") && command[1].toLowerCase().equals("to") && command[2].toLowerCase().equals("enclosure")) {
+				for (Enclosure enclosure : gameEngine.getZoo().getExistingEnclosures()) {
+					if (command[3].equals(enclosure.getName())) {
+						gameEngine.setCurrentEnclosure(enclosure);
+						gameEngine.setSituationIndicator(2);
+						return true;
+					}
+				}
+				throw new Exception(Message.notExists("The enclosure " + command[3]));
+			}
+		}
+		throw new Exception(Message.notRecognized());
 	}
 	
 	private static boolean executeCommandEnclosure(String[] command, GameEngine gameEngine) throws Exception {
-		if (command.length == 0) {
-			throw new Exception(Message.notRecognized());
-		}
-		else {
-			if (command.length == 1) {
-				if (command[0].toLowerCase().equals("feed")) {
-					
-				}
-				else if (command[0].toLowerCase().equals("heal")) {
-					
-				}
-				else if (command[0].toLowerCase().equals("leave")) {
-					
-				}
-				else throw new Exception(Message.notRecognized());
+		
+		if (command.length == 1) {
+			if (command[0].toLowerCase().equals("feed")) {
+				gameEngine.getZoo().getZooMaster().feedCreaturesInEnclosure(gameEngine.getCurrentEnclosure());
+				return true;
 			}
-			else if (command.length == 2) {
-				if (command[0].toLowerCase().equals("examine") && command[1].toLowerCase().equals("enclosure")) {
-					
-				}
-				else if (command[0].toLowerCase().equals("transfer") && command[1].toLowerCase().equals("creature")) {
-					
-				}
-				else if (command[0].toLowerCase().equals("remove") && command[1].toLowerCase().equals("creature")) {
-					
-				}
-				else if (command[0].toLowerCase().equals("clean") && command[1].toLowerCase().equals("enclosure")) {
-					
-				}
-				else throw new Exception(Message.notRecognized());
+			else if (command[0].toLowerCase().equals("heal")) {
+				return handleHeal(gameEngine);
 			}
-			else if (command.length == 3) {
-				if (command[0].toLowerCase().equals("show")) {
-					if (command[1].toLowerCase().equals("info") && command[2].toLowerCase().equals("zoomaster")) {
-						gameEngine.getZoo().getZooMaster().toString();
-					}
-					else if (command[1].toLowerCase().equals("enclosure") && command[2].toLowerCase().equals("details")) {
-						gameEngine.getCurrentEnclosure().toString();
-					}
-				}
+			else if (command[0].toLowerCase().equals("leave")) {
+				gameEngine.setSituationIndicator(1);
+				gameEngine.setCurrentEnclosure(null);
+				return true;
 			}
 		}
-		return true;
+		
+		else if (command.length == 2) {
+			if (command[0].toLowerCase().equals("examine") && command[1].toLowerCase().equals("enclosure")) {
+				gameEngine.getZoo().getZooMaster().examineEnclosure(gameEngine.getCurrentEnclosure());
+				return true;
+			}
+			else if (command[0].toLowerCase().equals("transfer") && command[1].toLowerCase().equals("creature")) {
+				return handleTransfert(gameEngine);
+			}
+			else if (command[0].toLowerCase().equals("remove") && command[1].toLowerCase().equals("creature")) {
+				return handleRemove(gameEngine);
+			}
+			else if (command[0].toLowerCase().equals("clean") && command[1].toLowerCase().equals("enclosure")) {
+				gameEngine.getZoo().getZooMaster().cleanEnclosure(gameEngine.getCurrentEnclosure());
+				return true;
+			}
+		}
+		
+		else if (command.length == 3) {
+			if (command[0].toLowerCase().equals("show")) {
+				if (command[1].toLowerCase().equals("info") && command[2].toLowerCase().equals("zoomaster")) {
+					gameEngine.getZoo().getZooMaster().toString();
+					return true;
+				}
+				else if (command[1].toLowerCase().equals("enclosure") && command[2].toLowerCase().equals("details")) {
+					gameEngine.getCurrentEnclosure().toString();
+					return true;
+				}
+			}
+		}
+		// No valid command detected
+		throw new Exception(Message.notRecognized());
+		
 	}
 	
 	

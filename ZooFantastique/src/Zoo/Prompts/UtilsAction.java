@@ -1,6 +1,5 @@
 package Zoo.Prompts;
 
-import the_game.Entity;
 
 public class UtilsAction {
 
@@ -18,21 +17,6 @@ public class UtilsAction {
 		}
 		return false;
 	}
-	
-	/**
-	 * <p>Finds the index of the searched entity based on its name.<br>
-	 * Considers that each entity's name is unique (no entity have the same name)</p>
-	 * @param entities the array of Entity to search in
-	 * @param nameEntityToFind the entity name to find
-	 * @return the index of the first entity whose name is the String in the parameters
-	 */
-	public static int findIndexEntity(Entity[] entities, String nameEntityToFind) {
-		for (int i = 0; i < entities.length; ++i) {
-			if (nameEntityToFind.equals(entities[i].getName())) {
-				return i;
-			}
-		}
-		return entities.length;
-	}
+
 	
 }

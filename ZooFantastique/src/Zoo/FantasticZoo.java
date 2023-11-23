@@ -84,5 +84,11 @@ public class FantasticZoo {
 	public void removeEnclosure(Enclosure oldEnclosure) {
 		
 	}
+	
+	/* ------------------------------------------------- */
+	
+//	public void feedCreaturesInEnclosure(int indexEnclosure) {
+//		
+//	}
 
 }
