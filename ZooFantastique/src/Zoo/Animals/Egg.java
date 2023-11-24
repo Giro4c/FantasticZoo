@@ -40,14 +40,36 @@ public class Egg {
 	public Enclosure getEnclosure(Egg egg) {
 		return this.enclosure;
 	}
+	public void setEnclosure(Enclosure enclosure) {
+		this.enclosure = enclosure;
+	}
+	public void incubation(Egg egg) {
+		Thread incubationThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (incubationProgress < incubationTime) {
+                    try {
+                        Thread.sleep(1000);
+                        incubationProgress++;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                hatch(egg);
+            }
+        });
+		incubationThread.start();
+	}
 	public Oviparous hatch(Egg egg) {
-		if(egg.getIncubationProgress()==egg.getIncubationTime()) {
-			Oviparous newoviparous = new Oviparous("test", "test", false, 0, 0, 0, "Full", false, "Perfect", this.enclosure);
-			this.enclosure.removeEgg(egg);
-			this.enclosure.addCreature(newoviparous);
-			return newoviparous;	
+		synchronized (this) {
+			if(egg.getIncubationProgress()==egg.getIncubationTime()) {
+				Oviparous newoviparous = new Oviparous("test", "test", false, 0, 0, 0, "Full", false, "Perfect", this.enclosure);
+				this.enclosure.removeEgg(egg);
+				this.enclosure.addCreature(newoviparous);
+				return newoviparous;	
+			}
+			return null;
 		}
-		return null;
 	}
 	
 }
