@@ -1,5 +1,7 @@
 package Zoo.Animals;
 
+import Zoo.Enclosure;
+
 public class Creature {
 	
 	public static final String[] HUNGER_STATES = {"Full", "Normal", "Hungry", "Famished", "Dead"};
@@ -15,7 +17,7 @@ public class Creature {
 	private String indicatorHunger;
 	private boolean isSleeping;
 	private String indicatorHealth;
-
+	private Enclosure enclosure;
 	// Height
 	private int heightMin = 0;
 
@@ -24,7 +26,7 @@ public class Creature {
 	}
 	
 	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
-		boolean isSleeping, String indicatorHealth) {
+		boolean isSleeping, String indicatorHealth, Enclosure enclosure) {
 		super();
 		this.specie = specie;
 		this.name = name;
@@ -35,6 +37,7 @@ public class Creature {
 		this.indicatorHunger = indicatorHunger;
 		this.isSleeping = isSleeping;
 		this.indicatorHealth = indicatorHealth;
+		this.enclosure = enclosure;
 	}
 	
 
@@ -52,7 +55,10 @@ public class Creature {
 		return name;
 	}
 
-
+	public void setEnclosure(Enclosure enclosure) {
+		this.enclosure = enclosure;
+		
+	}
 	public void setName(String name) {
 		this.name = name;
 	}

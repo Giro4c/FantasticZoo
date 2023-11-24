@@ -12,11 +12,12 @@ public class Egg {
 	
 	
 	public Egg(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger, boolean isSleeping,
-			String indicatorHealth, int incubationTime, int incubationProgress, Enclosure enclosure) {
-		this.newBorn = new Creature(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth);
-		this.incubationTime = incubationTime;
-		this.incubationProgress = incubationProgress;
-		this.enclosure = enclosure;
+	        String indicatorHealth, int incubationTime, int incubationProgress, Enclosure enclosure) {
+	    this.newBorn = new Oviparous(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth, enclosure);
+	    this.incubationTime = incubationTime;
+	    this.incubationProgress = incubationProgress;
+	    this.enclosure = enclosure;
+	    incubation(this);
 	}
 
 	public int getIncubationTime() {
@@ -51,6 +52,7 @@ public class Egg {
                     try {
                         Thread.sleep(1000);
                         incubationProgress++;
+                        System.out.println("L'oeuf est à : "+incubationProgress+" temps d'incubation");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -66,6 +68,8 @@ public class Egg {
 				Oviparous newoviparous = new Oviparous("test", "test", false, 0, 0, 0, "Full", false, "Perfect", this.enclosure);
 				this.enclosure.removeEgg(egg);
 				this.enclosure.addCreature(newoviparous);
+				System.out.println("Un nouvelle oeuf apparait !");
+				System.out.println("Il y a maintenant :"+this.enclosure.getCurrentNumberCreatures()+" Animaux dans l'enclos !");
 				return newoviparous;	
 			}
 			return null;

@@ -104,6 +104,7 @@ public class Enclosure {
 	
 	public void addCreature(Creature c) {
 		presentCreatures.add(c);
+		c.setEnclosure(this);
 		++currentNumberCreatures;
 	}
 	

@@ -13,7 +13,7 @@ public class Mammal extends Creature {
 	
 	public Mammal(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
 			boolean isSleeping, String indicatorHealth, int gestationTime, int gestationProgress, Enclosure enclosure) {
-		super(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth);
+		super(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth, enclosure);
 		this.gestationTime = gestationTime;
 		this.gestationProgress = gestationProgress;
 		this.setEnclosure(enclosure);
@@ -36,7 +36,25 @@ public class Mammal extends Creature {
 	public int getGestationTime() {
 		return gestationTime;
 	}
-
+	
+	public void gestation() {
+		Thread incubationThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (getGestationProgress() <= getGestationTime()) {
+                    try {
+                        Thread.sleep(1000);
+                        setGestationProgress(getGestationProgress()+1);
+                        System.out.println(getName()+" est ensceinte depuis "+getGestationProgress()+ " secondes");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                giveBirth();
+            }
+        });
+		incubationThread.start();
+	}
 
 
 	public Creature giveBirth() {
@@ -45,14 +63,17 @@ public class Mammal extends Creature {
 		boolean randomBoolean = random.nextBoolean();
 		int randomheight = random.nextInt(6) + 25;
 		int randomWeight = random.nextInt(1001) + 1500;
-		Creature newborn = new Creature(this.getSpecie(), "name", randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect");
+		Mammal newborn = new Mammal(this.getSpecie(), "name", randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.gestationTime , 0, this.enclosure);
 		this.enclosure.addCreature(newborn);
+		System.out.println("Un nouveau "+getSpecie()+ " est née !");
+		System.out.println("Il y a maintenant "+ this.enclosure.getCurrentNumberCreatures()+" Animaux dans l'enclos !");
 		return newborn;
 	}
 	
 	public void reproduction(){
 		if(isMale()==false){
 			this.gestationProgress = 0;
+			gestation();
 		}
 	}
 
