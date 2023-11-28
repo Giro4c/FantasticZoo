@@ -8,10 +8,8 @@ import Zoo.Animals.Oviparous;
 
 public class Main {
 	public static void main(String[] args) {
-	    // Create an instance of the Enclosure class
 	    Enclosure enclosure = new Enclosure("Test Enclosure", 100, 10, "Clean");
 	    Enclosure m = new Enclosure("Test m enclo", 100, 10, "Clean");
-	    // Add instances of the Oviparous class to the enclosure
 	    Oviparous oviparous1 = new Oviparous("Species1", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", enclosure);
         Oviparous oviparous2 = new Oviparous("Species2", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", enclosure);
 
@@ -22,9 +20,7 @@ public class Main {
 	    m.addCreature(m1);
 	    m.addCreature(m2);
 	    m.reproduction();
-	    // Call the reproduction function to test it
 	    enclosure.reproduction();
-	    // Print the number of creatures after reproduction
 	    System.out.println("Number of creatures after reproduction: " + enclosure.getCurrentNumberCreatures());
 	    
 	}

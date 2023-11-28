@@ -9,7 +9,7 @@ public class Mammal extends Creature {
 	private final int gestationTime;
 	private int gestationProgress;
 	private Enclosure enclosure;
-	
+	private Thread incubationThread;
 	
 	public Mammal(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
 			boolean isSleeping, String indicatorHealth, int gestationTime, int gestationProgress, Enclosure enclosure) {
@@ -38,7 +38,7 @@ public class Mammal extends Creature {
 	}
 	
 	public void gestation() {
-		Thread incubationThread = new Thread(new Runnable() {
+		 incubationThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (getGestationProgress() <= getGestationTime()) {
@@ -87,5 +87,17 @@ public class Mammal extends Creature {
 
 	public void setEnclosure(Enclosure enclosure) {
 		this.enclosure = enclosure;
+	}
+
+
+
+	public Thread getIncubationThread() {
+		return incubationThread;
+	}
+
+
+
+	public void setIncubationThread(Thread incubationThread) {
+		this.incubationThread = incubationThread;
 	}
 }

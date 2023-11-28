@@ -8,7 +8,7 @@ public class Egg {
 	private final int incubationTime;
 	private int incubationProgress;
 	private Enclosure enclosure;
-	
+	private Thread incubationThread;
 	
 	
 	public Egg(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger, boolean isSleeping,
@@ -19,7 +19,9 @@ public class Egg {
 	    this.enclosure = enclosure;
 	    incubation(this);
 	}
-
+	public Thread getIncubationThread() {
+		return this.incubationThread;
+	}
 	public int getIncubationTime() {
 		return incubationTime;
 	}
@@ -45,12 +47,12 @@ public class Egg {
 		this.enclosure = enclosure;
 	}
 	public void incubation(Egg egg) {
-		Thread incubationThread = new Thread(new Runnable() {
+		 incubationThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (incubationProgress < incubationTime) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(10000);
                         incubationProgress++;
                         System.out.println("L'oeuf est à : "+incubationProgress+" temps d'incubation");
                     } catch (InterruptedException e) {
