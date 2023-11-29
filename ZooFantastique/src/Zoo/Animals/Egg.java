@@ -3,7 +3,6 @@ package Zoo.Animals;
 import Zoo.Enclosure;
 
 public class Egg {
-
 	private Creature newBorn;
 	private final int incubationTime;
 	private int incubationProgress;
@@ -52,7 +51,7 @@ public class Egg {
             public void run() {
                 while (incubationProgress < incubationTime) {
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(1000);
                         incubationProgress++;
                         System.out.println("L'oeuf est à : "+incubationProgress+" temps d'incubation");
                     } catch (InterruptedException e) {
