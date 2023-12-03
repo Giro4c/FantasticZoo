@@ -1,5 +1,5 @@
 package Colony;
-
+import Colony.Utils;
 /**
  * A class representing a werewolf and its behavior
  * @author Giro4c
@@ -230,7 +230,24 @@ public class Werewolf extends Creature {
 	public void transform() {
 		this.currentlyHuman = !this.currentlyHuman;
 	}
-	
+	public void winDomination(Werewolf w) {
+		this.dominationFactor +=1;
+		if(!Utils.isDominant(this.rank, w.getRank())) {
+			char tmp = w.getRank();
+			w.setRank(this.getRank());
+			this.setRank(tmp);
+		}
+		w.setDominationFactor(w.getDominationFactor()-1);
+	}
+	public void loseDomination(Werewolf w) {
+		this.dominationFactor -=1;
+		if(Utils.isDominant(this.rank, w.getRank())) {
+			char tmp = w.getRank();
+			w.setRank(this.getRank());
+			this.setRank(tmp);
+		}
+		w.setDominationFactor(w.getDominationFactor()+1);
+	}
 	/* 
 	 * Ces fonctions peuvent etre utiles.
 	 * Je les laisse là vous pouvez les remplir ou non. 
@@ -239,11 +256,32 @@ public class Werewolf extends Creature {
 	public void submit() {
 		
 	}
-	public void dominate() {
-		
+	public void dominate(Werewolf w) {
+		System.out.println(super.getName() + " essaye de dominer "+ w.getName());
+		if(this.strength > w.strength && w.getRank()!='α') {
+			if(this.level>w.level||w.rank == 'ω') {
+				this.winDomination(w);
+			}
+			else if(this.level == w.getLevel()) {
+                System.out.println(super.getName() + " et " + w.getName() + " ont le même niveau le combat sera donc aléatoire ");
+                long random = Math.round(Math.random());
+                // si 1 this gagne sinon this perd
+                if (0 < random) {
+                    this.winDomination(w);
+                } else {
+                    this.loseDomination(w);
+                }
+            }
+			else {
+				this.loseDomination(w);
+			}
+		}
+		else {
+			this.loseDomination(w);
+		}
 	}
 	public void aggress() {
-		
+		System.out.println(super.getName() + " se montre agressif !");
 	}
 	
 	

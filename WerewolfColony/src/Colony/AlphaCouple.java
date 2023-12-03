@@ -74,7 +74,11 @@ public class AlphaCouple {
 	 * The alpha couple reproduces which create 1 to 7 newborn pack members.
 	 */
 	public void reproduce() {
-		
+		if(this.male.getRank() == 'α' && this.female.getRank() == 'α') {
+			if(Colony.matingSeason()) {
+				
+			}
+		}
 	}
 	
 	/**
