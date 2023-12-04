@@ -77,6 +77,11 @@ public class Pack {
 		return "Pack [members=" + members + ", territory=" + territory + ", alphaCouple=" + alphaCouple + "]";
 	}
 	
+	public String toStringWithoutAlphaCouple() {
+	    return "Pack [members=" + members + ", territory=" + territory + "]";
+	}
+
+	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
 	 * 					   METHODS
@@ -140,10 +145,10 @@ public class Pack {
 	        }
 		
 		// Constituer nouveau couple alpha
-		if (strongestFemale == null) {
-		this.alphaCouple.setPack(this);
-		this.alphaCouple.setMale(maleAlpha);
-		this.alphaCouple.setFemale(strongestFemale); }
+		if (strongestFemale != null) {
+	        this.alphaCouple = new AlphaCouple(maleAlpha, strongestFemale, this);
+	        this.alphaCouple.setPack(this);
+        }
 		else {
 			System.out.println("Aucune femelle trouvée pour constituer le nouveau couple");
 		}

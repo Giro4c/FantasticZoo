@@ -89,5 +89,4 @@ public class FantasticZoo {
 	public void removeEnclosure(Enclosure oldEnclosure) {
 		System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
 	}
-
 }

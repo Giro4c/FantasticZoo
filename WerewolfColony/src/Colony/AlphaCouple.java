@@ -68,8 +68,9 @@ public class AlphaCouple {
 	 */
 	@Override
 	public String toString() {
-		return "AlphaCouple [male=" + male + ", female=" + female + ", pack=" + pack + "]";
+	    return "AlphaCouple [male=" + male + ", female=" + female + ", pack=" + (pack != null ? pack.toStringWithoutAlphaCouple() : "null") + "]";
 	}
+
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
