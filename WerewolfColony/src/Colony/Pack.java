@@ -127,10 +127,26 @@ public class Pack {
 	public void constituteAlphaCouple(Werewolf maleAlpha) {
 		if (this.alphaCouple != null && maleAlpha == this.alphaCouple.getMale()) return;
 		// Déchoir l'ancien couple
-		
+		this.alphaCouple = null;
+
 		// Rechercher femelle la plus forte
+		Werewolf strongestFemale = null;
+		
+		for (Werewolf member : this.members )
+			if (member.isMale() == false) {
+	            if (strongestFemale == null || Utils.isDominant(member.getRank(), strongestFemale.getRank())) {
+	                strongestFemale = member;
+	            }
+	        }
 		
 		// Constituer nouveau couple alpha
+		if (strongestFemale == null) {
+		this.alphaCouple.setPack(this);
+		this.alphaCouple.setMale(maleAlpha);
+		this.alphaCouple.setFemale(strongestFemale); }
+		else {
+			System.out.println("Aucune femelle trouvée pour constituer le nouveau couple");
+		}
 	}
 	
 	/**
