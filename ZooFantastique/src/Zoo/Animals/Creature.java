@@ -1,7 +1,8 @@
 package Zoo.Animals;
 
+import Zoo.Desease;
 import Zoo.Enclosure;
-import ZooFantastique.src.Zoo.Desease;
+import Zoo.Animals.*;
 
 public class Creature {
 	
@@ -19,7 +20,8 @@ public class Creature {
 	private boolean isSleeping;
 	private String indicatorHealth;
 	private Enclosure enclosure;
-	private Desease hasDesease;
+	private Desease desease;
+	public boolean isSick;
 	// Height
 	private int heightMin = 0;
 
@@ -47,7 +49,8 @@ public class Creature {
 			return specie;
 	}
 	public void setDesease(Desease d){
-		this.hasDesease = d;
+		this.desease = d;
+		this.isSick = true;
 	}
 
 
@@ -73,7 +76,9 @@ public class Creature {
 		return isMale;
 	}
 
-
+	public void setIsSick(boolean isSick) {
+		this.isSick = isSick;
+	}
 	public void setMale(boolean isMale) {
 		this.isMale = isMale;
 	}
@@ -132,7 +137,6 @@ public class Creature {
 			
 		}
 	}
-	public static final String[] HEALTH_STATES = {"Perfect", "Normal", "Sick", "Very Sick", "Dead"};
 	public void becomeMoreSick(){
 		if(this.indicatorHealth.equals("Perfect")){this.indicatorHealth="Normal";}
 		if (this.indicatorHealth.equals("Normal")){this.indicatorHealth="Sick";}
@@ -141,6 +145,9 @@ public class Creature {
 			this.indicatorHealth="Dead";
 			this.die();
 		}
+	}
+	public Desease getDesease() {
+		return this.desease;
 	}
 
 
@@ -171,7 +178,7 @@ public class Creature {
 	}
 
 	public void treat(){
-		this.hasDesease.remove(this);
+		this.desease.remove(this);
 	}
 
 	public void eat() {
@@ -205,5 +212,6 @@ public class Creature {
 	public void die() {
 
 	}
+
 
 }
