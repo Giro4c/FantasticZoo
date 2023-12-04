@@ -166,10 +166,10 @@ public class Creature {
 	
 	public void getOlder() {
 		System.out.println("The creature " + this.name + " is getting older" );
-	}
+	} // getOlder
 	
 	public void die() {
 		System.out.println("The creature " + this.name + " is dead ahahahahaha he suck" );
-	}
+	} // die
 
-}
+} // Creature

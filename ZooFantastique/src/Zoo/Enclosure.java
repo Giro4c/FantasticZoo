@@ -32,17 +32,17 @@ public class Enclosure implements Runnable{
 		while(true) {
 			try {
 				synchronized (this) {
-					this.wait(10000);
+					int randomNumberSleep = random.nextInt(10001) + 10000;
+					this.wait(randomNumberSleep);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(this.cleanness);
 			int RandomNumber = random.nextInt(100);
-			if ( RandomNumber < 15) {
+			if ( RandomNumber < 5) {
 				if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
 					this.setIndexcleanness(this.getIndexcleanness()+1);
-					System.out.println("L'enclo " + this.getName() + " se salit !");
+					System.out.println("The enclosure " + this.getName() + " gets dirty !");
 				}
 			}
 		}
