@@ -47,54 +47,56 @@ public class Creature implements Runnable{
 	
 	@Override 
 	public void run() {
-		
-		Random random = new Random();
-		while(true) {
-			
-			if ( HUNGER_STATES.equals("Dead") || HEALTH_STATES.equals("Dead") ) {
-				this.die();
-			}
-			
-			try {
-				synchronized (this) {
-					int randomNumberSleep = random.nextInt(15001) + 10000;
-					this.wait(randomNumberSleep);
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			int RandomNumber = random.nextInt(100);
-			
-			if ( RandomNumber > (1 - this.percentageSick()) && !(this.isSick)) {
-				this.isSick = true;
-			}
-			
-			if ( RandomNumber < 5) {
-				this.getOlder();
-			}
-				
-			if ( this.isSleeping ) {
-				if ( RandomNumber < 15) {
-					this.wake();
-				}
-			}
-			else {
-				if ( RandomNumber < 10) {
-					this.sleep();
-				}
-				if ( RandomNumber > 10 && RandomNumber < 18) {
-					this.eat();
-				}
-				if ( RandomNumber > 18 && RandomNumber < 20) {
-					this.emitSound();
-				}
-				if ( RandomNumber > 20 && RandomNumber < 25) {
-					this.becomeMoreHungry();
-				}
-			}
-		}
+	    
+	    Random random = new Random(); // For random number
+	    
+	    while(true) { 
+	        
+	        if ( HUNGER_STATES.equals("Dead") || HEALTH_STATES.equals("Dead") ) { // Checks that the creature is not dead
+	            this.die(); 
+	        }
+	        
+	        try {
+	            synchronized (this) {
+	                int randomNumberSleep = random.nextInt(15001) + 10000;
+	                this.wait(randomNumberSleep); // Sleeps the thread between 15 and 25 seconds
+	            }
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        int RandomNumber = random.nextInt(100); // Generates a random number between 0 and 100
+	        
+	        if ( RandomNumber > (1 - this.percentageSick()) && !(this.isSick)) { // % chance that the creature gets sick
+	            this.isSick = true;
+	        }
+	        
+	        if ( RandomNumber < 5) { // 5% chance that the creature get older
+	            this.getOlder();
+	        }
+	            
+	        if ( this.isSleeping ) { // If it is sleeping
+	            if ( RandomNumber < 15) { // 15% chance that the creature wakes up
+	                this.wake();
+	            }
+	        }
+	        else { // If it is not sleeping
+	            if ( RandomNumber < 10) { // 10% chance that the creature falls asleep
+	                this.sleep();
+	            }
+	            if ( RandomNumber > 10 && RandomNumber < 18) { // 8% chance that the creature eats
+	                this.eat();
+	            }
+	            if ( RandomNumber > 18 && RandomNumber < 20) { // 2% chance that the creature emits a sound
+	                this.emitSound();
+	            }
+	            if ( RandomNumber > 20 && RandomNumber < 25) { // 5% chance that the creature gets hungry
+	                this.becomeMoreHungry();
+	            }
+	        }
+	    }
 	}
+
 	
 
 	public String getSpecie() {
@@ -118,6 +120,12 @@ public class Creature implements Runnable{
 		this.isSick = isSick;
 	}
 	
+	/**
+	 * 
+	 * This method calculates the percentage chance that a creature will fall sick, ill depending on its state of hunger, the cleanliness of the enclosure and whether there are already sick creatures in the same enclosure.
+	 * 
+	 * @return int percentage : the percentage calculated
+	 */
 	public int percentageSick () {
 		int percentage = 1;
 		
