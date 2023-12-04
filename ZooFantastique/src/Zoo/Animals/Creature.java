@@ -1,6 +1,7 @@
 package Zoo.Animals;
 
 import Zoo.Enclosure;
+import ZooFantastique.src.Zoo.Desease;
 
 public class Creature {
 	
@@ -18,6 +19,7 @@ public class Creature {
 	private boolean isSleeping;
 	private String indicatorHealth;
 	private Enclosure enclosure;
+	private Desease hasDesease;
 	// Height
 	private int heightMin = 0;
 
@@ -43,6 +45,9 @@ public class Creature {
 
 	public String getSpecie() {
 			return specie;
+	}
+	public void setDesease(Desease d){
+		this.hasDesease = d;
 	}
 
 
@@ -127,6 +132,16 @@ public class Creature {
 			
 		}
 	}
+	public static final String[] HEALTH_STATES = {"Perfect", "Normal", "Sick", "Very Sick", "Dead"};
+	public void becomeMoreSick(){
+		if(this.indicatorHealth.equals("Perfect")){this.indicatorHealth="Normal";}
+		if (this.indicatorHealth.equals("Normal")){this.indicatorHealth="Sick";}
+		if (this.indicatorHealth.equals("Sick")){this.indicatorHealth="Very Sick";}
+		if (this.indicatorHealth.equals("Very Sick")){
+			this.indicatorHealth="Dead";
+			this.die();
+		}
+	}
 
 
 	public boolean isSleeping() {
@@ -155,6 +170,9 @@ public class Creature {
 				+ ", indicatorHealth=" + indicatorHealth + "]";
 	}
 
+	public void treat(){
+		this.hasDesease.remove(this);
+	}
 
 	public void eat() {
 		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
@@ -166,7 +184,10 @@ public class Creature {
 	}
 	
 	public void heal() {
-		
+		if(this.indicatorHealth.equals("Normal")){this.indicatorHealth="Perfect";}
+		if (this.indicatorHealth.equals("Sick")){this.indicatorHealth="Normal";}
+		if (this.indicatorHealth.equals("Very Sick")){this.indicatorHealth="Sick";}
+		System.out.println("L'animal "+this.getName()+ " à été soigné, son état de santé est maintenant "+ this.indicatorHealth);
 	}
 	
 	public void sleep() {
@@ -182,7 +203,7 @@ public class Creature {
 	}
 	
 	public void die() {
-		
+
 	}
 
 }
