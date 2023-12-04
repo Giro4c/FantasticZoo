@@ -1,5 +1,7 @@
-package ZooFantastique.src.Zoo;
+package Zoo;
+
 import Zoo.Animals.Creature;
+
 public class Desease {
     public static final String[] HUNGER_STATES = {"Full", "Normal", "Hungry", "Famished", "Dead"};
     private String name;
@@ -10,7 +12,8 @@ public class Desease {
     private boolean canBeTreatedWithMedecine;
     private Creature animal;
     private boolean isTreated = false;
-    private Desease(String name, int damage, int severity, int time, Creature animal) {
+    public Thread deseaseThread;
+    public Desease(String name, int damage, int severity, int time, Creature animal) {
         this.name = name;
         this.damage = damage;
         this.severity = severity;
@@ -28,48 +31,64 @@ public class Desease {
             canBeTreatedAlone = true;
             canBeTreatedWithMedecine = true;
         }
+        deseaseAct();
     }
-    public void deseaseAct(){
+    public void deseaseAct() {
         final int[] currentTime = {0};
-        Thread deseaseThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (this){
-                while (currentTime[0] <=getTime()) {
-                    try {
-                        synchronized (currentTime){
-                            Thread.sleep(15000/severity);
-                            getAnimal().becomeMoreSick();
-                            if (canBeTreatedAlone){currentTime[0]+=1;}
-                            if (isTreated){break;}
-                            System.out.println(getName()+" est malade depuis "+ currentTime[0] + " secondes");
+        deseaseThread = new Thread(() -> {
+            while (currentTime[0] <= getTime() && !isTreated && !Thread.currentThread().isInterrupted()) {
+                try {
+                    getAnimal().becomeMoreSick();
+
+                    // Handle interruption when sleeping
+                    Thread.sleep(15000 / severity);
+
+                    if (canBeTreatedAlone) {
+                        synchronized (currentTime) {
+                            currentTime[0] += 1;
+                            System.out.println(animal.getName() + " est malade depuis " + currentTime[0] + " secondes");
                         }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
-                }
-                destroyDesease();
+                } catch (InterruptedException e) {
+                    // Restore interrupted status and exit the loop
+                    Thread.currentThread().interrupt();
+                    break;
                 }
             }
+            destroyDesease();
         });
         deseaseThread.start();
     }
+
+
+
     private void destroyDesease() {
+        if (this.animal != null) {
+            this.animal.setIsSick(false);
+            System.out.println(this.animal.isSick);
+            this.animal.setDesease(null);
+        }
+        this.isTreated = true;  // Set isTreated to true to avoid repeated destruction
         this.name = null;
-        this.animal.setDesease(null);
         this.animal = null;
     }
+
+
     public String getName() {
         return name;
     }
-    public void remove(Creature creature){
-        if (this.severity!=3){
-            isTreated = true;
-        }
-        else {
-            System.err.println("L'animal " + this.animal.getName()+" à une maladie incurable...");
+    public void remove(Creature creature) {
+        if (this.canBeTreatedWithMedecine== true&& !isTreated) {
+            new Thread(() -> {
+                isTreated = true;
+                deseaseThread.interrupt(); // Interrupt the deseaseThread
+            }).start();
+        } else {
+            System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");
         }
     }
+
+
     public int getDamage() {
         return damage;
     }

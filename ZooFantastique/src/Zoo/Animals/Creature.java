@@ -1,8 +1,9 @@
 package Zoo.Animals;
 
 import java.util.Random;
+import Zoo.Desease;
 import Zoo.Enclosure;
-import ZooFantastique.src.Zoo.Desease;
+import Zoo.Animals.*;
 
 public class Creature implements Runnable{
 	
@@ -19,9 +20,9 @@ public class Creature implements Runnable{
 	private String indicatorHunger;
 	private boolean isSleeping;
 	private String indicatorHealth;
-	private boolean isSick;
 	private Enclosure enclosure;
-	private Desease hasDesease;
+	private Desease desease;
+	public boolean isSick;
 	// Height
 	private int heightMin = 0;
 
@@ -103,7 +104,8 @@ public class Creature implements Runnable{
 			return specie;
 	}
 	public void setDesease(Desease d){
-		this.hasDesease = d;
+		this.desease = d;
+		this.isSick = true;
 	}
 
 
@@ -162,10 +164,6 @@ public class Creature implements Runnable{
 		return name;
 	}
 
-	public void setEnclosure(Enclosure enclosure) {
-		this.enclosure = enclosure;
-		
-	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -175,7 +173,9 @@ public class Creature implements Runnable{
 		return isMale;
 	}
 
-
+	public void setIsSick(boolean isSick) {
+		this.isSick = isSick;
+	}
 	public void setMale(boolean isMale) {
 		this.isMale = isMale;
 	}
@@ -252,6 +252,9 @@ public class Creature implements Runnable{
 			this.die();
 		}
 	}
+	public Desease getDesease() {
+		return this.desease;
+	}
 
 
 	public boolean isSleeping() {
@@ -281,7 +284,7 @@ public class Creature implements Runnable{
 	}
 
 	public void treat(){
-		this.hasDesease.remove(this);
+		this.desease.remove(this);
 	}
 
 	public void eat() {
