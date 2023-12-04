@@ -1,13 +1,14 @@
 package Zoo.Animals;
 
+import Zoo.Enclosure;
 import Zoo.Caracteristics.CanRun;
 
 public class Lycanthropes extends Mammal implements CanRun {
 
 	public Lycanthropes(String specie, String name, boolean isMale, int weight, int height, int age,
-			String indicatorHunger, boolean isSleeping, String indicatorHealth, int gestationTime, int gestationProgress) {
+			String indicatorHunger, boolean isSleeping, String indicatorHealth, int gestationTime, int gestationProgress, Enclosure enclosure) {
 		super(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth, gestationTime,
-				gestationProgress);
+				gestationProgress, enclosure);
 		// TODO Auto-generated constructor stub
 	}
 }
