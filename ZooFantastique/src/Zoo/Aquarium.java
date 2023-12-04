@@ -2,79 +2,115 @@ package Zoo;
 
 import java.util.Random;
 
+/**
+ * Represents an Aquarium enclosure.
+ */
 public class Aquarium extends Enclosure implements Runnable {
-	
-	public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
-	
-	private int depth;
-	private int salinity;
-	
-	private int indexcleanness = 0;
-	private String cleanness = CLEANNESS_STATES[indexcleanness];
-	
-	
-	public Aquarium(String name, int surface, int maxNumberCreatures, String cleanness, int depth, int salinity) {
-		super(name, surface, maxNumberCreatures, cleanness);
-		this.depth = depth;
-		this.salinity = salinity;
-	}
-	
-	@Override
-	public void run() {
-		Random random = new Random();
-		while(true) {
-			try {
-				synchronized (this) {
-					int randomNumberSleep = random.nextInt(10001) + 10000;
-					this.wait(randomNumberSleep);
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			int RandomNumber = random.nextInt(100);
-			if ( RandomNumber < 5) {
-				if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
-					this.setIndexcleanness(this.getIndexcleanness()+1);
-					System.out.println("The aquarium " + this.getName() + " gets dirty !");
-				}
-			}
-			if ( RandomNumber > 95) {
-				salinity += 1;
-				System.out.println("The salinity of the aquarium " + this.getName() + " gets dirty !");
-			}
-		}
-	}
-	
-	private void setIndexcleanness(int indexcleanness) {
-		 this.indexcleanness = indexcleanness;
-		 this.cleanness = CLEANNESS_STATES[indexcleanness];
-	}
+    
+    public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
+    
+    private int depth;
+    private int salinity;
+    private int indexcleanness = 0;
+    private String cleanness = CLEANNESS_STATES[indexcleanness];
+    
+    /**
+     * Constructor for the Aquarium class.
+     *
+     * @param name              The name of the aquarium.
+     * @param surface           The surface area of the aquarium.
+     * @param maxNumberCreatures The maximum number of creatures the aquarium can hold.
+     * @param cleanness         The initial cleanliness state of the aquarium.
+     * @param depth             The depth of the aquarium.
+     * @param salinity          The salinity level of the aquarium.
+     */
+    public Aquarium(String name, int surface, int maxNumberCreatures, String cleanness, int depth, int salinity) {
+        super(name, surface, maxNumberCreatures, cleanness);
+        this.depth = depth;
+        this.salinity = salinity;
+    }
+    
+    /**
+     * Thread for aquariums where dirtiness and salinity increase.
+     */
+    @Override
+    public void run() {
+        Random random = new Random();
+        while(true) {
+            try {
+                synchronized (this) {
+                    int randomNumberSleep = random.nextInt(10001) + 10000;
+                    this.wait(randomNumberSleep); // Sleep the thread for a duration of 10 to 20s
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int RandomNumber = random.nextInt(100);
+            if ( RandomNumber < 5) { // 5% chance that the aquarium gets dirty 
+                if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
+                    this.setIndexcleanness(this.getIndexcleanness()+1);
+                    System.out.println("The aquarium " + this.getName() + " gets dirty !");
+                }
+            }
+            if ( RandomNumber > 95) { // 5% chance that the salinity of the aquarium increases
+                salinity += 1;
+                System.out.println("The salinity of the aquarium " + this.getName() + " increases!");
+            }
+        }
+    }
+    
+    /**
+     * Set the cleanliness of the aquarium using an index in CLEANNESS_STATES.
+     *
+     * @param indexcleanness The index representing the cleanliness state.
+     */
+    private void setIndexcleanness(int indexcleanness) {
+        this.indexcleanness = indexcleanness;
+        this.cleanness = CLEANNESS_STATES[indexcleanness];
+    }
 
+    /**
+     * Get the depth of the aquarium.
+     *
+     * @return The depth of the aquarium.
+     */
+    public int getDepth() {
+        return depth;
+    }
 
-	public int getDepth() {
-		return depth;
-	}
+    /**
+     * Set the depth of the aquarium.
+     *
+     * @param depth The new depth of the aquarium.
+     */
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
 
+    /**
+     * Get the salinity of the aquarium.
+     *
+     * @return The salinity level of the aquarium.
+     */
+    public int getSalinity() {
+        return salinity;
+    }
 
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
+    /**
+     * Set the salinity of the aquarium.
+     *
+     * @param salinity The new salinity level of the aquarium.
+     */
+    public void setSalinity(int salinity) {
+        this.salinity = salinity;
+    }
 
-
-	public int getSalinity() {
-		return salinity;
-	}
-
-
-	public void setSalinity(int salinity) {
-		this.salinity = salinity;
-	}
-
-
-	@Override
-	public void clean() {
-		System.out.println("The aquarium " + this.getName() + " was cleaned !");
-	}
-
-
+    /**
+     * Clean the aquarium to remove dirtiness.
+     */
+    @Override
+    public void clean() {
+        this.setIndexcleanness(0);
+        System.out.println("The aquarium " + this.getName() + " was cleaned !");
+    }
 }

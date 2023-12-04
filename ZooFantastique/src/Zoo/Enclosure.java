@@ -8,203 +8,288 @@ import Zoo.Animals.Egg;
 import Zoo.Animals.Mammal;
 import Zoo.Animals.Oviparous;
 
-public class Enclosure implements Runnable{
-	
-	public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
+/**
+ * Represents an Enclosure for managing and simulating various creatures.
+ */
+public class Enclosure implements Runnable {
 
-	private String name;
-	private int surface;
-	private final int maxNumberCreatures;
-	private int currentNumberCreatures;
-	private ArrayList<Creature> presentCreatures;
-	private int indexcleanness = 0;
-	private String cleanness = CLEANNESS_STATES[indexcleanness];
-	private ArrayList<Egg> eggs;
+    public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
 
-	public Enclosure(String name, int surface, int maxNumberCreatures, String cleanness) {
-		super();
-		this.name = name;
-		this.surface = surface;
-		this.maxNumberCreatures = maxNumberCreatures;
-		this.cleanness = cleanness;
-		this.presentCreatures = new ArrayList<Creature>();
-		this.currentNumberCreatures = this.presentCreatures.size();
-		this.eggs = new ArrayList<Egg>();
-	}
-	
-	@Override
-	public void run() {
-		Random random = new Random();
-		while(true) {
-			try {
-				synchronized (this) {
-					int randomNumberSleep = random.nextInt(10001) + 10000;
-					this.wait(randomNumberSleep);
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			int RandomNumber = random.nextInt(100);
-			if ( RandomNumber < 5) {
-				if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
-					this.setIndexcleanness(this.getIndexcleanness()+1);
-					System.out.println("The enclosure " + this.getName() + " gets dirty !");
-				}
-			}
-		}
-	}
+    private String name;
+    private int surface;
+    private final int maxNumberCreatures;
+    private int currentNumberCreatures;
+    private ArrayList<Creature> presentCreatures;
+    private int indexcleanness = 0;
+    private String cleanness = CLEANNESS_STATES[indexcleanness];
+    private ArrayList<Egg> eggs;
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * Constructor for the Enclosure class.
+     *
+     * @param name              The name of the enclosure.
+     * @param surface           The surface area of the enclosure.
+     * @param maxNumberCreatures The maximum number of creatures the enclosure can hold.
+     * @param cleanness         The initial cleanliness state of the enclosure.
+     */
+    public Enclosure(String name, int surface, int maxNumberCreatures, String cleanness) {
+        super();
+        this.name = name;
+        this.surface = surface;
+        this.maxNumberCreatures = maxNumberCreatures;
+        this.cleanness = cleanness;
+        this.presentCreatures = new ArrayList<Creature>();
+        this.currentNumberCreatures = this.presentCreatures.size();
+        this.eggs = new ArrayList<Egg>();
+    }
 
-	public ArrayList<Egg> getEggs(){
-		return this.eggs;
-	}
+    /**
+     * Thread for enclosures where cleanliness may increase.
+     */
+    @Override
+    public void run() {
+        Random random = new Random();
+        while(true) {
+            try {
+                synchronized (this) {
+                    int randomNumberSleep = random.nextInt(10001) + 10000;
+                    this.wait(randomNumberSleep);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int RandomNumber = random.nextInt(100);
+            if ( RandomNumber < 5) { // 5% chance that the enclosure gets dirty 
+                if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
+                    this.setIndexcleanness(this.getIndexcleanness()+1);
+                    System.out.println("The enclosure " + this.getName() + " gets dirty !");
+                }
+            }
+        }
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * Get the name of the enclosure.
+     *
+     * @return The name of the enclosure.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get the list of eggs in the enclosure.
+     *
+     * @return The list of eggs in the enclosure.
+     */
+    public ArrayList<Egg> getEggs() {
+        return this.eggs;
+    }
+
+    /**
+     * Set the name of the enclosure.
+     *
+     * @param name The new name of the enclosure.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Get the index of cleanliness of the enclosure.
+     *
+     * @return The index of cleanliness of the enclosure.
+     */
+    public int getIndexcleanness() {
+        return indexcleanness;
+    }
+
+    /**
+     * Get the surface area of the enclosure.
+     *
+     * @return The surface area of the enclosure.
+     */
+    public int getSurface() {
+        return surface;
+    }
+
+    /**
+     * Set the surface area of the enclosure.
+     *
+     * @param surface The new surface area of the enclosure.
+     */
+    public void setSurface(int surface) {
+        this.surface = surface;
+    }
+
+    /**
+     * Get the current number of creatures in the enclosure.
+     *
+     * @return The current number of creatures in the enclosure.
+     */
+    public int getCurrentNumberCreatures() {
+        return this.presentCreatures.size();
+    }
+
+    /**
+     * Set the current number of creatures in the enclosure.
+     *
+     * @param currentNumberCreatures The new current number of creatures in the enclosure.
+     */
+    public void setCurrentNumberCreatures(int currentNumberCreatures) {
+        this.currentNumberCreatures = currentNumberCreatures;
+    }
+
+    /**
+     * Get the list of present creatures in the enclosure.
+     *
+     * @return The list of present creatures in the enclosure.
+     */
+    public ArrayList<Creature> getPresentCreatures() {
+        return presentCreatures;
+    }
+
+    /**
+     * Set the list of present creatures in the enclosure.
+     *
+     * @param presentCreatures The new list of present creatures in the enclosure.
+     */
+    public void setPresentCreatures(ArrayList<Creature> presentCreatures) {
+        this.presentCreatures = presentCreatures;
+    }
+
+    /**
+     * Get the cleanliness status of the enclosure.
+     *
+     * @return The cleanliness status of the enclosure.
+     */
+    public String getCleanness() {
+        return cleanness;
+    }
+
+    /**
+     * Set the cleanliness status of the enclosure.
+     *
+     * @param cleanness The new cleanliness status of the enclosure.
+     */
+    public void setCleanness(String cleanness) {
+        this.cleanness = cleanness;
+    }
+
+    /**
+     * Get the maximum number of creatures the enclosure can hold.
+     *
+     * @return The maximum number of creatures the enclosure can hold.
+     */
+    public int getMaxNumberCreatures() {
+        return maxNumberCreatures;
+    }
+
+    /**
+     * Set the index of cleanliness of the enclosure and update the cleanliness status accordingly.
+     *
+     * @param indexcleanness The new index of cleanliness of the enclosure.
+     */
+    private void setIndexcleanness(int indexcleanness) {
+        this.indexcleanness = indexcleanness;
+        this.cleanness = CLEANNESS_STATES[indexcleanness];
+    }
 
 
+    /**
+     * Display creatures' characteristics in the enclosure.
+     */
+    public void showCreaturesCaracteristics() {
+        System.out.println("Creatures Characteristics in the " + this.name + " : ");
+        for (Creature currentCreature : presentCreatures) {
+            System.out.println("Creature Characteristics: " + currentCreature.toString());
+        }
+    } 
 
-	public int getIndexcleanness() {
-		return indexcleanness;
-	}
+    /**
+     * Add a creature to the enclosure.
+     *
+     * @param newCreature The creature to be added.
+     */
+    public void addCreature(Creature newCreature) {
+        presentCreatures.add(newCreature);
+        newCreature.setEnclosure(this);
+        ++currentNumberCreatures;
+        System.out.println("A new creature " + newCreature.toString() + " was added to " + this.getName());
+    }
 
-	public int getSurface() {
-		return surface;
-	}
+    /**
+     * Remove a creature from the enclosure.
+     *
+     * @param creature The creature to be removed.
+     */
+    public void removeCreature(Creature creature) {
+        if (presentCreatures != null) {
+            presentCreatures.remove(creature);
+            --currentNumberCreatures;
+            System.out.println("The " + creature.getSpecie() + " " + creature.getName()+ " was removed from " + this.getName());
+        }
+    }
 
+    /**
+     * Feed the creatures in the enclosure.
+     */
+    public void feedCreatures() {
+        System.out.println("The creatures in the " + this.getName() + " were fed.");
+    }
 
+    /**
+     * Clean the enclosure to maintain hygiene.
+     */
+    public void clean() {
+        System.out.println("The enclosure " + this.getName() + " was cleaned !");
+    }
 
-	public void setSurface(int surface) {
-		this.surface = surface;
-	}
+    /**
+     * Remove an egg from the enclosure.
+     *
+     * @param egg The egg to be removed.
+     */
+    public void removeEgg(Egg egg) {
+        eggs.remove(egg);
+    }
 
+    /**
+     * Handle the reproduction process in the enclosure.
+     */
+    public void reproduction() {
+        if(currentNumberCreatures < maxNumberCreatures) {
+            boolean theresMale = false;
+            ArrayList<Creature> females = new ArrayList<>();
+            Random rand = new Random();
 
+            for (Creature currentCreature : presentCreatures) {
+                if (currentCreature.isMale()) {
+                    theresMale = true;
+                }
+                if (!currentCreature.isMale()) {
+                    females.add(currentCreature);
+                }
+                if (females.size() > 0 && theresMale) {
+                    int randomIndex = rand.nextInt(females.size());
+                    Creature pregnantFemale = females.get(randomIndex);
 
-	public int getCurrentNumberCreatures() {
-		return this.presentCreatures.size();
-	}
-
-
-
-	public void setCurrentNumberCreatures(int currentNumberCreatures) {
-		this.currentNumberCreatures = currentNumberCreatures;
-	}
-
-
-
-	public ArrayList<Creature> getPresentCreatures() {
-		return presentCreatures;
-	}
-
-
-
-	public void setPresentCreatures(ArrayList<Creature> presentCreatures) {
-		this.presentCreatures = presentCreatures;
-	}
-
-
-
-	public String getCleanness() {
-		return cleanness;
-	}
-
-
-
-	public void setCleanness(String cleanness) {
-		this.cleanness = cleanness;
-	}
-
-
-
-	public int getMaxNumberCreatures() {
-		return maxNumberCreatures;
-	}
-
-	private void setIndexcleanness(int indexcleanness) {
-		 this.indexcleanness = indexcleanness;
-		 this.cleanness = CLEANNESS_STATES[indexcleanness];
-	}
-
-
-	public void showCreaturesCaracteristics() {
-		System.out.println("Creatures Caracteristics in the " + this.name + " : ");
-		for (int i = 0;i <= presentCreatures.size();i++) {
-			System.out.println("Creatures Caracteristics : " + presentCreatures.get(i).toString());
-		}
-		
-	} 
-	
-	public void addCreature(Creature c) {
-		presentCreatures.add(c);
-		c.setEnclosure(this);
-		++currentNumberCreatures;
-		System.out.println("A new creature " + newCreature.toString() + " was added in the " + this.getName());
-	}
-	
-	public void removeCreature(Creature creature) {
-	    if (presentCreatures != null) {
-	        presentCreatures.remove(creature);
-			--currentNumberCreatures;
-			System.out.println("The " + creature.getSpecie() + " " + creature.getName()+ " was removed from " + this.getName());
-	    }
-	}
-	
-	public void feedCreatures() {
-		System.out.println("The creature in the " + this.getName() + " was feeded");
-	}
-	
-	public void clean() {
-		System.out.println("The enclosure " + this.getName() + " was cleaned !");
-	}
-	
-	public void removeEgg(Egg egg) {
-		eggs.remove(egg);
-	}
-
-	public void reproduction(){
-		//Vérifie si le nombre de créatures est strictement inférieur au nombre de créatures maximum dans l'enclos.
-		if(currentNumberCreatures<maxNumberCreatures){
-			Boolean theresmale = false;
-			ArrayList<Creature> females = new ArrayList<>();
-			Random rand = new Random();
-			//On parcours toutes les créatures dans l'enclos
-			for (Creature currentCreature : presentCreatures) {
-				//Si dans les créatures il y a minimum 1 male
-				if (currentCreature.isMale()==true) {
-					theresmale = true;
-				}
-				//Met toutes les femelles dans une liste
-				if(currentCreature.isMale()==false){
-					females.add(currentCreature);
-
-				}
-				//Si le nombre de femelles est strictement supérieur à 0
-				if (females.size()>0 && theresmale) {
-					int randomIndex = rand.nextInt(females.size());
-					//On récupère une femelle aléatoire dans la liste
-					Creature pregnantFemale = females.get(randomIndex);
-					//La femelle choisis aléatoirement devient enceinte
-					
-					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
-						Oviparous female = (Oviparous) pregnantFemale;
-						eggs.add(female.layEgg());
-						++currentNumberCreatures;
-					}
-					if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
-						Mammal female = (Mammal) pregnantFemale;
-						female.reproduction();
-						//On augmente le nombre de créatures dans l'enclos de 1
-						++currentNumberCreatures;
-					}
-				}
-			}
-		}
-		else{
-			System.out.println("Trop d'animaux dans l'enclos, la reproduction ne peut pas avoir lieu !");
-		}
-	}
+                    if (Oviparous.class.isAssignableFrom(pregnantFemale.getClass())) {
+                        Oviparous female = (Oviparous) pregnantFemale;
+                        eggs.add(female.layEgg());
+                        ++currentNumberCreatures;
+                    }
+                    if (Mammal.class.isAssignableFrom(pregnantFemale.getClass())) {
+                        Mammal female = (Mammal) pregnantFemale;
+                        female.reproduction();
+                        ++currentNumberCreatures;
+                    }
+                }
+            }
+        } else {
+            System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
+        }
+    }
 }
+                   
+
