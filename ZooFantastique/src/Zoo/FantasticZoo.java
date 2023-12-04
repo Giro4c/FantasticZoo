@@ -2,18 +2,20 @@ package Zoo;
 
 import java.util.ArrayList;
 
+import Zoo.Animals.Creature;
+
 public class FantasticZoo {
 
 	public static void main(String[] args) {
-//		Enclosure Encl = new Enclosure("test",20,12,"Clean");
-//		Thread t1 = new Thread(Encl);
-//		Aquarium Aqua = new Aquarium("test",20,12,"Clean", 2, 35);
-//		Thread t2 = new Thread(Aqua);
-//		Aviary avia = new Aviary("test",20,12,"Clean", 2);
-//		Thread t3 = new Thread(avia);
-//		t1.start();
-//		t2.start();
-//		t3.start();
+		Enclosure Encl = new Enclosure("test",20,12,"Clean");
+		Thread t1 = new Thread(Encl);
+		Aquarium Aqua = new Aquarium("test",20,12,"Clean", 2, 35);
+		Thread t2 = new Thread(Aqua);
+		Aviary avia = new Aviary("test",20,12,"Clean", 2);
+		Thread t3 = new Thread(avia);
+		t1.start();
+		t2.start();
+		t3.start();
 
 	}
 		
