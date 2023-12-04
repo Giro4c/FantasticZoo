@@ -17,7 +17,7 @@ public class Egg {
 
 	public int getIncubationTime() {
 		return incubationTime;
-	}
+	} 
 
 	public int getIncubationProgress() {
 		return incubationProgress;
