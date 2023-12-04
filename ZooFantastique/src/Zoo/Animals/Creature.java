@@ -1,6 +1,10 @@
 package Zoo.Animals;
 
-public class Creature {
+import java.util.Random;
+
+import Zoo.Enclosure;
+
+public class Creature implements Runnable{
 	
 	public static final String[] HUNGER_STATES = {"Full", "Normal", "Hungry", "Famished", "Dead"};
 	public static final String[] HEALTH_STATES = {"Perfect", "Normal", "Sick", "Very Sick", "Dead"};
@@ -15,9 +19,11 @@ public class Creature {
 	private String indicatorHunger;
 	private boolean isSleeping;
 	private String indicatorHealth;
+	private boolean isSick;
+	private Enclosure enclosure;
 	
 	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
-		boolean isSleeping, String indicatorHealth) {
+		 String indicatorHealth, Enclosure enclosure) {
 		super();
 		this.specie = specie;
 		this.name = name;
@@ -26,8 +32,61 @@ public class Creature {
 		this.height = height;
 		this.age = age;
 		this.indicatorHunger = indicatorHunger;
-		this.isSleeping = isSleeping;
+		this.isSleeping = false;
 		this.indicatorHealth = indicatorHealth;
+		this.isSick = false;
+		this.enclosure = enclosure;
+	}
+	
+	@Override 
+	public void run() {
+		
+		Random random = new Random();
+		while(true) {
+			
+			if ( HUNGER_STATES.equals("Dead") || HEALTH_STATES.equals("Dead") ) {
+				this.die();
+			}
+			
+			try {
+				synchronized (this) {
+					int randomNumberSleep = random.nextInt(15001) + 10000;
+					this.wait(randomNumberSleep);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			int RandomNumber = random.nextInt(100);
+			
+			if ( RandomNumber > (1 - this.percentageSick()) && !(this.isSick)) {
+				this.isSick = true;
+			}
+			
+			if ( RandomNumber < 5) {
+				this.getOlder();
+			}
+				
+			if ( this.isSleeping ) {
+				if ( RandomNumber < 15) {
+					this.wake();
+				}
+			}
+			else {
+				if ( RandomNumber < 10) {
+					this.sleep();
+				}
+				if ( RandomNumber > 10 && RandomNumber < 18) {
+					this.eat();
+				}
+				if ( RandomNumber > 18 && RandomNumber < 20) {
+					this.emitSound();
+				}
+				if ( RandomNumber > 20 && RandomNumber < 25) {
+					this.becomeMoreHungry();
+				}
+			}
+		}
 	}
 	
 
@@ -40,6 +99,46 @@ public class Creature {
 		this.specie = specie;
 	}
 
+
+	public boolean isSick() {
+		return isSick;
+	}
+
+	public void setSick(boolean isSick) {
+		this.isSick = isSick;
+	}
+	
+	public int percentageSick () {
+		int percentage = 1;
+		
+		if (this.indicatorHunger.equals("Normal")) {
+			percentage += 1;
+		}
+		else if (this.indicatorHunger.equals("Hungry")) {
+			percentage += 2;
+		}
+		else if (this.indicatorHunger.equals("Famished")) {
+			percentage += 3;
+		}
+		
+		if (this.getEnclosure().getCleanness().equals("Normal")) {
+			percentage += 1;
+		}
+		else if (this.getEnclosure().getCleanness().equals("Dirty")) {
+			percentage += 2;
+		}
+		else if (this.getEnclosure().getCleanness().equals("Moundir's Room")) {
+			percentage += 3;
+		}
+		
+		for (Creature crea : this.getEnclosure().getPresentCreatures()) {
+			if ( crea.isSick ) {
+				percentage += 1;
+			}
+		}
+		
+		return percentage;		
+	}
 
 	public String getName() {
 		return name;
@@ -96,6 +195,14 @@ public class Creature {
 	}
 
 
+	public Enclosure getEnclosure() {
+		return enclosure;
+	}
+
+	public void setEnclosure(Enclosure enclosure) {
+		this.enclosure = enclosure;
+	}
+
 	public void setIndicatorHunger(String indicatorHunger) {
 		this.indicatorHunger = indicatorHunger;
 	}
@@ -105,13 +212,13 @@ public class Creature {
 			this.indicatorHunger = "Normal";
 		}
 		else if (this.indicatorHunger.equals("Normal")) {
-			
+			this.indicatorHunger = "Hungry";
 		}
 		else if (this.indicatorHunger.equals("Hungry")) {
-			
+			this.indicatorHunger = "Famished";
 		}
 		else if (this.indicatorHunger.equals("Famished")) {
-			
+			this.indicatorHunger = "Dead";
 		}
 	}
 
@@ -142,10 +249,17 @@ public class Creature {
 				+ ", indicatorHealth=" + indicatorHealth + "]";
 	}
 
-
 	public void eat() {
-		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
-		
+		if (this.indicatorHunger.equals("Normal")) {
+			this.indicatorHunger = "Full";
+		}
+		else if (this.indicatorHunger.equals("Hungry")) {
+			this.indicatorHunger = "Normal";
+		}
+		else if (this.indicatorHunger.equals("Famished")) {
+			this.indicatorHunger = "Hungry";
+		}
+		//System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
 	}
 	
 	public void emitSound() {
@@ -153,23 +267,32 @@ public class Creature {
 	}
 	
 	public void heal() {
-		System.out.println("The creature " + this.name + " is healing" );
+		if (this.indicatorHunger.equals("Very Sick")) {
+			this.indicatorHunger = "Sick";
+		}
+		else if (this.indicatorHunger.equals("Sick")) {
+			this.indicatorHunger = "Normal";
+		}
+		else if (this.indicatorHunger.equals("Normal")) {
+			this.indicatorHunger = "Perfect";
+		}
 	}
 	
 	public void sleep() {
-		System.out.println("The creature " + this.name + " is sleeping" );
+		this.isSleeping = true;
 	}
 	
 	public void wake() {
-		System.out.println("The creature " + this.name + " is awake" );
+		this.isSleeping = false;
 	}
 	
 	public void getOlder() {
-		System.out.println("The creature " + this.name + " is getting older" );
-	} // getOlder
+		this.setAge(this.getAge()+ 1);
+	}
 	
 	public void die() {
-		System.out.println("The creature " + this.name + " is dead ahahahahaha he suck" );
-	} // die
+		// a faire
+	}
 
-} // Creature
+
+}

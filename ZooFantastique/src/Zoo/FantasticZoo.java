@@ -2,8 +2,6 @@ package Zoo;
 
 import java.util.ArrayList;
 
-import Zoo.Animals.Creature;
-
 public class FantasticZoo {
 
 	public static void main(String[] args) {
@@ -18,7 +16,7 @@ public class FantasticZoo {
 //		t3.start();
 
 	}
-	
+		
 	public FantasticZoo(String name, ZooMaster zooMaster, int maxNumberEnclosures) {
 		super();
 		this.name = name;
