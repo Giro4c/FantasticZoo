@@ -2,13 +2,14 @@ package Zoo;
 
 import java.util.ArrayList;
 
+import Zoo.Animals.Dragon;
+
 public class FantasticZoo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
-	
+		
 	public FantasticZoo(String name, ZooMaster zooMaster, int maxNumberEnclosures) {
 		super();
 		this.name = name;
