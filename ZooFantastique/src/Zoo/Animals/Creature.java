@@ -1,8 +1,8 @@
 package Zoo.Animals;
 
 import java.util.Random;
-
 import Zoo.Enclosure;
+import ZooFantastique.src.Zoo.Desease;
 
 public class Creature implements Runnable{
 	
@@ -21,9 +21,16 @@ public class Creature implements Runnable{
 	private String indicatorHealth;
 	private boolean isSick;
 	private Enclosure enclosure;
+	private Desease hasDesease;
+	// Height
+	private int heightMin = 0;
+
+	public void setHeightMin(int min){
+		heightMin = min;
+	}
 	
 	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
-		 String indicatorHealth, Enclosure enclosure) {
+		boolean isSleeping, String indicatorHealth, Enclosure enclosure) {
 		super();
 		this.specie = specie;
 		this.name = name;
@@ -93,6 +100,9 @@ public class Creature implements Runnable{
 	public String getSpecie() {
 			return specie;
 	}
+	public void setDesease(Desease d){
+		this.hasDesease = d;
+	}
 
 
 	public void setSpecie(String specie) {
@@ -144,7 +154,10 @@ public class Creature implements Runnable{
 		return name;
 	}
 
-
+	public void setEnclosure(Enclosure enclosure) {
+		this.enclosure = enclosure;
+		
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -221,6 +234,16 @@ public class Creature implements Runnable{
 			this.indicatorHunger = "Dead";
 		}
 	}
+	
+	public void becomeMoreSick(){
+		if(this.indicatorHealth.equals("Perfect")){this.indicatorHealth="Normal";}
+		if (this.indicatorHealth.equals("Normal")){this.indicatorHealth="Sick";}
+		if (this.indicatorHealth.equals("Sick")){this.indicatorHealth="Very Sick";}
+		if (this.indicatorHealth.equals("Very Sick")){
+			this.indicatorHealth="Dead";
+			this.die();
+		}
+	}
 
 
 	public boolean isSleeping() {
@@ -247,6 +270,10 @@ public class Creature implements Runnable{
 		return "Creature [specie=" + specie + ", isMale=" + isMale + ", weight=" + weight + ", height=" + height
 				+ ", age=" + age + ", indicatorHunger=" + indicatorHunger + ", isSleeping=" + isSleeping
 				+ ", indicatorHealth=" + indicatorHealth + "]";
+	}
+
+	public void treat(){
+		this.hasDesease.remove(this);
 	}
 
 	public void eat() {
@@ -276,6 +303,7 @@ public class Creature implements Runnable{
 		else if (this.indicatorHunger.equals("Normal")) {
 			this.indicatorHunger = "Perfect";
 		}
+		System.out.println("The creature "+ this.getName() + " has been healed, its health is now : "+ this.indicatorHealth);
 	}
 	
 	public void sleep() {
