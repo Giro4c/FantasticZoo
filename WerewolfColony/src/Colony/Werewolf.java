@@ -231,6 +231,7 @@ public class Werewolf extends Creature {
 		this.currentlyHuman = !this.currentlyHuman;
 	}
 	public void winDomination(Werewolf w) {
+		System.out.println(this.getName()+ " gagne la domination !");
 		this.dominationFactor +=1;
 		if(!Utils.isDominant(this.rank, w.getRank())) {
 			char tmp = w.getRank();
@@ -240,6 +241,7 @@ public class Werewolf extends Creature {
 		w.setDominationFactor(w.getDominationFactor()-1);
 	}
 	public void loseDomination(Werewolf w) {
+		System.out.println(this.getName()+ " perd la domination !");
 		this.dominationFactor -=1;
 		if(Utils.isDominant(this.rank, w.getRank())) {
 			char tmp = w.getRank();

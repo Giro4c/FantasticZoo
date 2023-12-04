@@ -12,7 +12,7 @@ public class Utils {
 	 private static ArrayList<String> meatingSeason = new ArrayList<>(Arrays.asList("february","march"));
 	 public static boolean isDominant(char c1, char c2) {
 		 if(listRankDomination.contains(c1) && listRankDomination.contains(c2)) {
-	            if(listRankDomination.indexOf(c1) > listRankDomination.indexOf(c2)) {
+	            if(listRankDomination.indexOf(c1) < listRankDomination.indexOf(c2)) {
 	                return true;
 	            }
 	        }

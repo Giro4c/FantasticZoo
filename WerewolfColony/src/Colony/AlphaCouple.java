@@ -54,6 +54,7 @@ public class AlphaCouple {
 		this.male = male;
 		this.female = female;
 		this.pack = pack;
+		this.childrens = new ArrayList<>();
 	}
 	
 	/* ------------------------------------------------- *
@@ -81,9 +82,9 @@ public class AlphaCouple {
 	 */
 	public void reproduce() {
 		if(this.male.getRank() == 'α' && this.female.getRank() == 'α') {
-			if(Colony.matingSeason()) {
+			if(!Colony.matingSeason()) {
 				Random rand = new Random();
-				int newWolfNb = 0;
+				int newWolfNb = rand.nextInt(1,7);
 				for(int i=0; i<newWolfNb; i++) {
 					boolean sex = ThreadLocalRandom.current().nextBoolean();
 					Scanner sc = new Scanner(System.in);

@@ -56,6 +56,12 @@ public class Pack {
 		this.territory = territory;
 		// Faire appel aux fonctions de mise à jour de hierarchie après avoir choisi un male alpha (le plus fort lors de la création)
 	}
+	public Pack(Territory territory) {
+		super();
+		this.territory = territory;
+		this.members = new ArrayList<>();
+		// Faire appel aux fonctions de mise à jour de hierarchie après avoir choisi un male alpha (le plus fort lors de la création)
+	}
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
