@@ -48,12 +48,14 @@ public class Creature {
 	public String getSpecie() {
 			return specie;
 	}
-	public void setDesease(Desease d){
+	public void becomeSick(Desease d){
 		this.desease = d;
 		this.isSick = true;
 	}
 
-
+	public void removeDesease() {
+		this.desease =null;
+    }
 	public void setSpecie(String specie) {
 		this.specie = specie;
 	}
@@ -138,12 +140,18 @@ public class Creature {
 		}
 	}
 	public void becomeMoreSick(){
-		if(this.indicatorHealth.equals("Perfect")){this.indicatorHealth="Normal";}
-		if (this.indicatorHealth.equals("Normal")){this.indicatorHealth="Sick";}
-		if (this.indicatorHealth.equals("Sick")){this.indicatorHealth="Very Sick";}
-		if (this.indicatorHealth.equals("Very Sick")){
+		if(this.indicatorHealth.equals("Very Sick")){
 			this.indicatorHealth="Dead";
 			this.die();
+		}
+		if(this.indicatorHealth.equals("Sick")){
+			this.indicatorHealth="Very Sick";
+			}
+		if(this.indicatorHealth.equals("Normal")){
+			this.indicatorHealth="Sick";
+		}
+		if(this.indicatorHealth.equals("Perfect")){
+			this.indicatorHealth="Normal";
 		}
 	}
 	public Desease getDesease() {
@@ -178,12 +186,12 @@ public class Creature {
 	}
 
 	public void treat(){
+		System.out.println("L'animal "+this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
 		this.desease.remove(this);
 	}
 
 	public void eat() {
 		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
-		
 	}
 	
 	public void emitSound() {
@@ -210,7 +218,7 @@ public class Creature {
 	}
 	
 	public void die() {
-
+		System.out.println("L'animal "+this.getName()+" est mort !");
 	}
 
 
