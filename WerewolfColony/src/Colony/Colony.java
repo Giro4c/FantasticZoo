@@ -31,8 +31,7 @@ public class Colony {
 	 * @return true if the mating season has started, false otherwise.
 	 */
 	public static boolean matingSeason() {
-		// A IMPLEMENTER
-		return false;
+		return Utils.isMeating();
 	}
 	
 	/**
