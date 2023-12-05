@@ -313,7 +313,7 @@ public class Creature implements Runnable{
 
 	//fonction qui permet à un animal d'être traité de la maladie
 	public void treat(){
-		System.out.println("L'animal "+this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
+		System.out.println("L'animal " + this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
 		this.desease.remove(this);
 	}
 

@@ -84,9 +84,7 @@ public class FantasticZoo {
 	public int Comptcreature() {
 		int NumberAnimals = 0; 
 		for (Enclosure enclo : existingEnclosures) {
-			for (Creature creatur : enclo.getPresentCreatures()) {
-				NumberAnimals += 1;
-			}
+			NumberAnimals += enclo.getCurrentNumberCreatures();
 		}
 		return NumberAnimals;
 	}
@@ -108,14 +106,15 @@ public class FantasticZoo {
 		System.out.println("The new enclosure " + newEnclosure.getName() + " was added in the FantasticZoo");
 	}
 	
+	public void removeEnclosure(int oldEnclosureIndex) {
+		//System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+	}
+	
 	public void removeEnclosure(Enclosure oldEnclosure) {
 		System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
 	}
 	
 	/* ------------------------------------------------- */
 	
-//	public void feedCreaturesInEnclosure(int indexEnclosure) {
-//		
-//	}
 
 }

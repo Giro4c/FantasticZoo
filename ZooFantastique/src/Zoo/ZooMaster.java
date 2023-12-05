@@ -51,7 +51,7 @@ public class ZooMaster {
 	}
 	
 	public void feedCreaturesInEnclosure(Enclosure enclosure) {
-		System.out.println("The ZooMaster " + this.name + " is feeding the creature in the" + enclosure.getName());
+		System.out.println("The ZooMaster " + this.name + " is feeding the creatures in the" + enclosure.getName());
 	}
 	
 	public void tranfertCreature(Enclosure prevEnclosure, int indexInEnclosure, Enclosure newEnclosure) {
