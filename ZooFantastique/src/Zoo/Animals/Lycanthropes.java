@@ -11,7 +11,4 @@ public class Lycanthropes extends Mammal implements CanRun {
 				gestationProgress,enclosure);
 		// TODO Auto-generated constructor stub
 	}
-
-
-	
 }

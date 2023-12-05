@@ -156,19 +156,21 @@ public class Creature {
 	public void setIndicatorHunger(String indicatorHunger) {
 		this.indicatorHunger = indicatorHunger;
 	}
-	
 	public void becomeMoreHungry() {
+		
+		if (this.indicatorHunger.equals("Famished")) {
+			this.indicatorHunger = "Dead";
+			System.out.println("L'animal "+this.getName()+" Meurt de faim !");
+			this.die();
+		}
+		if (this.indicatorHunger.equals("Hungry")) {
+			this.indicatorHunger = "Famished";
+		}
+		if(this.indicatorHunger.equals("Normal")) {
+			this.indicatorHunger = "Hungry";
+		}
 		if (this.indicatorHunger.equals("Full")) {
 			this.indicatorHunger = "Normal";
-		}
-		else if (this.indicatorHunger.equals("Normal")) {
-			
-		}
-		else if (this.indicatorHunger.equals("Hungry")) {
-			
-		}
-		else if (this.indicatorHunger.equals("Famished")) {
-			
 		}
 	}
 	//NE PAS MODIFIER L'ORDRE !!!
@@ -224,9 +226,11 @@ public class Creature {
 		System.out.println("L'animal "+this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
 		this.desease.remove(this);
 	}
-
 	public void eat() {
 		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
+		if(this.indicatorHunger.equals("Normal")) {this.indicatorHunger = "Full";}
+		if(this.indicatorHunger.equals("Hungry")) {this.indicatorHunger = "Normal";}
+		if(this.indicatorHunger.equals("Famished")) {this.indicatorHunger = "Hungry";}
 	}
 	
 	public void emitSound() {

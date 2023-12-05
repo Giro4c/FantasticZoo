@@ -9,7 +9,8 @@ import Zoo.Animals.Mammal;
 import Zoo.Animals.Oviparous;
 
 public class Enclosure {
-
+	public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
+	
 	private String name;
 	private int surface;
 	private final int maxNumberCreatures;
@@ -115,11 +116,20 @@ public class Enclosure {
 	}
 	
 	public void feedCreatures() {
-		
+		for( Creature creature : this.presentCreatures) {
+			creature.eat();
+		}
+	}
+	public void becomeLessClean() {
+		if(this.cleanness.equals("Dirty")) {this.cleanness = "Moundir's Room";}
+		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}
+		if(this.cleanness.equals("Clean")) {this.cleanness = "Normal";}
 	}
 	
 	public void clean() {
-		
+		if(this.cleanness.equals("Normal")) {this.cleanness = "Clean";}
+		if(this.cleanness.equals("Dirty")) {this.cleanness = "Normal";}
+		if(this.cleanness.equals("Moundir's Room")) {this.cleanness = "Dirty";}
 	}
 	public void removeEgg(Egg egg) {
 		eggs.remove(egg);
