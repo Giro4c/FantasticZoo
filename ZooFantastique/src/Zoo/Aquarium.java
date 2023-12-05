@@ -11,6 +11,7 @@ public class Aquarium extends Enclosure implements Runnable {
     
     private int depth;
     private int salinity;
+    private int startSalinity;
     private int indexcleanness = 0;
     private String cleanness = CLEANNESS_STATES[indexcleanness];
     
@@ -28,6 +29,7 @@ public class Aquarium extends Enclosure implements Runnable {
         super(name, surface, maxNumberCreatures, cleanness);
         this.depth = depth;
         this.salinity = salinity;
+        startSalinity = salinity;
     }
     
     /**
@@ -111,6 +113,7 @@ public class Aquarium extends Enclosure implements Runnable {
     @Override
     public void clean() {
         this.setIndexcleanness(0);
+        this.setSalinity(startSalinity);
         System.out.println("The aquarium " + this.getName() + " was cleaned !");
     }
 }
