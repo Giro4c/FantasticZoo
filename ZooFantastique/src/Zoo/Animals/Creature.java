@@ -253,10 +253,10 @@ public class Creature {
 	}
 	//méthode qui permet de faire en sorte qu'un animal meurt
 	public void die() {
+		this.enclosure.removeCreature(this);
 		this.enclosure = null;
 		this.desease = null;
-		this.desease.setAnimal(null);
-		this.enclosure.removeCreature(this);
+		if(this.desease!=null) {this.desease.setAnimal(null);}
 		System.out.println("L'animal "+this.getName()+" est mort !");
 		System.gc();
 	}
