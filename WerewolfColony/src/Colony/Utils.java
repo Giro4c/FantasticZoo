@@ -10,6 +10,8 @@ public class Utils {
 	 private static ArrayList<String> listMonth = new ArrayList<>(Arrays.asList("january", "february","march","april","may","june","july",
 			 "august","september","october","november","december"));
 	 private static ArrayList<String> meatingSeason = new ArrayList<>(Arrays.asList("february","march"));
+	 
+	 
 	 public static boolean isDominant(char c1, char c2) {
 		 if(listRankDomination.contains(c1) && listRankDomination.contains(c2)) {
 	            if(listRankDomination.indexOf(c1) < listRankDomination.indexOf(c2)) {
@@ -18,6 +20,8 @@ public class Utils {
 	        }
 	        return false;
 	 }
+	 
+	 
 	 public static void changeMonth() {
 		    Thread monthThread = new Thread(() -> {
 		        while (true) {

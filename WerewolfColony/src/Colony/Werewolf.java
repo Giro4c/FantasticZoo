@@ -52,6 +52,10 @@ public class Werewolf extends Creature {
 	 */
 	private boolean currentlyHuman;
 
+	/**
+	 * the threshold of the dominating factor, when this seuil is excedeed, the dominating rank goes down
+	 */
+	private final int THRESHOLD_DOMINATING_FACTOR = -5;
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
@@ -123,11 +127,11 @@ public class Werewolf extends Creature {
 	
 	
 	public Werewolf(String specie, String name, boolean isMale, int weight, int height, int age, String ageRange,
-			boolean isSleeping, int strength, int dominationFactor, char rank, int level, int arroganceFactor,
+			boolean isSleeping, int strength, char rank, int level, int arroganceFactor,
 			Pack pack) {
 		super(specie, name, isMale, weight, height, age, ageRange, isSleeping);
 		this.strength = strength;
-		this.dominationFactor = dominationFactor;
+		this.dominationFactor = 0;
 		this.rank = rank;
 		this.level = level;
 		this.arroganceFactor = arroganceFactor;
@@ -258,9 +262,35 @@ public class Werewolf extends Creature {
 	public void submit() {
 		
 	}
+	
+	/**
+	 * this tell us if the aggressor can dare to dominate the target 
+	 * @param target
+	 * @return
+	 */
+	public boolean canDominate(Werewolf target) {
+	    boolean candominate = false;
+
+	    if (this.strength >= target.strength && target.getRank() != 'α') {
+	        if (this.strength == target.strength) {
+	            if (this.getArroganceFactor() > target.getArroganceFactor()) {
+	                candominate = true;
+	            } else if (this.getArroganceFactor() == target.getArroganceFactor()) {
+	                long random = Math.round(Math.random());
+	                candominate = (random == 1);
+	            }
+	        } else {
+	            candominate = true;
+	        }
+	    }
+
+	    return candominate;
+	}
+	
+
+	
 	public void dominate(Werewolf w) {
 		System.out.println(super.getName() + " essaye de dominer "+ w.getName());
-		if(this.strength > w.strength && w.getRank()!='α') {
 			if(this.level>w.level||w.rank == 'ω') {
 				this.winDomination(w);
 			}
@@ -277,14 +307,18 @@ public class Werewolf extends Creature {
 			else {
 				this.loseDomination(w);
 			}
-		}
-		else {
-			this.loseDomination(w);
-		}
 	}
+	
 	public void aggress() {
 		System.out.println(super.getName() + " se montre agressif !");
 	}
 	
-	
+	/**
+	 * Check if the wolf have to be deranked (if his dominating factor is less than the threshold)
+	 */
+	public void thresholdFDRankDecrease() {
+	        if (this.dominationFactor < THRESHOLD_DOMINATING_FACTOR && this.getRank() != 'ω') {
+                this.rank++; 
+	        }
+	    } 
 }

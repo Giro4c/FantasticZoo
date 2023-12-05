@@ -120,8 +120,20 @@ public class Pack {
 	 * 
 	 */
 	public void updateHierarchy() {
-		// A REMPLIR
-	}
+	    for (Werewolf wolf : members) 
+	        wolf.thresholdFDRankDecrease();
+	    
+		    for (Werewolf agressor : members) {
+		        for (Werewolf target : members) {
+		            if (agressor != target && agressor.canDominate(target)) {
+		            	agressor.dominate(target);
+		            }
+		        }
+		    }
+
+
+		}
+	
 	
 	/**
 	 * Constitutes a new alpha couple depending from an alpha werewolf. 
@@ -146,6 +158,7 @@ public class Pack {
 		
 		// Constituer nouveau couple alpha
 		if (strongestFemale != null) {
+			strongestFemale.setRank('α');
 	        this.alphaCouple = new AlphaCouple(maleAlpha, strongestFemale, this);
 	        this.alphaCouple.setPack(this);
         }
