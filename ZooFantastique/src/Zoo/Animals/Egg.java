@@ -6,18 +6,14 @@ import java.util.Scanner;
 import Zoo.Enclosure;
 
 public class Egg {
-	private Creature newBorn;
 	private final int incubationTime;
-	private int incubationProgress;
+	private int incubationProgress = 0;
 	private Enclosure enclosure;
 	private Thread incubationThread;
 	private Oviparous mother;
 	
-	public Egg(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger, boolean isSleeping,
-	        String indicatorHealth, int incubationTime, int incubationProgress, Enclosure enclosure, Oviparous mother) {
-	    this.newBorn = new Oviparous(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth, enclosure);
+	public Egg(int incubationTime, Enclosure enclosure, Oviparous mother) {
 	    this.incubationTime = incubationTime;
-	    this.incubationProgress = incubationProgress;
 	    this.enclosure = enclosure;
 	    this.mother = mother;
 	    incubation(this);
@@ -70,6 +66,7 @@ public class Egg {
 	public Oviparous hatch() {
 		synchronized (this) {
 			if(getIncubationProgress()==getIncubationTime()) {
+				System.out.println(mother.getHeightMin()+ "  "+ mother.getHeightMax());
 				enclosure.setCurrentNumberCreatures(enclosure.getCurrentNumberCreatures()-1);
 				Random random = new Random();
 				boolean randomBoolean = random.nextBoolean();

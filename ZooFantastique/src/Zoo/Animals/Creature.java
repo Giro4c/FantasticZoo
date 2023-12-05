@@ -46,7 +46,6 @@ public class Creature {
 		this.desease = desease;
 	}
 	public boolean isSick;
-	// Height
 	private int heightMin;
 	private int heightMax;
 	private int weightMin;
