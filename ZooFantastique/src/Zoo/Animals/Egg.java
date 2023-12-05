@@ -1,5 +1,8 @@
 package Zoo.Animals;
 
+import java.util.Random;
+import java.util.Scanner;
+
 import Zoo.Enclosure;
 
 public class Egg {
@@ -8,14 +11,15 @@ public class Egg {
 	private int incubationProgress;
 	private Enclosure enclosure;
 	private Thread incubationThread;
-	
+	private Oviparous mother;
 	
 	public Egg(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger, boolean isSleeping,
-	        String indicatorHealth, int incubationTime, int incubationProgress, Enclosure enclosure) {
+	        String indicatorHealth, int incubationTime, int incubationProgress, Enclosure enclosure, Oviparous mother) {
 	    this.newBorn = new Oviparous(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth, enclosure);
 	    this.incubationTime = incubationTime;
 	    this.incubationProgress = incubationProgress;
 	    this.enclosure = enclosure;
+	    this.mother = mother;
 	    incubation(this);
 	}
 	public Thread getIncubationThread() {
@@ -58,18 +62,26 @@ public class Egg {
                         e.printStackTrace();
                     }
                 }
-                hatch(egg);
+                hatch();
             }
         });
 		incubationThread.start();
 	}
-	public Oviparous hatch(Egg egg) {
+	public Oviparous hatch() {
 		synchronized (this) {
-			if(egg.getIncubationProgress()==egg.getIncubationTime()) {
-				Oviparous newoviparous = new Oviparous("test", "test", false, 0, 0, 0, "Full", false, "Perfect", this.enclosure);
-				this.enclosure.removeEgg(egg);
+			if(getIncubationProgress()==getIncubationTime()) {
+				enclosure.setCurrentNumberCreatures(enclosure.getCurrentNumberCreatures()-1);
+				Random random = new Random();
+				boolean randomBoolean = random.nextBoolean();
+				int randomHeight = random.nextInt(mother.getHeightMin(), mother.getHeightMax());
+				int randomWeight = random.nextInt(mother.getWeightMin(), mother.getWeightMax());
+				Scanner scanner = new Scanner(System.in);
+			    System.out.print("Entrez un nom pour le nouveau née: ");
+			    String newbornName = scanner.nextLine();
+				Oviparous newoviparous = new Oviparous(mother.getSpecie(), newbornName, randomBoolean, randomWeight, randomHeight, 0, "Full", false, "Perfect", this.enclosure);
+				this.enclosure.removeEgg(this);
 				this.enclosure.addCreature(newoviparous);
-				System.out.println("Un nouvelle oeuf apparait !");
+				System.out.println("Un nouveau ovipare apparait !");
 				System.out.println("Il y a maintenant :"+this.enclosure.getCurrentNumberCreatures()+" Animaux dans l'enclos !");
 				return newoviparous;	
 			}

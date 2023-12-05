@@ -1,6 +1,7 @@
 package Zoo.Animals;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import Zoo.Enclosure;
 
@@ -58,12 +59,16 @@ public class Mammal extends Creature {
 
 
 	public Creature giveBirth() {
+		this.enclosure.setCurrentNumberCreatures(enclosure.getCurrentNumberCreatures()-1);
 		this.gestationProgress = 0;
 		Random random = new Random();
 		boolean randomBoolean = random.nextBoolean();
-		int randomheight = random.nextInt(6) + 25;
-		int randomWeight = random.nextInt(1001) + 1500;
-		Mammal newborn = new Mammal(this.getSpecie(), "name", randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.gestationTime , 0, this.enclosure);
+		int randomheight = random.nextInt(super.getHeightMin(), super.getHeightMax());
+		int randomWeight = random.nextInt(super.getWeightMin(), super.getWeightMax());
+		Scanner scanner = new Scanner(System.in);
+	    System.out.print("Entrez un nom pour le nouveau née: ");
+	    String newbornName = scanner.nextLine();
+		Mammal newborn = new Mammal(this.getSpecie(), newbornName, randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.gestationTime , 0, this.enclosure);
 		this.enclosure.addCreature(newborn);
 		System.out.println("Un nouveau "+getSpecie()+ " est née !");
 		System.out.println("Il y a maintenant "+ this.enclosure.getCurrentNumberCreatures()+" Animaux dans l'enclos !");

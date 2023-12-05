@@ -32,12 +32,17 @@ public class Desease {
         }
         deseaseAct();
     }
+    //fonction qui fait en sorte que la maladie agit sur l'animal
+    //si l'animal est infecté par une maladie de severity 3 il va mourir dans tout les cas car incurable
+    //si l'animal est infecté par une maladie de severity 2 il peut être traité avec un médicament
+    //si l'animal est infecté par une maladie de severity 1 il va se soigner tout seul...
+    //le temps diminue avec la sévérity...
     public void deseaseAct() {
         final int[] currentTime = {0};
         deseaseThread = new Thread(() -> {
             while (currentTime[0] != getTime() && !isTreated && !Thread.currentThread().isInterrupted()&& this.animal.getIndicatorHealth()!="Dead") {
                 try {
-                	currentTime[0] += 1;
+                	if(this.severity!=3) {currentTime[0] += 1;}
                 	getAnimal().becomeMoreSick();
                     Thread.sleep(1500 / severity);
                     System.out.println(animal.getName() + " est malade depuis " + currentTime[0] + " secondes");
@@ -51,7 +56,7 @@ public class Desease {
         deseaseThread.start();
     }
 
-
+    //fonction qui détruit une maladie (l'objet va s'auto-détruire par java automatiquement)
     private void destroyDesease() {
         if (this.animal != null) {
             this.animal.setIsSick(false);
@@ -63,6 +68,7 @@ public class Desease {
     public String getName() {
         return name;
     }
+    //fonction qui enlève la maladie depuis la classe Creature 
     public void remove(Creature creature) {
         if (this.canBeTreatedWithMedecine== true&& !isTreated) {
             new Thread(() -> {

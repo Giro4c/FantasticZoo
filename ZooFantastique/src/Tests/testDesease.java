@@ -59,5 +59,22 @@ class testDesease {
 	    }
 	    assertEquals(c2.getIndicatorHealth(), "Normal");
 	}
+	@Test 
+	void testSeverity3() {
+		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
+		Creature c2 = new Creature("un", "animalMalade", false, 0, 0, 0, "Full", false, "Perfect", enclo);
+		Desease maladie = new Desease("Covid",1,3,1,c2);
+		assertTrue(c2.isSick);
+		assertEquals(c2.getDesease(), maladie);
+		Thread thread = maladie.deseaseThread;
+	    try {
+	        if (thread != null) {
+	        	thread.join();
+	        }
+	    } catch (InterruptedException e) {
+	    	fail("Bug Thread");
+	    }
+	    assertEquals(c2.getIndicatorHealth(), "Dead");
+	}
 }
 
