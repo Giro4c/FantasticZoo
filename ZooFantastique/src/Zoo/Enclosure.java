@@ -210,25 +210,48 @@ public class Enclosure implements Runnable {
      * Add a creature to the enclosure.
      *
      * @param newCreature The creature to be added.
+     * @return False if creature is null or addition failed. True if success.
      */
-    public void addCreature(Creature newCreature) {
-        presentCreatures.add(newCreature);
+    public boolean addCreature(Creature newCreature) {
+        if (newCreature == null) return false;
+    	if (!presentCreatures.add(newCreature)) return false;
         newCreature.setEnclosure(this);
         ++currentNumberCreatures;
         System.out.println("A new creature " + newCreature.toString() + " was added to " + this.getName());
+        return true;
     }
 
+    /**
+     * Remove a creature from the enclosure by searching the object.
+     *
+     * @param creatureIndex The index of the creature to be removed.
+     * @return The creature removed from the zoo. Returns null if there is no creature in the enclosure or the creature is null.
+     */
+    public Creature removeCreature(int creatureIndex) {
+        if (presentCreatures == null || creatureIndex < 0 || !(creatureIndex < this.presentCreatures.size()) ) return null;
+        Creature creature = presentCreatures.remove(creatureIndex);
+        --currentNumberCreatures;
+        if (creature == null) return null;
+        creature.setEnclosure(null);
+        System.out.println("The " + creature.getSpecie() + " " + creature.getName()+ " was removed from " + this.getName());
+        return creature;
+        
+    }
+    
     /**
      * Remove a creature from the enclosure.
      *
      * @param creature The creature to be removed.
+     * @return The creature removed from the zoo. Returns null if there is no creature in the enclosure or the creature is null.
      */
-    public void removeCreature(Creature creature) {
-        if (presentCreatures != null) {
-            presentCreatures.remove(creature);
-            --currentNumberCreatures;
-            System.out.println("The " + creature.getSpecie() + " " + creature.getName()+ " was removed from " + this.getName());
-        }
+    public Creature removeCreature(Creature creature) {
+        if (presentCreatures == null || creature == null) return null;
+        presentCreatures.remove(creature);
+        --currentNumberCreatures;
+        creature.setEnclosure(null);
+        System.out.println("The " + creature.getSpecie() + " " + creature.getName()+ " was removed from " + this.getName());
+        return creature;
+        
     }
 
     /**

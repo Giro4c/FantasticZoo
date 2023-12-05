@@ -22,14 +22,63 @@ public class Creature implements Runnable{
 	private String indicatorHealth;
 	private Enclosure enclosure;
 	private Desease desease;
-	public boolean isSick;
-	// Height
-	private int heightMin = 0;
-
-	public void setHeightMin(int min){
-		heightMin = min;
+	public boolean isSick() {
+		return isSick;
 	}
-	
+	public void setSick(boolean isSick) {
+		this.isSick = isSick;
+	}
+	public Enclosure getEnclosure() {
+		return enclosure;
+	}
+	public int getHeightMin() {
+		return heightMin;
+	}
+	public int getHeightMax() {
+		return heightMax;
+	}
+	public int getWeightMin() {
+		return weightMin;
+	}
+	public int getWeightMax() {
+		return weightMax;
+	}
+	public void setDesease(Desease desease) {
+		this.desease = desease;
+	}
+	public boolean isSick;
+
+	public String getSpecie() {
+			return specie;
+	}
+	public void becomeSick(Desease d){
+		this.desease = d;
+		this.isSick = true;
+	}
+
+	public void removeDesease() {
+		this.desease =null;
+    }
+	public void setSpecie(String specie) {
+		this.specie = specie;
+	}
+
+	private int heightMin;
+	private int heightMax;
+	private int weightMin;
+	private int weightMax;
+	public void setHeightMin(int min){
+		this.heightMin = min;
+	}
+	public void setHeightMax(int max) {
+		this.heightMax = max;
+	}
+	public void setWeightMin(int min){
+		this.weightMin = min;
+	}
+	public void setWeightMax(int max) {
+		this.weightMax = max;
+	}
 	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
 		boolean isSleeping, String indicatorHealth, Enclosure enclosure) {
 		super();
@@ -53,7 +102,7 @@ public class Creature implements Runnable{
 	    
 	    while(true) { 
 	        
-	        if ( HUNGER_STATES.equals("Dead") || HEALTH_STATES.equals("Dead") ) { // Checks that the creature is not dead
+	        if ( HUNGER_STATES[4].equals(this.indicatorHunger) || HEALTH_STATES[4].equals(this.indicatorHealth) ) { // Checks that the creature is not dead
 	            this.die(); 
 	        }
 	        
@@ -96,30 +145,6 @@ public class Creature implements Runnable{
 	            }
 	        }
 	    }
-	}
-
-	
-
-	public String getSpecie() {
-			return specie;
-	}
-	public void setDesease(Desease d){
-		this.desease = d;
-		this.isSick = true;
-	}
-
-
-	public void setSpecie(String specie) {
-		this.specie = specie;
-	}
-
-
-	public boolean isSick() {
-		return isSick;
-	}
-
-	public void setSick(boolean isSick) {
-		this.isSick = isSick;
 	}
 	
 	/**
@@ -215,11 +240,6 @@ public class Creature implements Runnable{
 		return indicatorHunger;
 	}
 
-
-	public Enclosure getEnclosure() {
-		return enclosure;
-	}
-
 	public void setEnclosure(Enclosure enclosure) {
 		this.enclosure = enclosure;
 	}
@@ -242,14 +262,22 @@ public class Creature implements Runnable{
 			this.indicatorHunger = "Dead";
 		}
 	}
-	
+
+	//NE PAS MODIFIER L'ORDRE !!!
+	//l'animal devient de plus en plus malade
 	public void becomeMoreSick(){
-		if(this.indicatorHealth.equals("Perfect")){this.indicatorHealth="Normal";}
-		if (this.indicatorHealth.equals("Normal")){this.indicatorHealth="Sick";}
-		if (this.indicatorHealth.equals("Sick")){this.indicatorHealth="Very Sick";}
-		if (this.indicatorHealth.equals("Very Sick")){
+		if(this.indicatorHealth.equals("Very Sick")){
 			this.indicatorHealth="Dead";
 			this.die();
+		}
+		if(this.indicatorHealth.equals("Sick")){
+			this.indicatorHealth="Very Sick";
+		}
+		if(this.indicatorHealth.equals("Normal")){
+			this.indicatorHealth="Sick";
+		}
+		if(this.indicatorHealth.equals("Perfect")){
+			this.indicatorHealth="Normal";
 		}
 	}
 	public Desease getDesease() {
@@ -283,7 +311,9 @@ public class Creature implements Runnable{
 				+ ", indicatorHealth=" + indicatorHealth + "]";
 	}
 
+	//fonction qui permet à un animal d'être traité de la maladie
 	public void treat(){
+		System.out.println("L'animal "+this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
 		this.desease.remove(this);
 	}
 
@@ -297,13 +327,13 @@ public class Creature implements Runnable{
 		else if (this.indicatorHunger.equals("Famished")) {
 			this.indicatorHunger = "Hungry";
 		}
-		//System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
+		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
 	}
 	
 	public void emitSound() {
 		System.out.println("The creature " + this.name + "emit a sound !");
 	}
-	
+	//fonction qui permet à un animal de se soigner 
 	public void heal() {
 		if (this.indicatorHunger.equals("Very Sick")) {
 			this.indicatorHunger = "Sick";
@@ -328,9 +358,15 @@ public class Creature implements Runnable{
 	public void getOlder() {
 		this.setAge(this.getAge()+ 1);
 	}
-	
+
+	//méthode qui permet de faire en sorte qu'un animal meurt
 	public void die() {
-		// a faire
+		this.enclosure.removeCreature(this);
+		this.enclosure = null;
+		this.desease = null;
+		if(this.desease!=null) {this.desease.setAnimal(null);}
+		System.out.println("The creature "+ this.getName() +" is dead !");
+		System.gc();
 	}
 
 
