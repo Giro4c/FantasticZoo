@@ -75,6 +75,7 @@ public class Creature {
 		this.isSleeping = isSleeping;
 		this.indicatorHealth = indicatorHealth;
 		this.enclosure = enclosure;
+		this.enclosure.addCreature(this);
 	}
 	
 	public String getSpecie() {

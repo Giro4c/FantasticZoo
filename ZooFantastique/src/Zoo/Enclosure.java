@@ -28,8 +28,6 @@ public class Enclosure {
 		this.currentNumberCreatures = this.presentCreatures.size();
 		this.eggs = new ArrayList<Egg>();
 	}
-	
-	
 
 	public String getName() {
 		return name;
@@ -43,8 +41,6 @@ public class Enclosure {
 		this.name = name;
 	}
 
-
-
 	public int getSurface() {
 		return surface;
 	}
@@ -54,7 +50,6 @@ public class Enclosure {
 	public void setSurface(int surface) {
 		this.surface = surface;
 	}
-
 
 
 	public int getCurrentNumberCreatures() {
@@ -91,13 +86,9 @@ public class Enclosure {
 		this.cleanness = cleanness;
 	}
 
-
-
 	public int getMaxNumberCreatures() {
 		return maxNumberCreatures;
 	}
-
-
 
 	public void showCreaturesCaracteristics() {
 		
@@ -116,7 +107,7 @@ public class Enclosure {
 	}
 	
 	public void feedCreatures() {
-		for( Creature creature : this.presentCreatures) {
+		for( Creature creature : presentCreatures) {
 			creature.eat();
 		}
 	}
