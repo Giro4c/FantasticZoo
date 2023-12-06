@@ -11,8 +11,7 @@ public class Aquarium extends Enclosure implements Runnable {
     
     private int depth;
     private int salinity;
-    private int indexcleanness = 0;
-    private String cleanness = CLEANNESS_STATES[indexcleanness];
+    
     
     /**
      * Constructor for the Aquarium class.
@@ -57,16 +56,6 @@ public class Aquarium extends Enclosure implements Runnable {
                 System.out.println("The salinity of the aquarium " + this.getName() + " increases!");
             }
         }
-    }
-    
-    /**
-     * Set the cleanliness of the aquarium using an index in CLEANNESS_STATES.
-     *
-     * @param indexcleanness The index representing the cleanliness state.
-     */
-    private void setIndexcleanness(int indexcleanness) {
-        this.indexcleanness = indexcleanness;
-        this.cleanness = CLEANNESS_STATES[indexcleanness];
     }
 
     /**

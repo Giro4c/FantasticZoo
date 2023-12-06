@@ -190,7 +190,7 @@ public class Enclosure implements Runnable {
      *
      * @param indexcleanness The new index of cleanliness of the enclosure.
      */
-    private void setIndexcleanness(int indexcleanness) {
+    public void setIndexcleanness(int indexcleanness) {
         this.indexcleanness = indexcleanness;
         this.cleanness = CLEANNESS_STATES[indexcleanness];
     }

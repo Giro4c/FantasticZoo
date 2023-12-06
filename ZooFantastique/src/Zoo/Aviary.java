@@ -10,8 +10,6 @@ public class Aviary extends Enclosure implements Runnable {
     public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
 
     private int height;
-    private int indexcleanness = 0;
-    private String cleanness = CLEANNESS_STATES[indexcleanness];
 
     /**
      * Constructor for the Aviary class.
@@ -52,16 +50,7 @@ public class Aviary extends Enclosure implements Runnable {
         }
     }
 
-    /**
-     * Set the cleanliness of the aviary using an index in CLEANNESS_STATES.
-     *
-     * @param indexcleanness The index representing the cleanliness state.
-     */
-    private void setIndexcleanness(int indexcleanness) {
-         this.indexcleanness = indexcleanness;
-         this.cleanness = CLEANNESS_STATES[indexcleanness];
-    }
-
+    
     /**
      * Get the height of the aviary.
      *
