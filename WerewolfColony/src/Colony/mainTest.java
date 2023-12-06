@@ -8,9 +8,9 @@ public class mainTest {
 	
 	
 		// test constituteCoupleAlpha
-        Werewolf alphaMale = new Werewolf("Wolf", "AlphaMale", true, 50, 120, 3, "Young", false, 100, 'α', 5, 8, null);
-        Werewolf female1 = new Werewolf("Wolf", "Female1", false, 44, 100, 2, "Young", false, 81, 'δ', 4, 8, null);
-        Werewolf female2 = new Werewolf("Wolf", "Female2", false, 45, 110, 3, "Young", false, 81, 'γ', 5, 8, null);
+        Werewolf alphaMale = new Werewolf("Wolf", true, 50, 120, 3, "Elder", false, 10, 10, null);
+        Werewolf female1 = new Werewolf("Wolf", false, 44, 100, 2, "Young", false, 1, 8, null);
+        Werewolf female2 = new Werewolf("Wolf", false, 45, 110, 3, "Young", false, 6, 8, null);
       /*  Territory territory = new Territory();
         Pack packtest = new Pack(territory);
         packtest.getMembers().add(alphaMale);
@@ -22,11 +22,21 @@ public class mainTest {
         System.out.println(packtest.getAlphaCouple().getPack()); **/
        
         
-        System.out.println(female1.canDominate(female2));
+       /* System.out.println(female1.canDominate(female2));
         System.out.println(female1.getStrength());
         System.out.println(female1.getRank());
-        System.out.println(female2.getStrength());
-        System.out.println(female2.getRank());
+        System.out.println(female2.getStrength()); */
+        System.out.println(alphaMale.getLevel());
+        
+       /* public Werewolf(String name, boolean isMale, int weight, int height, int age, String ageRange,
+    			boolean isSleeping, int strength, int arroganceFactor,
+    			Pack pack) {
+    		super(name, isMale, weight, height, age, ageRange, isSleeping);
+    		this.strength = strength;
+    		this.arroganceFactor = arroganceFactor;
+    		this.pack = pack;
+    		this.level = calculateLevel; 
+    	}*/
 
         
         

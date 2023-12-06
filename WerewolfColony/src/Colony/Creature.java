@@ -136,10 +136,9 @@ public class Creature {
 	 * ------------------------------------------------- */
 	
 	
-	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String ageRange,
+	public Creature(String name, boolean isMale, int weight, int height, int age, String ageRange,
 			boolean isSleeping) {
 		super();
-		this.specie = specie;
 		this.name = name;
 		this.isMale = isMale;
 		this.weight = weight;

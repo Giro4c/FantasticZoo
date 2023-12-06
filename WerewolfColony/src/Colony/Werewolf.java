@@ -14,7 +14,8 @@ public class Werewolf extends Creature {
 	 * ------------------------------------------------- */
 	
 	/**
-	 * The strength of the werewolf.
+	 * The strength of the werewolf. 
+	 * from 0 to 10
 	 */
 	private int strength;
 	
@@ -22,23 +23,25 @@ public class Werewolf extends Creature {
 	 * The domination factor of the werewolf.<br>
 	 * Corresponds to the number of dominations exerted minus the ones received.
 	 */
-	private int dominationFactor;
+	private int dominationFactor = 0;
 	
 	/**
 	 * The werewolf's domination rank within its pack. 
 	 * Hierarchy follows the Greek alphabet. 
 	 */
-	private char rank;
+	private Character rank = ' ';
 	
 	/**
 	 * The subjective quality criteria for the werewolf.<br>
 	 * Depends on the age category, the strength, the domination factor and the rank of the werewolf.
+	 * from 0 to 20
 	 */
 	private int level;
 	
 	/**
 	 * The arrogance factor of the werewolf. 
 	 * Will have an impact on whether or not it will try a domination on a fellow pack member.
+	 * from 0 to 5
 	 */
 	private int arroganceFactor;
 	
@@ -126,20 +129,19 @@ public class Werewolf extends Creature {
 	 * ------------------------------------------------- */
 	
 	
-	public Werewolf(String specie, String name, boolean isMale, int weight, int height, int age, String ageRange,
-			boolean isSleeping, int strength, char rank, int level, int arroganceFactor,
+	public Werewolf(String name, boolean isMale, int weight, int height, int age, String ageRange,
+			boolean isSleeping, int strength, int arroganceFactor,
 			Pack pack) {
-		super(specie, name, isMale, weight, height, age, ageRange, isSleeping);
+		super(name, isMale, weight, height, age, ageRange, isSleeping);
 		this.strength = strength;
-		this.dominationFactor = 0;
-		this.rank = rank;
-		this.level = level;
 		this.arroganceFactor = arroganceFactor;
 		this.pack = pack;
+		this.level = Utils.calculateLevel(ageRange, strength, arroganceFactor, rank); 
 	}
 
 	
-	
+	//; calculé en fonction de la catégorie d’âge, de la force, du facteur de domination et
+	//du rang) ;
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
@@ -234,6 +236,8 @@ public class Werewolf extends Creature {
 	public void transform() {
 		this.currentlyHuman = !this.currentlyHuman;
 	}
+	
+	
 	public void winDomination(Werewolf w) {
 		System.out.println(this.getName()+ " gagne la domination !");
 		this.dominationFactor +=1;
@@ -319,6 +323,8 @@ public class Werewolf extends Creature {
 	public void thresholdFDRankDecrease() {
 	        if (this.dominationFactor < THRESHOLD_DOMINATING_FACTOR && this.getRank() != 'ω') {
                 this.rank++; 
+                this.dominationFactor = 0;
 	        }
 	    } 
+	
 }

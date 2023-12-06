@@ -44,5 +44,32 @@ public class Utils {
 	            return meatingSeason.contains(listMonth.get(index));
 		 }
 	 }
+	 
+	 public static int calculateLevel(String ageRange, int strength, int dominationFactor, Character rank) {
+		    double ageCoefficient = 1.8;
+		    double strengthCoefficient = 0.6;
+		    double dominationCoefficient = 0.2;
+		    double rankCoefficient = 0.4;
+
+		    double ageFactor;
+		    switch (ageRange) {
+		        case "Young":
+		            ageFactor = 2;
+		            break;
+		        case "Adult":
+		            ageFactor = 3;
+		            break;
+		        default:
+		            ageFactor = 1;
+		    }
+
+		    double rawLevel = ageFactor * ageCoefficient + strength * strengthCoefficient
+		                     + dominationFactor * dominationCoefficient + ( listRankDomination.size() - listRankDomination.indexOf(rank)) * rankCoefficient;
+
+		    int level = (int) Math.max(0, Math.min(20, rawLevel));
+
+		    return level;
+		}
+
 
 }
