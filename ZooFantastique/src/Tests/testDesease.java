@@ -16,7 +16,7 @@ class testDesease {
 	}
 	@Test
 	void testAnimalHasdesease() {
-		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
+		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Creature c1 = new Creature("un", "animal testAnimalHasdesease", false, 0, 0, 0, "Full", false, "Perfect", enclo);
 		Desease maladie = new Desease(1,2,3,c1);
 		assertTrue(c1.isSick);
@@ -24,7 +24,7 @@ class testDesease {
 	}	
 	@Test
 	void testAnimalCanBeTreat() throws InterruptedException {
-		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
+		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Creature c3 = new Creature("un", "animal testAnimalCanBeTreat", false, 0, 0, 0, "Full", false, "Perfect", enclo);
 		Desease maladie = new Desease(1,2,3,c3);
 		assertTrue(c3.isSick);
@@ -43,7 +43,7 @@ class testDesease {
 	}
 	@Test
 	void testAnimalBecomeMoreSick() {
-		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
+		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Creature c2 = new Creature("un", "animal testAnimalBecomeMoreSick", false, 0, 0, 0, "Full", false, "Perfect", enclo);
 		Desease maladie = new Desease(1,1,2,c2);
 		assertTrue(c2.isSick);
@@ -60,7 +60,7 @@ class testDesease {
 	}
 	@Test 
 	void testSeverity3() {
-		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
+		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Creature c2 = new Creature("un", "animal testSeverity3", false, 0, 0, 0, "Full", false, "Perfect", enclo);
 		Desease maladie = new Desease(1,3,1,c2);
 		assertTrue(c2.isSick);
