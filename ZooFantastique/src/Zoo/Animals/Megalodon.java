@@ -12,7 +12,7 @@ public class Megalodon extends Oviparous implements CanSwim {
 
     
     
-    public Megalodon(boolean isMale, int age, Enclosure enclosure, int heightMin) {
+    public Megalodon(boolean isMale, int age, Enclosure enclosure) {
 		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
 		this.setSpecie(this.getClass().getName());
         
