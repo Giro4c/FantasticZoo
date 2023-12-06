@@ -1,6 +1,8 @@
 package Colony;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Pack {
 
@@ -121,18 +123,81 @@ public class Pack {
 	 */
 	public void updateHierarchy() {
 	    for (Werewolf wolf : members) 
-	        wolf.thresholdFDRankDecrease();
+	        wolf.naturalRankDecrease();
 	    
-		    for (Werewolf agressor : members) {
-		        for (Werewolf target : members) {
-		            if (agressor != target && agressor.canDominate(target)) {
-		            	agressor.dominate(target);
-		            }
-		        }
-		    }
+	    if (this.alphaCouple.getMale().getRank() != 'α') {
+	    	this.alphaCouple.setMale(null);
+	    	constituteAlphaCouple()
+	    }
+	    
+
 
 
 		}
+	
+	
+	 public Werewolf getStrongestMale() {
+	        ArrayList<Werewolf> males = new ArrayList<>();
+	        for (Werewolf member : members) {
+	            if (member.isMale()) {
+	                males.add(member);
+	            }
+	        }
+	        Collections.sort(males, Comparator.comparingInt(Werewolf::getStrength).reversed());
+	        Werewolf strongestMale = males.get(0);
+	        
+	        for (int i = 1; i < males.size(); i++) {
+	            Werewolf currentMale = males.get(i);
+
+	            if (currentMale.getStrength() == strongestMale.getStrength()) {
+	                if (currentMale.getLevel() > strongestMale.getLevel()) {
+	                    strongestMale = currentMale;
+	                }
+	                else if (currentMale.getLevel() == strongestMale.getLevel() && Utils.isDominant(currentMale.getRank(), strongestMale.getRank())) {
+	                    strongestMale = currentMale;
+	                }
+	                else if (currentMale.getLevel() == strongestMale.getLevel() && currentMale.getRank() == strongestMale.getRank()) {
+	                    if (Math.random() < 0.5) {
+	                        strongestMale = currentMale;
+	                    }
+	                }
+	            }
+	        }
+	        return strongestMale;
+	    }
+	 
+	 
+	 public Werewolf getStrongestFemale() {
+	        ArrayList<Werewolf> females = new ArrayList<>();
+	        for (Werewolf member : members) {
+	            if (!member.isMale()) {
+	                females.add(member);
+	            }
+	        }
+
+	        Collections.sort(females, Comparator.comparingInt(Werewolf::getStrength).reversed());
+	        Werewolf strongestFemale = females.get(0);
+
+	        for (int i = 1; i < females.size(); i++) {
+	            Werewolf currentFemale = females.get(i);
+
+	            if (currentFemale.getStrength() == strongestFemale.getStrength()) {
+	                if (currentFemale.getLevel() > strongestFemale.getLevel()) {
+	                    strongestFemale = currentFemale;
+	                }
+	                else if (currentFemale.getLevel() == strongestFemale.getLevel() && Utils.isDominant(currentFemale.getRank(), strongestFemale.getRank())) {
+	                    strongestFemale = currentFemale;
+	                }
+	                else if (currentFemale.getLevel() == strongestFemale.getLevel() && currentFemale.getRank() == strongestFemale.getRank()) {
+	                    if (Math.random() < 0.5) {
+	                        strongestFemale = currentFemale;
+	                    }
+	                }
+	            }
+	        }
+
+	        return strongestFemale;
+	    }
 	
 	
 	/**
@@ -149,12 +214,14 @@ public class Pack {
 		// Rechercher femelle la plus forte
 		Werewolf strongestFemale = null;
 		
-		for (Werewolf member : this.members )
+		/*for (Werewolf member : this.members )
 			if (member.isMale() == false) {
 	            if (strongestFemale == null || Utils.isDominant(member.getRank(), strongestFemale.getRank())) {
 	                strongestFemale = member;
 	            }
-	        }
+	        }*/
+		strongestFemale = this.getStrongestFemale();
+		
 		
 		// Constituer nouveau couple alpha
 		if (strongestFemale != null) {
@@ -207,6 +274,16 @@ public class Pack {
 	 */
 	public void launchReproduction() {
 		this.alphaCouple.reproduce();
+	}
+	
+	public void launchDominations (){
+	    for (Werewolf agressor : members) {
+	        for (Werewolf target : members) {
+	            if (agressor != target && agressor.canDominate(target, this)) {
+	            	agressor.dominate(target);
+	            }
+	        }
+	    }
 	}
 	
 	

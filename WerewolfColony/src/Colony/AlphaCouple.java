@@ -93,9 +93,9 @@ public class AlphaCouple {
 		        	String str = sc.nextLine();
 		        	int randomH = rand.nextInt(140, 150);
 		        	int randomW = rand.nextInt(30, 45);
-					Werewolf newWolf = new Werewolf(this.female.getSpecie(), str, sex, randomW, randomH, 1,
+					Werewolf newWolf = new Werewolf(str, sex, randomW, randomH, 1,
 							"Young", false, this.male.getStrength()/2, this.male.getDominationFactor()/2, 
-							'β', 0, this.male.getArroganceFactor()/2, this.pack);
+							this.pack);
 					this.pack.packMemberJoins(newWolf);
 					childrens.add(newWolf);
 				}

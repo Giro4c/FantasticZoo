@@ -272,20 +272,26 @@ public class Werewolf extends Creature {
 	 * @param target
 	 * @return
 	 */
-	public boolean canDominate(Werewolf target) {
+	public boolean canDominate(Werewolf target, Pack pack) {
 	    boolean candominate = false;
+	    
+    	if (this.strength >= target.strength && pack.getAlphaCouple().getFemale() != target) {
 
-	    if (this.strength >= target.strength && target.getRank() != 'α') {
-	        if (this.strength == target.strength) {
-	            if (this.getArroganceFactor() > target.getArroganceFactor()) {
-	                candominate = true;
-	            } else if (this.getArroganceFactor() == target.getArroganceFactor()) {
-	                long random = Math.round(Math.random());
-	                candominate = (random == 1);
-	            }
-	        } else {
-	            candominate = true;
-	        }
+    		if (this.getArroganceFactor() > 4) {
+    			candominate = true;
+    		}
+    		else if (this.getArroganceFactor() == 4) {
+    			candominate = Math.random() < 3 / 4;
+    		}
+    		else if (this.getArroganceFactor() == 3) {
+    			candominate = Math.round(Math.random()) == 0; }
+    		
+    		else if (this.getArroganceFactor() == 2) {
+    			candominate = Math.random() < 1 / 3;
+    			}
+    		else if (this.getArroganceFactor() == 1) {
+    			candominate = Math.random() < 1 / 4;
+    		}
 	    }
 
 	    return candominate;
@@ -320,7 +326,7 @@ public class Werewolf extends Creature {
 	/**
 	 * Check if the wolf have to be deranked (if his dominating factor is less than the threshold)
 	 */
-	public void thresholdFDRankDecrease() {
+	public void naturalRankDecrease() {
 	        if (this.dominationFactor < THRESHOLD_DOMINATING_FACTOR && this.getRank() != 'ω') {
                 this.rank++; 
                 this.dominationFactor = 0;
