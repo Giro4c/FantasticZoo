@@ -70,7 +70,7 @@ public class Aquarium extends Enclosure implements Runnable {
      *
      * @param indexcleanness The index representing the cleanliness state.
      */
-    private void setIndexcleanness(int indexcleanness) {
+    public void setIndexcleanness(int indexcleanness) {
         this.indexcleanness = indexcleanness;
         this.cleanness = CLEANNESS_STATES[indexcleanness];
     }

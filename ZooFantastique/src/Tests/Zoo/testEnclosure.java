@@ -60,6 +60,36 @@ class testEnclosure {
 	}
 	
 	@Test
+	void testsetCleanness() {
+		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
+		enclosure.setCleanness("Clean");
+		assertEquals(enclosure.getCleanness(),"Clean");
+	}
+	
+	@Test
+	void testsetIndexcleanness() {
+		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
+		enclosure.setIndexcleanness(0);
+		assertEquals(enclosure.getCleanness(),"Clean");
+		
+	}
+	@Test
+	void testaddCreature() {
+		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
+		Dragon dragon1 = new Dragon("test1", "test", false, 10, 10, 10, "test", false, "test", enclosure);
+		Dragon dragon2 = new Dragon("test1", "test", false, 10, 10, 10, "test", false, "test", enclosure);
+		Dragon dragon3 = new Dragon("test2", "test", false, 10, 10, 10, "test", false, "test", enclosure);
+
+		assert(enclosure.addCreature(dragon1));
+		enclosure.addCreature(dragon1);
+		assert(enclosure.addCreature(dragon2));
+		enclosure.addCreature(dragon2);
+		assert(!(enclosure.addCreature(dragon3)));
+		enclosure.addCreature(dragon3);
+	}
+	
+	
+	@Test
 	void becomeMoreClean() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		enclosure.clean();
