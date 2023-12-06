@@ -254,6 +254,14 @@ public class Enclosure implements Runnable {
         
     }
 
+    public void treatAnimals() {
+		for (Creature creature : this.presentCreatures) {
+			if(creature.isSick && (creature.getDesease().canBeTreatedWithMedecine || creature.getDesease().canBeTreatedAlone)) {
+				creature.treat();
+			}
+		}
+	}
+
     /**
      * Feed the creatures in the enclosure.
      */
@@ -265,8 +273,12 @@ public class Enclosure implements Runnable {
      * Clean the enclosure to maintain hygiene.
      */
     public void clean() {
-        System.out.println("The enclosure " + this.getName() + " was cleaned !");
+        if(this.cleanness.equals("Normal")) {this.cleanness = "Clean";}
+		if(this.cleanness.equals("Dirty")) {this.cleanness = "Normal";}
+		if(this.cleanness.equals("Moundir's Room")) {this.cleanness = "Dirty";}
+	    System.out.println("The enclosure " + this.getName() + " was cleaned !");
     }
+
 
     /**
      * Remove an egg from the enclosure.
@@ -281,38 +293,55 @@ public class Enclosure implements Runnable {
      * Handle the reproduction process in the enclosure.
      */
     public void reproduction() {
-        if(currentNumberCreatures < maxNumberCreatures) {
-            boolean theresMale = false;
-            ArrayList<Creature> females = new ArrayList<>();
-            Random rand = new Random();
+        //Vérifie si le nombre de créatures est strictement inférieur au nombre de créatures maximum dans l'enclos.
+		if(currentNumberCreatures<maxNumberCreatures){
+			Boolean theresmale = false;
+			ArrayList<Creature> females = new ArrayList<>();
+			Random rand = new Random();
+			//On parcours toutes les créatures dans l'enclos
+			for (Creature currentCreature : presentCreatures) {
+				//Si dans les créatures il y a minimum 1 male
+				if (currentCreature.isMale()==true) {
+					theresmale = true;
+				}
+				//Met toutes les femelles dans une liste
+				if(currentCreature.isMale()==false){
+					females.add(currentCreature);
 
-            for (Creature currentCreature : presentCreatures) {
-                if (currentCreature.isMale()) {
-                    theresMale = true;
-                }
-                if (!currentCreature.isMale()) {
-                    females.add(currentCreature);
-                }
-                if (females.size() > 0 && theresMale) {
-                    int randomIndex = rand.nextInt(females.size());
-                    Creature pregnantFemale = females.get(randomIndex);
-
-                    if (Oviparous.class.isAssignableFrom(pregnantFemale.getClass())) {
-                        Oviparous female = (Oviparous) pregnantFemale;
-                        eggs.add(female.layEgg());
-                        ++currentNumberCreatures;
-                    }
-                    if (Mammal.class.isAssignableFrom(pregnantFemale.getClass())) {
-                        Mammal female = (Mammal) pregnantFemale;
-                        female.reproduction();
-                        ++currentNumberCreatures;
-                    }
-                }
-            }
-        } else {
+				}
+				//Si le nombre de femelles est strictement supérieur à 0
+				if (females.size()>0 && theresmale) {
+					int randomIndex = rand.nextInt(females.size());
+					//On récupère une femelle aléatoire dans la liste
+					Creature pregnantFemale = females.get(randomIndex);
+					//La femelle choisis aléatoirement devient enceinte
+					
+					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
+						Oviparous female = (Oviparous) pregnantFemale;
+						eggs.add(female.layEgg());
+						++currentNumberCreatures;
+					}
+					if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
+						Mammal female = (Mammal) pregnantFemale;
+						female.reproduction();
+						//On augmente le nombre de créatures dans l'enclos de 1
+						++currentNumberCreatures;
+					}
+				}
+			}
+		}
+        else {
             System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
         }
     }
+	
+	public void becomeLessClean() {
+		if(this.cleanness.equals("Dirty")) {this.cleanness = "Moundir's Room";}
+		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}
+		if(this.cleanness.equals("Clean")) {this.cleanness = "Normal";}
+	}
+	
+	
 }
                    
 

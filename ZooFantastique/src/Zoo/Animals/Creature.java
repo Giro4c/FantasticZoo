@@ -93,6 +93,7 @@ public class Creature implements Runnable{
 		this.indicatorHealth = indicatorHealth;
 		this.isSick = false;
 		this.enclosure = enclosure;
+		this.enclosure.addCreature(this);
 	}
 	
 	@Override 
@@ -247,19 +248,20 @@ public class Creature implements Runnable{
 	public void setIndicatorHunger(String indicatorHunger) {
 		this.indicatorHunger = indicatorHunger;
 	}
-	
 	public void becomeMoreHungry() {
-		if (this.indicatorHunger.equals("Full")) {
-			this.indicatorHunger = "Normal";
+		
+		if (this.indicatorHunger.equals("Famished")) {
+			this.indicatorHunger = "Dead";
+			this.die();
 		}
-		else if (this.indicatorHunger.equals("Normal")) {
-			this.indicatorHunger = "Hungry";
-		}
-		else if (this.indicatorHunger.equals("Hungry")) {
+		if (this.indicatorHunger.equals("Hungry")) {
 			this.indicatorHunger = "Famished";
 		}
-		else if (this.indicatorHunger.equals("Famished")) {
-			this.indicatorHunger = "Dead";
+		if(this.indicatorHunger.equals("Normal")) {
+			this.indicatorHunger = "Hungry";
+		}
+		if (this.indicatorHunger.equals("Full")) {
+			this.indicatorHunger = "Normal";
 		}
 	}
 
@@ -316,7 +318,6 @@ public class Creature implements Runnable{
 		System.out.println("L'animal " + this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
 		this.desease.remove(this);
 	}
-
 	public void eat() {
 		if (this.indicatorHunger.equals("Normal")) {
 			this.indicatorHunger = "Full";
@@ -328,6 +329,9 @@ public class Creature implements Runnable{
 			this.indicatorHunger = "Hungry";
 		}
 		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
+		if(this.indicatorHunger.equals("Normal")) {this.indicatorHunger = "Full";}
+		if(this.indicatorHunger.equals("Hungry")) {this.indicatorHunger = "Normal";}
+		if(this.indicatorHunger.equals("Famished")) {this.indicatorHunger = "Hungry";}
 	}
 	
 	public void emitSound() {
@@ -335,6 +339,7 @@ public class Creature implements Runnable{
 	}
 	//fonction qui permet à un animal de se soigner 
 	public void heal() {
+		this.treat();		
 		if (this.indicatorHunger.equals("Very Sick")) {
 			this.indicatorHunger = "Sick";
 		}

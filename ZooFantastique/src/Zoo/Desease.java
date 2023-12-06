@@ -8,7 +8,7 @@ public class Desease {
     private int time;
     private int severity;
     public boolean canBeTreatedAlone;
-    private boolean canBeTreatedWithMedecine;
+    public boolean canBeTreatedWithMedecine;
     private Creature animal;
     private boolean isTreated = false;
     public Thread deseaseThread;
@@ -89,7 +89,8 @@ public class Desease {
         if (this.canBeTreatedWithMedecine== true&& !isTreated) {
             new Thread(() -> {
                 isTreated = true;
-                deseaseThread.interrupt(); // Interrupt the deseaseThread
+                deseaseThread.interrupt();
+                System.out.println(this.animal.getName() + " n'es plus malade !"); 
             }).start();
         } else {
             System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");
