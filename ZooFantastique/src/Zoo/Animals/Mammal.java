@@ -9,17 +9,30 @@ public class Mammal extends Creature {
 
 	private final int gestationTime;
 	private int gestationProgress;
-	private Enclosure enclosure;
 	private Thread incubationThread;
 	
-	public Mammal(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
-			boolean isSleeping, String indicatorHealth, int gestationTime, int gestationProgress, Enclosure enclosure) {
-		super(specie, name, isMale, weight, height, age, indicatorHunger, isSleeping, indicatorHealth, enclosure);
+	public Mammal(String specie, boolean isMale, int age, Enclosure enclosure, int heightMin, int heightMax,
+			int weightMin, int weightMax, int gestationTime, int gestationProgress) {
+		super(specie, isMale, age, enclosure, heightMin, heightMax, weightMin, weightMax);
 		this.gestationTime = gestationTime;
 		this.gestationProgress = gestationProgress;
-		this.setEnclosure(enclosure);
 	}
 
+
+
+	public Mammal(String specie, boolean isMale, int weight, int height, int age, Enclosure enclosure, int gestationTime, int gestationProgress) {
+		super(specie, isMale, weight, height, age, enclosure);
+		this.gestationTime = gestationTime;
+		this.gestationProgress = gestationProgress;
+	}
+
+
+
+	public Mammal(String specie, String name, boolean isMale, int weight, int height, int age, Enclosure enclosure, int gestationTime, int gestationProgress) {
+		super(specie, name, isMale, weight, height, age, enclosure);
+		this.gestationTime = gestationTime;
+		this.gestationProgress = gestationProgress;
+	}
 
 
 	public int getGestationProgress() {
@@ -59,19 +72,15 @@ public class Mammal extends Creature {
 
 
 	public Creature giveBirth() {
-		this.enclosure.setCurrentNumberCreatures(enclosure.getCurrentNumberCreatures()-1);
+		this.getEnclosure().setCurrentNumberCreatures(this.getEnclosure().getCurrentNumberCreatures()-1);
 		this.gestationProgress = 0;
 		Random random = new Random();
-		boolean randomBoolean = random.nextBoolean();
-		int randomheight = random.nextInt(super.getHeightMin(), super.getHeightMax());
-		int randomWeight = random.nextInt(super.getWeightMin(), super.getWeightMax());
-		Scanner scanner = new Scanner(System.in);
-	    System.out.print("Entrez un nom pour le nouveau née: ");
-	    String newbornName = scanner.nextLine();
-		Mammal newborn = new Mammal(this.getSpecie(), newbornName, randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.gestationTime , 0, this.enclosure);
-		this.enclosure.addCreature(newborn);
-		System.out.println("a new "+ this.getSpecie()+ " is born !");
-		System.out.println("There is now "+ this.enclosure.getCurrentNumberCreatures() + " creatures in the enclosure !");
+		boolean randomGender = random.nextBoolean();
+		// A changer
+	    Mammal newborn = new Mammal(this.getSpecie(), randomGender, 0, this.getEnclosure(), this.getHeightMin(), this.getHeightMax(), this.getWeightMin(), this.getWeightMax(), this.gestationTime, 0);
+		this.getEnclosure().addCreature(newborn);
+		System.out.println("A new "+ this.getSpecie()+ " is born !");
+		System.out.println("There is now "+ this.getEnclosure().getCurrentNumberCreatures() + " creatures in the enclosure !");
 		return newborn;
 	}
 	
@@ -83,23 +92,9 @@ public class Mammal extends Creature {
 	}
 
 
-
-	public Enclosure getEnclosure() {
-		return enclosure;
-	}
-
-
-
-	public void setEnclosure(Enclosure enclosure) {
-		this.enclosure = enclosure;
-	}
-
-
-
 	public Thread getIncubationThread() {
 		return incubationThread;
 	}
-
 
 
 	public void setIncubationThread(Thread incubationThread) {
