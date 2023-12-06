@@ -34,8 +34,8 @@ class testReproduction {
 	@Test
 	void ajoutOviparousApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
-		Kraken oviparous1 = new Kraken("Species1", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
-		Kraken oviparous2 = new Kraken("Species2", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
+		Kraken oviparous1 = new Kraken("kraken", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
+		Kraken oviparous2 = new Kraken("kraken", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
 	    o.reproduction();
 	    ArrayList<Egg> eggs = new ArrayList<>();
 	    eggs = o.getEggs();
@@ -57,8 +57,8 @@ class testReproduction {
 	@Test
 	void ajoutOeufDansEnclos() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
-		Kraken oviparous1 = new Kraken("Species1", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
-		Kraken oviparous2 = new Kraken("Species2", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
+		Kraken oviparous1 = new Kraken("kraken", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
+		Kraken oviparous2 = new Kraken("kraken", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
         o.addCreature(oviparous1);
 	    o.addCreature(oviparous2);
 	    o.reproduction();
@@ -67,10 +67,8 @@ class testReproduction {
 	@Test
 	void ajoutDeLaBonneCreatureApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
-		Kraken oviparous1 = new Kraken("Species1", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
-		Kraken oviparous2 = new Kraken("Species2", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
-        o.addCreature(oviparous1);
-	    o.addCreature(oviparous2);
+		Kraken oviparous1 = new Kraken("kraken", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
+		Kraken oviparous2 = new Kraken("kraken", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
 	    o.reproduction();
 	    ArrayList<Egg> eggs = new ArrayList<>();
 	    eggs = o.getEggs();
@@ -89,8 +87,6 @@ class testReproduction {
 	    ArrayList<Creature> animals = new ArrayList<>();
 	    animals = o.getPresentCreatures();
 	    for (Creature a : animals) {
-	    	System.out.println(o.getCurrentNumberCreatures());
-	    	System.out.println(a.toString());
 	    	assertTrue(a instanceof Oviparous, "Pas un oviparous mais un :  " + a.getClass());
 	    }
 	}

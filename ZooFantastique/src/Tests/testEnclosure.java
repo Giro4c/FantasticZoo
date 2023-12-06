@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import Zoo.Desease;
 import Zoo.Enclosure;
 import Zoo.Animals.Creature;
+import Zoo.Animals.Kraken;
 
 class testEnclosure {
-
 	@Test
 	void becomeMoreClean() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
@@ -32,8 +32,8 @@ class testEnclosure {
 	@Test
 	void treatAnimals() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
-		Creature c4 = new Creature("shiny", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
-		Creature c5 = new Creature("animal iii", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
+		Creature c4 = new Creature("creature", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
+		Creature c5 = new Creature("creature", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
 		Desease maladie = new Desease(1,2,3,c4);
 		Desease maladie2 = new Desease(1,2,3,c5);
 		assertTrue(c4.isSick);
@@ -41,5 +41,12 @@ class testEnclosure {
 		enclosure.treatAnimals();
 		assertFalse(c4.isSick);
 		assertFalse(c5.isSick);	
+	}
+	@Test
+	void canBeCleanedTest() {
+		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
+		Kraken kraken = new Kraken("creature", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
+		enclosure.clean();
+		assertFalse(enclosure.canBeCleaned());
 	}
 }

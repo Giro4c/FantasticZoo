@@ -46,7 +46,6 @@ public class Mammal extends Creature {
                     try {
                         Thread.sleep(1000);
                         setGestationProgress(getGestationProgress()+1);
-                        System.out.println(getName()+" est ensceinte depuis "+getGestationProgress()+ " secondes");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

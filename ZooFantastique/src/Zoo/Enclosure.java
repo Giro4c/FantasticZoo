@@ -293,10 +293,15 @@ public class Enclosure implements Runnable {
      * Clean the enclosure to maintain hygiene.
      */
     public void clean() {
-        if(this.cleanness.equals("Normal")) {this.cleanness = "Clean";}
-		if(this.cleanness.equals("Dirty")) {this.cleanness = "Normal";}
-		if(this.cleanness.equals("Moundir's Room")) {this.cleanness = "Dirty";}
-	    System.out.println("The enclosure " + this.getName() + " was cleaned !");
+    	if(this.canBeCleaned()) {
+            if(this.cleanness.equals("Normal")) {this.cleanness = "Clean";}
+    		if(this.cleanness.equals("Dirty")) {this.cleanness = "Normal";}
+    		if(this.cleanness.equals("Moundir's Room")) {this.cleanness = "Dirty";}
+    	    System.out.println("The enclosure " + this.getName() + " was cleaned !");	
+    	}
+    	else {
+    		System.out.println("The enclosure " + this.getName() + " cannot be cleaned, there are animals");
+    	}
     }
 
 
@@ -332,11 +337,11 @@ public class Enclosure implements Runnable {
 			}
 				//Si le nombre de femelles est strictement supérieur à 0
 				if (females.size()>0 && theresmale) {
-					System.out.println("PAR PITIER");
 					int randomIndex = rand.nextInt(females.size());
 					//On récupère une femelle aléatoire dans la liste
 					Creature pregnantFemale = females.get(randomIndex);
 					//La femelle choisis aléatoirement devient enceinte
+					System.out.println("ouiii");
 					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
 						Oviparous female = (Oviparous) pregnantFemale;
 						eggs.add(female.layEgg());
@@ -351,7 +356,15 @@ public class Enclosure implements Runnable {
             System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
         }
     }
-	
+	public boolean canBeCleaned() {
+		if(this.presentCreatures.isEmpty()) {
+			return true;
+		}
+		else {
+			System.out.println("The enclosure " + this.getName() + " cannot be cleaned, there are animals");
+			return false;
+		}
+	}
 	public void becomeLessClean() {
 		if(this.cleanness.equals("Dirty")) {this.cleanness = "Moundir's Room";}
 		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}
