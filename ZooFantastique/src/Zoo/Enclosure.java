@@ -213,12 +213,29 @@ public class Enclosure implements Runnable {
      * @return False if creature is null or addition failed. True if success.
      */
     public boolean addCreature(Creature newCreature) {
-        if (newCreature == null) return false;
-    	if (!presentCreatures.add(newCreature)) return false;
-        newCreature.setEnclosure(this);
-        ++currentNumberCreatures;
-        System.out.println("A new creature " + newCreature.toString() + " was added to " + this.getName());
-        return true;
+    	if (checkCompatibilité(newCreature)) {
+            if (newCreature == null) return false;
+        	if (!presentCreatures.add(newCreature)) return false;
+            newCreature.setEnclosure(this);
+            ++currentNumberCreatures;
+            System.out.println("A new creature " + newCreature.toString() + " was added to " + this.getName());
+            return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    public boolean checkCompatibilité(Creature creature) {
+		if ( this.presentCreatures.size() == 0) {
+			return true;
+		}
+		else if ( this.presentCreatures.get(0).getSpecie().equals(creature.getSpecie())){
+			return true;
+		}
+		else {
+			return false;
+		}
     }
 
     /**

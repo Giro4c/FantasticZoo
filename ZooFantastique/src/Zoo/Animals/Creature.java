@@ -22,6 +22,7 @@ public class Creature implements Runnable{
 	private String indicatorHealth;
 	private Enclosure enclosure;
 	private Desease desease;
+	
 	public boolean isSick() {
 		return isSick;
 	}
@@ -118,7 +119,7 @@ public class Creature implements Runnable{
 	        int RandomNumber = random.nextInt(100); // Generates a random number between 0 and 100
 	        
 	        if ( RandomNumber > (1 - this.percentageSick()) && !(this.isSick)) { // % chance that the creature gets sick
-	            this.isSick = true;
+	        	Desease desease = new Desease(1, random.nextInt(3), random.nextInt(5), this);
 	        }
 	        
 	        if ( RandomNumber < 5) { // 5% chance that the creature get older
@@ -354,7 +355,7 @@ public class Creature implements Runnable{
 	public void wake() {
 		this.isSleeping = false;
 	}
-	
+		
 	public void getOlder() {
 		this.setAge(this.getAge()+ 1);
 	}

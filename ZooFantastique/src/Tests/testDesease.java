@@ -18,7 +18,7 @@ class testDesease {
 	void testAnimalHasdesease() {
 		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
 		Creature c1 = new Creature("un", "animal testAnimalHasdesease", false, 0, 0, 0, "Full", false, "Perfect", enclo);
-		Desease maladie = new Desease("Covid",1,2,3,c1);
+		Desease maladie = new Desease(1,2,3,c1);
 		assertTrue(c1.isSick);
 		assertEquals(c1.getDesease(), maladie);
 	}	
@@ -26,7 +26,7 @@ class testDesease {
 	void testAnimalCanBeTreat() throws InterruptedException {
 		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
 		Creature c3 = new Creature("un", "animal testAnimalCanBeTreat", false, 0, 0, 0, "Full", false, "Perfect", enclo);
-		Desease maladie = new Desease("Covid",1,2,3,c3);
+		Desease maladie = new Desease(1,2,3,c3);
 		assertTrue(c3.isSick);
 		assertEquals(c3.getDesease(), maladie);
 		c3.treat();
@@ -45,7 +45,7 @@ class testDesease {
 	void testAnimalBecomeMoreSick() {
 		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
 		Creature c2 = new Creature("un", "animal testAnimalBecomeMoreSick", false, 0, 0, 0, "Full", false, "Perfect", enclo);
-		Desease maladie = new Desease("Covid",1,1,2,c2);
+		Desease maladie = new Desease(1,1,2,c2);
 		assertTrue(c2.isSick);
 		assertEquals(c2.getDesease(), maladie);
 		Thread thread = maladie.deseaseThread;
@@ -62,7 +62,7 @@ class testDesease {
 	void testSeverity3() {
 		Enclosure enclo = new Enclosure("enlo de caca", 100, 10, "propre");
 		Creature c2 = new Creature("un", "animal testSeverity3", false, 0, 0, 0, "Full", false, "Perfect", enclo);
-		Desease maladie = new Desease("Covid",1,3,1,c2);
+		Desease maladie = new Desease(1,3,1,c2);
 		assertTrue(c2.isSick);
 		assertEquals(c2.getDesease(), maladie);
 		Thread thread = maladie.deseaseThread;

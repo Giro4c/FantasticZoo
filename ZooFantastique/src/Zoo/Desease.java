@@ -20,8 +20,8 @@ public class Desease {
      * @param time The time duration of the disease.
      * @param animal The animal affected by the disease.
      */
-    public Desease(String name, int damage, int severity, int time, Creature animal) {
-        this.name = name;
+    public Desease(int damage, int severity, int time, Creature animal) {
+        this.name = "a implementer";
         this.damage = damage;
         this.severity = severity;
         this.time = time;

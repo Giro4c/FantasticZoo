@@ -27,7 +27,7 @@ public class GameEngine {
 	public GameEngine() {
 		super();
 		this.promptGenerator = new Prompt();
-		this.zoo = new FantasticZoo("Zoo", new ZooMaster("Camille", false, 19), 5);
+		this.zoo = new FantasticZoo("Zoo", new ZooMaster("Moundir le roi", false, 19), 5);
 		this.currentEnclosure = null;
 		this.setSituationIndicator(1);
 	}
