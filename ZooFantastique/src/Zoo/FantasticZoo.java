@@ -7,18 +7,11 @@ import Zoo.Prompts.Message;
 import Zoo.Animals.Creature;
 
 public class FantasticZoo {
-
-	private static void testThreads(){
-		Enclosure Encl = new Enclosure("test",20,12,"Clean");
-		Thread t1 = new Thread(Encl);
-		Aquarium Aqua = new Aquarium("test",20,12,"Clean", 2, 35);
-		Thread t2 = new Thread(Aqua);
-		Aviary avia = new Aviary("test",20,12,"Clean", 2);
-		Thread t3 = new Thread(avia);
-		t1.start();
-		t2.start();
-		t3.start();
-	}
+	
+	private String name;
+	private ZooMaster zooMaster;
+	private final int maxNumberEnclosures;
+	private ArrayList<Enclosure> existingEnclosures;
 
 	public static void main(String[] args) {
 		GameEngine game = new GameEngine();
@@ -30,7 +23,6 @@ public class FantasticZoo {
 				System.out.println(e.getMessage());
 			}
 		}
-
 	}
 		
 	public FantasticZoo(String name, ZooMaster zooMaster, int maxNumberEnclosures) {
@@ -40,11 +32,6 @@ public class FantasticZoo {
 		this.maxNumberEnclosures = maxNumberEnclosures;
 		this.existingEnclosures = new ArrayList<Enclosure>();
 	}
-
-	private String name;
-	private ZooMaster zooMaster;
-	private final int maxNumberEnclosures;
-	private ArrayList<Enclosure> existingEnclosures;
 	
 	public String getName() {
 		return name;
@@ -134,7 +121,7 @@ public class FantasticZoo {
 		}
 	}
 	
-	/* ------------------------------------------f------- */
+	/* ------------------------------------------------- */
 	
 
 }

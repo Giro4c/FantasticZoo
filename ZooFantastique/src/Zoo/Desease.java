@@ -87,11 +87,9 @@ public class Desease {
      */ 
     public void remove(Creature creature) {
         if (this.canBeTreatedWithMedecine== true&& !isTreated) {
-            new Thread(() -> {
                 isTreated = true;
                 deseaseThread.interrupt();
                 System.out.println(this.animal.getName() + " n'es plus malade !"); 
-            }).start();
         } else {
             System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");
         }

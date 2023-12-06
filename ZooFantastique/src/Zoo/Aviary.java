@@ -2,6 +2,10 @@ package Zoo;
 
 import java.util.Random;
 
+import Zoo.Animals.Creature;
+import Zoo.Caracteristics.CanFly;
+import Zoo.Caracteristics.CanSwim;
+
 /**
  * Represents an Aviary enclosure.
  */
@@ -78,6 +82,16 @@ public class Aviary extends Enclosure implements Runnable {
      */
     public void setHeight(int height) {
         this.height = height;
+    }
+    
+    @Override 
+    public boolean checkCompatibilité(Creature creature) {
+    	if (creature instanceof CanFly) {
+    		return super.checkCompatibilité(creature);
+    	}
+    	else {
+    		return false;
+    	}
     }
 
     /**

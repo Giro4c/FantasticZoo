@@ -2,6 +2,10 @@ package Zoo;
 
 import java.util.Random;
 
+import Zoo.Animals.Creature;
+import Zoo.Caracteristics.CanFly;
+import Zoo.Caracteristics.CanSwim;
+
 /**
  * Represents an Aquarium enclosure.
  */
@@ -105,6 +109,16 @@ public class Aquarium extends Enclosure implements Runnable {
      */
     public void setSalinity(int salinity) {
         this.salinity = salinity;
+    }
+    
+    @Override 
+    public boolean checkCompatibilité(Creature creature) {
+    	if (creature instanceof CanSwim) {
+    		return super.checkCompatibilité(creature);
+    	}
+    	else {
+    		return false;
+    	}
     }
 
     /**

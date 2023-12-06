@@ -273,7 +273,7 @@ public class Enclosure implements Runnable {
 
     public void treatAnimals() {
 		for (Creature creature : this.presentCreatures) {
-			if(creature.isSick && (creature.getDesease().canBeTreatedWithMedecine || creature.getDesease().canBeTreatedAlone)) {
+			if(creature.isSick && creature.getDesease().canBeTreatedWithMedecine) {
 				creature.treat();
 			}
 		}
@@ -356,6 +356,11 @@ public class Enclosure implements Runnable {
 		if(this.cleanness.equals("Dirty")) {this.cleanness = "Moundir's Room";}
 		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}
 		if(this.cleanness.equals("Clean")) {this.cleanness = "Normal";}
+	}
+
+	public void checkCompatibilité() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
