@@ -103,15 +103,35 @@ public class FantasticZoo {
 	}
 	
 	public void addNewEnclosure(Enclosure newEnclosure) {
-		System.out.println("The new enclosure " + newEnclosure.getName() + " was added in the FantasticZoo");
+		if ( existingEnclosures.size() < this.getMaxNumberEnclosures()) {
+			this.existingEnclosures.add(newEnclosure);
+			System.out.println("The new enclosure " + newEnclosure.getName() + " was added in the FantasticZoo");
+		}
+		else {
+			System.out.println("Le nombre max d'enclo a déja était atteint (je sais pas écrire c abusé)");
+		}
 	}
 	
 	public void removeEnclosure(int oldEnclosureIndex) {
-		//System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
-	}
+		Enclosure oldEnclosure = existingEnclosures.get(oldEnclosureIndex);
+		if ( oldEnclosure.getCurrentNumberCreatures() == 0) {
+			existingEnclosures.remove(oldEnclosure);
+			System.out.println("The enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+			System.gc();
+		}
+		else {
+			System.out.println("The enclosure " + oldEnclosure.getName() + " cannot be remove, creature still live in !");
+		}	}
 	
 	public void removeEnclosure(Enclosure oldEnclosure) {
-		System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+		if ( oldEnclosure.getCurrentNumberCreatures() == 0) {
+			existingEnclosures.remove(oldEnclosure);
+			System.out.println("The enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+			System.gc();
+		}
+		else {
+			System.out.println("The enclosure " + oldEnclosure.getName() + " cannot be remove, creature still live in !");
+		}
 	}
 	
 	/* ------------------------------------------------- */
