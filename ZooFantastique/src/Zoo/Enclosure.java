@@ -224,8 +224,9 @@ public class Enclosure implements Runnable {
     	else {
     		return false;
     	}
-    }
     
+    
+    }
     public boolean checkCompatibilité(Creature creature) {
 		if ( this.presentCreatures.size() == 0) {
 			return true;
@@ -235,7 +236,7 @@ public class Enclosure implements Runnable {
 		}
 		else {
 			return false;
-		}
+		}    
     }
 
     /**
@@ -273,16 +274,18 @@ public class Enclosure implements Runnable {
 
     public void treatAnimals() {
 		for (Creature creature : this.presentCreatures) {
-			if(creature.isSick && (creature.getDesease().canBeTreatedWithMedecine || creature.getDesease().canBeTreatedAlone)) {
+			if(creature.isSick && creature.getDesease().canBeTreatedWithMedecine) {
 				creature.treat();
 			}
 		}
 	}
-
     /**
      * Feed the creatures in the enclosure.
      */
     public void feedCreatures() {
+    	for(Creature creature : this.presentCreatures) {
+    		creature.eat();
+    	}
         System.out.println("The creatures in the " + this.getName() + " were fed.");
     }
 
@@ -326,27 +329,24 @@ public class Enclosure implements Runnable {
 					females.add(currentCreature);
 
 				}
+			}
 				//Si le nombre de femelles est strictement supérieur à 0
 				if (females.size()>0 && theresmale) {
+					System.out.println("PAR PITIER");
 					int randomIndex = rand.nextInt(females.size());
 					//On récupère une femelle aléatoire dans la liste
 					Creature pregnantFemale = females.get(randomIndex);
 					//La femelle choisis aléatoirement devient enceinte
-					
 					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
 						Oviparous female = (Oviparous) pregnantFemale;
 						eggs.add(female.layEgg());
-						++currentNumberCreatures;
 					}
 					if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
 						Mammal female = (Mammal) pregnantFemale;
 						female.reproduction();
-						//On augmente le nombre de créatures dans l'enclos de 1
-						++currentNumberCreatures;
 					}
 				}
 			}
-		}
         else {
             System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
         }

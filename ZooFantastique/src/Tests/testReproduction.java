@@ -19,8 +19,6 @@ class testReproduction {
 	    Enclosure m = new Enclosure("Test mammals enclo", 100, 10, "Clean");
 	    Nymphe m1 = new Nymphe("specie1", "m1", false, 30, 20, 8, "Full", false, "Good", 3, 0, m);
         Nymphe m2 = new Nymphe("specie1", "m1", true, 30, 20, 8, "Full", false, "Good", 3, 0, m);
-	    m.addCreature(m1);
-	    m.addCreature(m2);
 	    m.reproduction();
 	    Thread reproductionThread = m1.getIncubationThread();
 	    try {
@@ -38,8 +36,6 @@ class testReproduction {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
 		Kraken oviparous1 = new Kraken("Species1", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
 		Kraken oviparous2 = new Kraken("Species2", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
-        o.addCreature(oviparous1);
-	    o.addCreature(oviparous2);
 	    o.reproduction();
 	    ArrayList<Egg> eggs = new ArrayList<>();
 	    eggs = o.getEggs();

@@ -34,12 +34,12 @@ class testEnclosure {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
 		Creature c4 = new Creature("shiny", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
 		Creature c5 = new Creature("animal iii", "animal treatAnimals", false, 0, 0, 0, "Normal", false, "Perfect", enclosure);
-		Desease maladie = new Desease("Covid",1,2,3,c4);
-		Desease maladie2 = new Desease("Covid",1,2,3,c5);
+		Desease maladie = new Desease(1,2,3,c4);
+		Desease maladie2 = new Desease(1,2,3,c5);
 		assertTrue(c4.isSick);
 		assertTrue(c5.isSick);
 		enclosure.treatAnimals();
 		assertFalse(c4.isSick);
-		assertFalse(c5.isSick);
+		assertFalse(c5.isSick);	
 	}
 }

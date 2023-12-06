@@ -59,7 +59,7 @@ public class Mammal extends Creature {
 
 
 	public Creature giveBirth() {
-		this.enclosure.setCurrentNumberCreatures(enclosure.getCurrentNumberCreatures()-1);
+		System.out.println("iiiiiiiiiii");
 		this.gestationProgress = 0;
 		Random random = new Random();
 		boolean randomBoolean = random.nextBoolean();
@@ -69,7 +69,6 @@ public class Mammal extends Creature {
 	    System.out.print("Entrez un nom pour le nouveau née: ");
 	    String newbornName = scanner.nextLine();
 		Mammal newborn = new Mammal(this.getSpecie(), newbornName, randomBoolean, randomWeight, randomheight, 0, "Full", false, "Perfect", this.gestationTime , 0, this.enclosure);
-		this.enclosure.addCreature(newborn);
 		System.out.println("a new "+ this.getSpecie()+ " is born !");
 		System.out.println("There is now "+ this.enclosure.getCurrentNumberCreatures() + " creatures in the enclosure !");
 		return newborn;
