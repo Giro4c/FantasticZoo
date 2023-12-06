@@ -154,6 +154,7 @@ public class Creature implements Runnable{
 		this.indicatorHealth = HEALTH_STATES[0];
 		this.indicatorHunger = HUNGER_STATES[0];
 	}
+	
 	@Override 
 	public void run() {
 	    

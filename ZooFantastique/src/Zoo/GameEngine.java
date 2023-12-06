@@ -2,6 +2,9 @@ package Zoo;
 
 import Zoo.Prompts.Message;
 import Zoo.Prompts.Prompt;
+
+import java.util.ArrayList;
+
 import Zoo.Animals.*;
 
 public class GameEngine {
@@ -25,6 +28,8 @@ public class GameEngine {
 	 */
 	private int situationIndicator;
 	private int subSituationIndicator;
+	private ArrayList<Thread> enclosureThreads = new ArrayList<Thread>();
+	private ArrayList<Thread> creatureThreads = new ArrayList<Thread>();
 
 	public GameEngine() {
 		super();
@@ -129,10 +134,21 @@ public class GameEngine {
 		enclosure.addCreature(new Phenix(true, 14, enclosure));
 		this.zoo.addNewEnclosure(enclosure); 			// 9
 		
-		// Activate all enclosure threads for the zoo
+		// Create all threads for the zoo (enclosures and creatures)
+		for (Enclosure enclosureTh : this.zoo.getExistingEnclosures()){
+			this.enclosureThreads.add(new Thread(enclosureTh));
+			for (Creature creatureTh : enclosureTh.getPresentCreatures()) {
+				this.creatureThreads.add(new Thread(creatureTh));
+			}
+		}
 		
-		// Activate all Creature threads
-		
+		// Start all threads
+		for (int indexThreadE = 0; indexThreadE < this.enclosureThreads.size(); ++indexThreadE) {
+			this.enclosureThreads.get(indexThreadE).start();
+		}
+		for (int indexThreadC = 0; indexThreadC < this.enclosureThreads.size(); ++indexThreadC) {
+			this.creatureThreads.get(indexThreadC).start();
+		}
 		
 	}
 	
