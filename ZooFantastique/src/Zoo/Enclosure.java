@@ -44,7 +44,14 @@ public class Enclosure {
 	public int getSurface() {
 		return surface;
 	}
-
+	
+	public void treatAnimals() {
+		for (Creature creature : this.presentCreatures) {
+			if(creature.isSick && (creature.getDesease().canBeTreatedWithMedecine || creature.getDesease().canBeTreatedAlone)) {
+				creature.treat();
+			}
+		}
+	}
 
 
 	public void setSurface(int surface) {

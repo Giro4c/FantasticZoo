@@ -239,6 +239,7 @@ public class Creature {
 	}
 	//fonction qui permet à un animal de se soigner 
 	public void heal() {
+		this.treat();
 		if(this.indicatorHealth.equals("Normal")){this.indicatorHealth="Perfect";}
 		if (this.indicatorHealth.equals("Sick")){this.indicatorHealth="Normal";}
 		if (this.indicatorHealth.equals("Very Sick")){this.indicatorHealth="Sick";}
