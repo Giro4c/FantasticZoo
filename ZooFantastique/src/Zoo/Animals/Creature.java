@@ -95,6 +95,27 @@ public class Creature implements Runnable{
 		this.enclosure = enclosure;
 	}
 	
+	public Creature(String specie, boolean isMale, int weight, int height, int age, String indicatorHunger,
+			boolean isSleeping, String indicatorHealth, Enclosure enclosure) {
+			super();
+			this.specie = specie;
+			this.isMale = isMale;
+			if (isMale) {
+				this.name = ListNames.assignRandomNameMale();
+			}
+			else {
+				this.name = ListNames.assignRandomNameFemale();
+			}
+			this.weight = weight;
+			this.height = height;
+			this.age = age;
+			this.indicatorHunger = indicatorHunger;
+			this.isSleeping = false;
+			this.indicatorHealth = indicatorHealth;
+			this.isSick = false;
+			this.enclosure = enclosure;
+		}
+	
 	@Override 
 	public void run() {
 	    

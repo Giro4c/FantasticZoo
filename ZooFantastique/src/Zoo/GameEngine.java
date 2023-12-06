@@ -77,15 +77,25 @@ public class GameEngine {
 			// Enclosure 1
 		Enclosure enclosure = new Enclosure("Savanaria", 150, 10, Enclosure.CLEANNESS_STATES[0]);
 		enclosure.addCreature(new Nymphe(null, null, false, situationIndicator, situationIndicator, situationIndicator, null, false, null, situationIndicator, situationIndicator, enclosure));
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Enclosure("Savanaria", 150, 10, Enclosure.CLEANNESS_STATES[0])); 			// 0
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Enclosure("Babil", 175, 12, Enclosure.CLEANNESS_STATES[0])); 				// 1
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Enclosure("Leon's Gate", 205, 15, Enclosure.CLEANNESS_STATES[0])); 		// 2
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Enclosure("Well", 136, 8, Enclosure.CLEANNESS_STATES[0])); 				// 3
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Enclosure("ArraLa", 103, 5, Enclosure.CLEANNESS_STATES[0])); 				// 4
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Aquarium("AquaSea", 100, 10, Enclosure.CLEANNESS_STATES[0], 30, 39)); 		// 5
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Aquarium("Seallusion", 130, 16, Enclosure.CLEANNESS_STATES[0], 38, 38)); 	// 6
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Aquarium("Lake Accuity", 90, 9, Enclosure.CLEANNESS_STATES[0], 15, 10)); 	// 7
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Aviary("Great Aviary", 150, 15, Enclosure.CLEANNESS_STATES[0], 30)); 		// 8
+			// Enclosure 1
 		this.zoo.addNewEnclosure(new Aviary("Smallviary", 60, 6, Enclosure.CLEANNESS_STATES[0], 20)); 			// 9
 		// Fill all enclosures
 			// Enclosure 1
