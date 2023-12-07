@@ -6,9 +6,14 @@ import Zoo.Animals.Egg;
 import Zoo.Animals.Mammal;
 import Zoo.Animals.Oviparous;
 
-public class Main {
+public class ManualTests {
 	public static void main(String[] args) {
-	    Enclosure enclosure = new Enclosure("Test Enclosure", 100, 10, "Clean");
+	    
+	    
+	}
+	
+	private static void testReproduction() {
+		Enclosure enclosure = new Enclosure("Test Enclosure", 100, 10, "Clean");
 	    Enclosure m = new Enclosure("Test m enclo", 100, 10, "Clean");
 	    Oviparous oviparous1 = new Oviparous("Species1", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", enclosure);
         Oviparous oviparous2 = new Oviparous("Species2", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", enclosure);
@@ -22,6 +27,9 @@ public class Main {
 	    m.reproduction();
 	    enclosure.reproduction();
 	    System.out.println("Number of creatures after reproduction: " + enclosure.getCurrentNumberCreatures());
-	    
+	}
+	
+	private static void testCloneCreature() {
+		// Want to check if the use of Object.clone()
 	}
 }
