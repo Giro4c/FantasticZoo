@@ -99,7 +99,7 @@ public class Creature implements Runnable{
 		this.height = height;
 		this.age = age;
 		
-		if (this.enclosure.addCreature(this)) {
+		if (enclosure != null && enclosure.addCreature(this)) {
 			this.enclosure = enclosure;
 		}
 		else {
@@ -129,7 +129,7 @@ public class Creature implements Runnable{
 			this.weight = weight;
 			this.height = height;
 			this.age = age;
-			if (this.enclosure.addCreature(this)) {
+			if (enclosure != null && enclosure.addCreature(this)) {
 			this.enclosure = enclosure;
 			}
 			else {
@@ -160,7 +160,7 @@ public class Creature implements Runnable{
 			this.name = ListNames.assignRandomNameFemale();
 		}
 		this.age = age;
-		if (this.enclosure.addCreature(this)) {
+		if (enclosure != null && enclosure.addCreature(this)) {
 			this.enclosure = enclosure;
 		}
 		else {
@@ -208,7 +208,8 @@ public class Creature implements Runnable{
 	        int RandomNumber = random.nextInt(100); // Generates a random number between 0 and 100
 	        
 	        if ( RandomNumber > (1 - this.percentageSick()) && !(this.isSick)) { // % chance that the creature gets sick
-	        	Desease desease = new Desease(1, random.nextInt(3), random.nextInt(5), this);
+	        	this.desease = new Desease(1, random.nextInt(3), random.nextInt(5), this);
+	        	this.isSick = true;
 	        }
 	        
 	        if ( RandomNumber < 5) { // 5% chance that the creature get older
@@ -463,6 +464,13 @@ public class Creature implements Runnable{
 		if(this.desease!=null) {this.desease.setAnimal(null);}
 		this.endLife();
 		System.gc();
+	}
+	
+	/**
+	 * @throws CloneNotSupportedException
+	 */
+	public Creature clone() throws CloneNotSupportedException {
+		return (Creature) super.clone();
 	}
 
 

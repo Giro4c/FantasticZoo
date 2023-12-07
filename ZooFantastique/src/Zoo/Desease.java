@@ -17,7 +17,7 @@ public class Desease {
      * @param name The name of the disease.
      * @param damage The damage caused by the disease.
      * @param severity The severity level of the disease.
-     * @param time The time duration of the disease.
+     * @param time The time duration of the disease in sleep iterations.
      * @param animal The animal affected by the disease.
      */
     public Desease(int damage, int severity, int time, Creature animal) {
@@ -57,7 +57,7 @@ public class Desease {
                 	if(canBeTreatedAlone&&currentTime[0]==this.time) {break;}
                 	getAnimal().becomeMoreSick();
                     Thread.sleep(15000 / severity);
-                    System.out.println(animal.getName() + " est malade depuis " + (currentTime[0]) + " secondes");
+//                    System.out.println(animal.getName() + " est malade depuis " + (currentTime[0]) + " secondes");
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;

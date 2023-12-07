@@ -2,14 +2,13 @@ package Zoo;
 
 import java.util.ArrayList;
 
-import Zoo.Animals.Egg;
-import Zoo.Animals.Mammal;
-import Zoo.Animals.Oviparous;
+import Zoo.Animals.*;
+
 
 public class ManualTests {
 	public static void main(String[] args) {
 	    
-	    
+		testCloneCreature();
 	}
 	
 	private static void testReproduction() {
@@ -30,6 +29,22 @@ public class ManualTests {
 	}
 	
 	private static void testCloneCreature() {
-		// Want to check if the use of Object.clone()
+		// Want to check if the use of Object.clone() keeps the class.
+		
+		Dragon dragon1 = new Dragon(true, 20, null);
+		System.out.println(dragon1.toString());
+		System.out.println(dragon1.getClass().getName());
+		System.out.println();
+		
+		System.out.println();
+		
+		Creature dragon3 = new Dragon(true, 20, null);
+		System.out.println(dragon3.toString());
+		System.out.println(dragon3.getClass().getName());
+		System.out.println();
+		
+		System.out.println(Dragon.class.getSimpleName());
+		
+		
 	}
 }
