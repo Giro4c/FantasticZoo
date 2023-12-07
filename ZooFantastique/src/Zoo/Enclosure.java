@@ -217,7 +217,7 @@ public class Enclosure implements Runnable {
      * @return False if creature is null or addition failed. True if success.
      */
     public boolean addCreature(Creature newCreature) {
-    	if (checkCompatibilité(newCreature)) {
+    	if (checkCompatibility(newCreature)) {
             if (newCreature == null) return false;
         	if (!presentCreatures.add(newCreature)) return false;
             newCreature.setEnclosure(this);
@@ -231,17 +231,17 @@ public class Enclosure implements Runnable {
     
     
     }
-    public boolean checkCompatibilité(Creature creature) {
-		if ( this.presentCreatures.size() == 0) {
-			return true;
-		}
-		else if ( this.presentCreatures.get(0).getSpecie().equals(creature.getSpecie())){
-			return true;
-		}
-		else {
-			return false;
-		}    
-    }
+	 public boolean checkCompatibility(Creature creature) {
+			if ( this.presentCreatures.size() == 0) {
+				return true;
+			}
+			else if ( this.presentCreatures.get(0).getSpecie().equals(creature.getSpecie())){
+				return true;
+			}
+			else {
+				return false;
+			}
+	 }
 
     /**
      * Remove a creature from the enclosure by searching the object.
@@ -375,12 +375,6 @@ public class Enclosure implements Runnable {
 		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}
 		if(this.cleanness.equals("Clean")) {this.cleanness = "Normal";}
 	}
-
-	public void checkCompatibilité() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
     
     /**

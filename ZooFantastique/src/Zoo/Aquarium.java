@@ -100,9 +100,9 @@ public class Aquarium extends Enclosure implements Runnable {
     }
     
     @Override 
-    public boolean checkCompatibilité(Creature creature) {
+    public boolean checkCompatibility(Creature creature) {
     	if (creature instanceof CanSwim) {
-    		return super.checkCompatibilité(creature);
+    		return super.checkCompatibility(creature);
     	}
     	else {
     		return false;
