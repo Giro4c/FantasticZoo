@@ -4,8 +4,9 @@ package Zoo.Animals;
 import Zoo.Enclosure;
 
 public class Oviparous extends Creature {
+	public int incubationTime;
 	
-	public Oviparous(String specie, String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
+	public Oviparous(String specie, String name, boolean isMale, int weight, int height,int age, Enclosure enclosure) {
 		super(specie, name, isMale, weight, height, age, enclosure);
 	}
 	
@@ -17,11 +18,11 @@ public class Oviparous extends Creature {
 	public Oviparous(String specie, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
 		super(specie, isMale, weight, height, age, enclosure);
 	}
-
+	
 
 	public Egg layEgg() {
 		if (!this.isMale()) {	
-			return new Egg(2, this.getEnclosure(), this);
+			return new Egg(incubationTime, this.getEnclosure(), this);
 		}
 		return null;
 	}

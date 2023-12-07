@@ -6,6 +6,7 @@ import Zoo.Caracteristics.Revivable;
 
 public class Phenix extends Oviparous implements CanFly, Revivable {
 
+	public static final int INCUBATION_TIME = 4;
     public static final int minHeight = 50;
     public static final int maxHeight = 100;
     public static final int minWeight = 5;

@@ -5,6 +5,7 @@ import Zoo.Caracteristics.CanSwim;
 
 public class Kraken extends Oviparous implements CanSwim {
 	
+	public static final int INCUBATION_TIME = 8;
 	public static final int minHeight = 10;
 	public static final int maxHeight = 20;
 	public static final int minWeight = 6000;

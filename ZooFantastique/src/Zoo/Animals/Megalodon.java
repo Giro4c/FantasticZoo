@@ -4,7 +4,7 @@ import Zoo.Enclosure;
 import Zoo.Caracteristics.CanSwim;
 
 public class Megalodon extends Oviparous implements CanSwim {
-
+	public static final int INCUBATION_TIME = 10;
     public static final int minHeight = 400; 
     public static final int maxHeight = 600; 
     public static final int minWeight = 5000;

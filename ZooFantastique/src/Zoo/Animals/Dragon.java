@@ -8,7 +8,7 @@ import Zoo.Caracteristics.Revivable;
 
 public class Dragon extends Oviparous implements CanRun, CanSwim, CanFly, Revivable {
 
-	
+	public static final int INCUBATION_TIME = 7; 
     public static final int minHeight = 200;
     public static final int maxHeight = 300;
     public static final int minWeight = 200;
