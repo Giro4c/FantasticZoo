@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import Zoo.Desease;
 import Zoo.Enclosure;
 import Zoo.Animals.Creature;
+import Zoo.Animals.Dragon;
+import Zoo.Animals.Kraken;
+import Zoo.Animals.Nymphe;
+import Zoo.Animals.Sirene;
 
 class testDesease {
 
@@ -17,7 +21,7 @@ class testDesease {
 	@Test
 	void testAnimalHasdesease() {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
-		Creature c1 = new Creature("un", "animal testAnimalHasdesease", false, 0, 0, 0, "Full", false, "Perfect", enclo);
+		Kraken c1 = new Kraken(false, 2, enclo);
 		Desease maladie = new Desease(1,2,3,c1);
 		assertTrue(c1.isSick);
 		assertEquals(c1.getDesease(), maladie);
@@ -25,7 +29,7 @@ class testDesease {
 	@Test
 	void testAnimalCanBeTreat() throws InterruptedException {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
-		Creature c3 = new Creature("un", "animal testAnimalCanBeTreat", false, 0, 0, 0, "Full", false, "Perfect", enclo);
+		Nymphe c3 = new Nymphe(false, 3, enclo);
 		Desease maladie = new Desease(1,2,3,c3);
 		assertTrue(c3.isSick);
 		assertEquals(c3.getDesease(), maladie);
@@ -44,7 +48,7 @@ class testDesease {
 	@Test
 	void testAnimalBecomeMoreSick() {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
-		Creature c2 = new Creature("un", "animal testAnimalBecomeMoreSick", false, 0, 0, 0, "Full", false, "Perfect", enclo);
+		Sirene c2 = new Sirene(false, 2, enclo);
 		Desease maladie = new Desease(1,1,2,c2);
 		assertTrue(c2.isSick);
 		assertEquals(c2.getDesease(), maladie);
@@ -61,7 +65,7 @@ class testDesease {
 	@Test 
 	void testSeverity3() {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
-		Creature c2 = new Creature("un", "animal testSeverity3", false, 0, 0, 0, "Full", false, "Perfect", enclo);
+		Dragon c2 = new Dragon(false, 2, enclo);
 		Desease maladie = new Desease(1,3,1,c2);
 		assertTrue(c2.isSick);
 		assertEquals(c2.getDesease(), maladie);

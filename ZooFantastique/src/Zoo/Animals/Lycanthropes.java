@@ -12,13 +12,11 @@ public class Lycanthropes extends Mammal implements CanRun {
     public static final int GESTATION_TIME = 2;
 	
 	public Lycanthropes(boolean isMale, int age, Enclosure enclosure) {
-		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Lycanthropes.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
 	}
 
 	public Lycanthropes(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Lycanthropes.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);
@@ -28,8 +26,7 @@ public class Lycanthropes extends Mammal implements CanRun {
 
 	public Lycanthropes(String name, boolean isMale, int weight, int height, int age,
 			Enclosure enclosure) {
-		super(null, name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Lycanthropes.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);

@@ -17,8 +17,8 @@ class testReproduction {
 	@Test
 	void ajoutMammalApresReproduction() {
 	    Enclosure m = new Enclosure("Test mammals enclo", 100, 10, "Clean");
-	    Nymphe m1 = new Nymphe("specie1", "m1", false, 30, 20, 8, "Full", false, "Good", 3, 0, m);
-        Nymphe m2 = new Nymphe("specie1", "m1", true, 30, 20, 8, "Full", false, "Good", 3, 0, m);
+	    Nymphe m1 = new Nymphe(false, 30, m);
+        Nymphe m2 = new Nymphe(true, 30, m);
 	    m.reproduction();
 	    Thread reproductionThread = m1.getIncubationThread();
 	    try {
@@ -28,14 +28,15 @@ class testReproduction {
 	    } catch (InterruptedException e) {
 	    	fail("Bug Thread");
 	    }
-	    
+	    for(Creature creature : m.getPresentCreatures() ) {
+	    	assertEquals(creature.getClass(), m1.getClass());
+	    }
 	    assertEquals(m.getCurrentNumberCreatures(), 3);
 	}
-	@Test
 	void ajoutOviparousApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
-		Kraken oviparous1 = new Kraken("kraken", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
-		Kraken oviparous2 = new Kraken("kraken", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
+		Kraken oviparous1 = new Kraken(true, 50, o);
+		Kraken oviparous2 = new Kraken(false, 45, o);
 	    o.reproduction();
 	    ArrayList<Egg> eggs = new ArrayList<>();
 	    eggs = o.getEggs();
@@ -54,21 +55,19 @@ class testReproduction {
 	    
 	    assertEquals(o.getCurrentNumberCreatures(), 3);
 	}
-	@Test
 	void ajoutOeufDansEnclos() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
-		Kraken oviparous1 = new Kraken("kraken", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
-		Kraken oviparous2 = new Kraken("kraken", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
+		Kraken oviparous1 = new Kraken(true, 50, o);
+		Kraken oviparous2 = new Kraken(false, 45, 28, 4, o);
         o.addCreature(oviparous1);
 	    o.addCreature(oviparous2);
 	    o.reproduction();
 	    assertEquals(o.getEggs().size(), 1);
 	}
-	@Test
 	void ajoutDeLaBonneCreatureApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
-		Kraken oviparous1 = new Kraken("kraken", "Oviparous1", true, 50, 30, 5, "Full", false, "Good", o);
-		Kraken oviparous2 = new Kraken("kraken", "Oviparous2", false, 45, 28, 4, "Full", false, "Excellent", o);
+		Kraken oviparous1 = new Kraken(true, 50, o);
+		Kraken oviparous2 = new Kraken(false, 45, o);
 	    o.reproduction();
 	    ArrayList<Egg> eggs = new ArrayList<>();
 	    eggs = o.getEggs();

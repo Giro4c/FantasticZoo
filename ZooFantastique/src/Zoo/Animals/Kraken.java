@@ -12,8 +12,7 @@ public class Kraken extends Oviparous implements CanSwim {
 	
 	
 	public Kraken(boolean isMale, int age, Enclosure enclosure) {
-		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
-		this.setSpecie(this.getClass().getName());
+		super(Kraken.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
 		
 		this.setHeightMin(minHeight);
 		this.setHeightMax(maxHeight);
@@ -22,8 +21,7 @@ public class Kraken extends Oviparous implements CanSwim {
 	}
 
 	public Kraken(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, isMale, weight, height, age, enclosure);
-		this.setSpecie(this.getClass().getName());
+		super(Kraken.class.getSimpleName(), isMale, weight, height, age, enclosure);
 		
 		this.setHeightMin(minHeight);
 		this.setHeightMax(maxHeight);
@@ -32,8 +30,7 @@ public class Kraken extends Oviparous implements CanSwim {
 	}
 
 	public Kraken(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, name, isMale, weight, height, age, enclosure);
-		this.setSpecie(this.getClass().getName());
+		super(Kraken.class.getSimpleName(), name, isMale, weight, height, age, enclosure);
 		
 		this.setHeightMin(minHeight);
 		this.setHeightMax(maxHeight);

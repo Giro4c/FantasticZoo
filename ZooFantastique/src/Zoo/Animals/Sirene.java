@@ -12,13 +12,12 @@ public class Sirene extends Mammal implements CanSwim {
     public static final int GESTATION_TIME = 5;
 
     public Sirene(boolean isMale, int age, Enclosure enclosure) {
-		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Sirene.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
 	}
 
 	public Sirene(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Sirene.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
+
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);
@@ -27,8 +26,7 @@ public class Sirene extends Mammal implements CanSwim {
 	}
 
 	public Sirene(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Sirene.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);

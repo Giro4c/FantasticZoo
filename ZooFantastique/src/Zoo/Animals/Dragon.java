@@ -15,14 +15,13 @@ public class Dragon extends Oviparous implements CanRun, CanSwim, CanFly, Reviva
     public static final int maxWeight = 500;
 
     public Dragon(boolean isMale, int age, Enclosure enclosure) {
-		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
-		this.setSpecie(this.getClass().getName());
+		super(Dragon.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
 		
 	}
 
 	public Dragon(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, isMale, weight, height, age, enclosure);
-		this.setSpecie(this.getClass().getName());
+		super(Dragon.class.getSimpleName(), isMale, weight, height, age, enclosure);
+		
 		
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);
@@ -31,8 +30,8 @@ public class Dragon extends Oviparous implements CanRun, CanSwim, CanFly, Reviva
 	}
 
 	public Dragon(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, name, isMale, weight, height, age, enclosure);
-		this.setSpecie(this.getClass().getName());
+		super(Dragon.class.getSimpleName(), name, isMale, weight, height, age, enclosure);
+	
 		
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);

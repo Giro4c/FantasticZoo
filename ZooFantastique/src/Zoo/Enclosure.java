@@ -279,6 +279,8 @@ public class Enclosure implements Runnable {
     public void treatAnimals() {
 		for (Creature creature : this.presentCreatures) {
 			if(creature.isSick && creature.getDesease().canBeTreatedWithMedecine) {
+				System.out.println(creature);
+				System.out.println("lyes yacine soudani reguig");
 				creature.treat();
 			}
 		}
@@ -345,7 +347,6 @@ public class Enclosure implements Runnable {
 					//On récupère une femelle aléatoire dans la liste
 					Creature pregnantFemale = females.get(randomIndex);
 					//La femelle choisis aléatoirement devient enceinte
-					System.out.println("ouiii");
 					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
 						Oviparous female = (Oviparous) pregnantFemale;
 						eggs.add(female.layEgg());

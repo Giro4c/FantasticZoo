@@ -13,13 +13,12 @@ public class Nymphe extends Mammal implements Revivable {
     
     
     public Nymphe(boolean isMale, int age, Enclosure enclosure) {
-		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Nymphe.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
+
 	}
 
 	public Nymphe(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Nymphe.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);
@@ -28,8 +27,7 @@ public class Nymphe extends Mammal implements Revivable {
 	}
 
 	public Nymphe(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
-		this.setSpecie(this.getClass().getName());
+		super(Nymphe.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);
