@@ -22,6 +22,16 @@ public class Creature implements Runnable{
 	private String indicatorHealth;
 	private Enclosure enclosure;
 	private Desease desease;
+	// Thread will run until creature dies or is deleted
+	private Thread lifeThread;
+	
+	public void startLife() {
+		this.lifeThread.start();
+	}
+	private void endLife() {
+		this.lifeThread.interrupt();
+		this.lifeThread = null;
+	}
 	
 	public boolean isSick() {
 		return isSick;
@@ -97,6 +107,7 @@ public class Creature implements Runnable{
 		this.indicatorHealth = HEALTH_STATES[0];
 		this.indicatorHunger = HUNGER_STATES[0];
 		
+		this.lifeThread = new Thread(this);
 	}
 	
 	public Creature(String specie, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
@@ -121,7 +132,7 @@ public class Creature implements Runnable{
 			this.indicatorHealth = HEALTH_STATES[0];
 			this.indicatorHunger = HUNGER_STATES[0];
 			
-			
+			this.lifeThread = new Thread(this);
 	}
 	
 	
@@ -153,6 +164,8 @@ public class Creature implements Runnable{
 		this.weight = rand.nextInt(weightMin, weightMax + 1);
 		this.indicatorHealth = HEALTH_STATES[0];
 		this.indicatorHunger = HUNGER_STATES[0];
+		
+		this.lifeThread = new Thread(this);
 	}
 	
 	@Override 
@@ -163,7 +176,8 @@ public class Creature implements Runnable{
 	    while(true) { 
 	        
 	        if ( HUNGER_STATES[4].equals(this.indicatorHunger) || HEALTH_STATES[4].equals(this.indicatorHealth) ) { // Checks that the creature is not dead
-	            this.die(); 
+	            this.die();
+	            break;
 	        }
 	        
 	        try {
@@ -421,11 +435,16 @@ public class Creature implements Runnable{
 
 	//méthode qui permet de faire en sorte qu'un animal meurt
 	public void die() {
+		System.out.println("The creature " + this.getName() + " is dead !");
+		this.delete();
+	}
+	
+	public void delete() {
 		this.enclosure.removeCreature(this);
 		this.enclosure = null;
 		this.desease = null;
 		if(this.desease!=null) {this.desease.setAnimal(null);}
-		System.out.println("The creature "+ this.getName() +" is dead !");
+		this.endLife();
 		System.gc();
 	}
 

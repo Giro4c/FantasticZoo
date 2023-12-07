@@ -82,7 +82,7 @@ public class FantasticZoo {
 		return "FantasticZoo [name=" + name + ", zooMaster=" + zooMaster + ", maxNumberEnclosures="
 				+ maxNumberEnclosures + ", existingEnclosures=" + existingEnclosures + "]";
 	}
-	public int Comptcreature() {
+	public int countCreatures() {
 		int NumberAnimals = 0; 
 		for (Enclosure enclo : existingEnclosures) {
 			NumberAnimals += enclo.getCurrentNumberCreatures();
@@ -91,7 +91,7 @@ public class FantasticZoo {
 	}
 
 	public void showTotalCreatures() {
-		System.out.println("In the FantasticZoo " + this.getName() + " there is " + this.Comptcreature() + " creature");
+		System.out.println("In the FantasticZoo " + this.getName() + " there is " + this.countCreatures() + " creature");
 	} 
 	
 	public void showAllCreatures(){
@@ -112,7 +112,9 @@ public class FantasticZoo {
 	}
 	
 	public void removeEnclosure(Enclosure oldEnclosure) {
-		System.out.println("The new enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+		if (! this.existingEnclosures.remove(oldEnclosure))return;
+		System.out.println("The enclosure " + oldEnclosure.getName() + " was removed from the FantasticZoo");
+		oldEnclosure.delete();
 	}
 	
 	/* ------------------------------------------------- */

@@ -23,6 +23,7 @@ public class Enclosure implements Runnable {
     private int indexcleanness = 0;
     private String cleanness = CLEANNESS_STATES[indexcleanness];
     private ArrayList<Egg> eggs;
+    private Thread timeThread;
 
     /**
      * Constructor for the Enclosure class.
@@ -41,6 +42,9 @@ public class Enclosure implements Runnable {
         this.presentCreatures = new ArrayList<Creature>();
         this.currentNumberCreatures = this.presentCreatures.size();
         this.eggs = new ArrayList<Egg>();
+        
+        this.timeThread = new Thread(this);
+        this.timeThread.start();
     }
 
     /**
@@ -312,6 +316,28 @@ public class Enclosure implements Runnable {
         } else {
             System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
         }
+    }
+    
+    /**
+     * Empty the enclosure and stop the associated threads for a later deletion using garbage collector.
+     */
+    public void delete() {
+    	// Eggs deleted first in case one hatches during deletion
+    	for (Egg egg : this.eggs) {
+    		this.eggs.remove(egg);
+    	}
+    	this.eggs = null;
+    	// Delete all creatures
+    	for (Creature creature : this.presentCreatures) {
+    		creature.delete();
+    	}
+    	this.presentCreatures = null;
+    	// End thread of the enclosure
+    	this.timeThread.interrupt();
+    	this.timeThread = null;
+    	// Run garbage collector
+    	System.gc();
+    	
     }
 }
                    
