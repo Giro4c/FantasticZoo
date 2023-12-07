@@ -14,7 +14,6 @@ import Zoo.Animals.Nymphe;
 import Zoo.Animals.Oviparous;
 
 class testReproduction {
-	@Test
 	void ajoutMammalApresReproduction() {
 	    Enclosure m = new Enclosure("Test mammals enclo", 100, 10, "Clean");
 	    Nymphe m1 = new Nymphe(false, 30, m);
@@ -33,6 +32,7 @@ class testReproduction {
 	    }
 	    assertEquals(m.getCurrentNumberCreatures(), 3);
 	}
+	@Test
 	void ajoutOviparousApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
 		Kraken oviparous1 = new Kraken(true, 50, o);
@@ -52,7 +52,10 @@ class testReproduction {
 	    } catch (InterruptedException e) {
 	    	fail("Bug Thread");
 	    }
-	    
+
+	    for(Creature creature : o.getPresentCreatures() ) {
+	    	assertEquals(creature.getClass(), oviparous1.getClass());
+	    }
 	    assertEquals(o.getCurrentNumberCreatures(), 3);
 	}
 	void ajoutOeufDansEnclos() {
