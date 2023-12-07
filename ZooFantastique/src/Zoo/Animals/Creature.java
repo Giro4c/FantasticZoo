@@ -22,6 +22,16 @@ public class Creature implements Runnable{
 	private String indicatorHealth;
 	private Enclosure enclosure;
 	private Desease desease;
+	// Thread will run until creature dies or is deleted
+	private Thread lifeThread;
+	
+	public void startLife() {
+		this.lifeThread.start();
+	}
+	private void endLife() {
+		this.lifeThread.interrupt();
+		this.lifeThread = null;
+	}
 	
 	public boolean isSick() {
 		return isSick;
@@ -80,8 +90,7 @@ public class Creature implements Runnable{
 	public void setWeightMax(int max) {
 		this.weightMax = max;
 	}
-	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, String indicatorHunger,
-		boolean isSleeping, String indicatorHealth, Enclosure enclosure) {
+	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
 		super();
 		this.specie = specie;
 		this.name = name;
@@ -89,12 +98,90 @@ public class Creature implements Runnable{
 		this.weight = weight;
 		this.height = height;
 		this.age = age;
-		this.indicatorHunger = indicatorHunger;
-		this.isSleeping = false;
-		this.indicatorHealth = indicatorHealth;
+		
+		if (this.enclosure.addCreature(this)) {
+			this.enclosure = enclosure;
+		}
+		else {
+			this.enclosure = null;
+		}
+		
+		// Default values
+		this.desease = null;
 		this.isSick = false;
-		this.enclosure = enclosure;
-		this.enclosure.addCreature(this);
+		this.isSleeping = false;
+		this.indicatorHealth = HEALTH_STATES[0];
+		this.indicatorHunger = HUNGER_STATES[0];
+		
+		this.lifeThread = new Thread(this);
+	}
+	
+	public Creature(String specie, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
+			super();
+			this.specie = specie;
+			this.isMale = isMale;
+			if (isMale) {
+				this.name = ListNames.assignRandomNameMale();
+			}
+			else {
+				this.name = ListNames.assignRandomNameFemale();
+			}
+			this.weight = weight;
+			this.height = height;
+			this.age = age;
+			if (this.enclosure.addCreature(this)) {
+			this.enclosure = enclosure;
+			}
+			else {
+				this.enclosure = null;
+			}
+			
+			// Default values
+			this.desease = null;
+			this.isSick = false;
+			this.isSleeping = false;
+			this.indicatorHealth = HEALTH_STATES[0];
+			this.indicatorHunger = HUNGER_STATES[0];
+			
+			this.lifeThread = new Thread(this);
+	}
+	
+	
+	
+	public Creature(String specie, boolean isMale, int age, Enclosure enclosure, int heightMin, int heightMax,
+			int weightMin, int weightMax) {
+		super();
+		this.specie = specie;
+		this.isMale = isMale;
+		if (isMale) {
+			this.name = ListNames.assignRandomNameMale();
+		}
+		else {
+			this.name = ListNames.assignRandomNameFemale();
+		}
+		this.age = age;
+		if (this.enclosure.addCreature(this)) {
+			this.enclosure = enclosure;
+		}
+		else {
+			this.enclosure = null;
+		}
+		this.heightMin = heightMin;
+		this.heightMax = heightMax;
+		this.weightMin = weightMin;
+		this.weightMax = weightMax;
+		
+		// Default values
+		this.desease = null;
+		this.isSick = false;
+		this.isSleeping = false;
+		Random rand = new Random();
+		this.height = rand.nextInt(heightMin, heightMax + 1);
+		this.weight = rand.nextInt(weightMin, weightMax + 1);
+		this.indicatorHealth = HEALTH_STATES[0];
+		this.indicatorHunger = HUNGER_STATES[0];
+		
+		this.lifeThread = new Thread(this);
 	}
 	
 	@Override 
@@ -105,7 +192,8 @@ public class Creature implements Runnable{
 	    while(true) { 
 	        
 	        if ( HUNGER_STATES[4].equals(this.indicatorHunger) || HEALTH_STATES[4].equals(this.indicatorHealth) ) { // Checks that the creature is not dead
-	            this.die(); 
+	            this.die();
+	            break;
 	        }
 	        
 	        try {
@@ -364,11 +452,16 @@ public class Creature implements Runnable{
 
 	//méthode qui permet de faire en sorte qu'un animal meurt
 	public void die() {
+		System.out.println("The creature " + this.getName() + " is dead !");
+		this.delete();
+	}
+	
+	public void delete() {
 		this.enclosure.removeCreature(this);
 		this.enclosure = null;
 		this.desease = null;
 		if(this.desease!=null) {this.desease.setAnimal(null);}
-		System.out.println("The creature "+ this.getName() +" is dead !");
+		this.endLife();
 		System.gc();
 	}
 

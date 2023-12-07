@@ -18,6 +18,7 @@ public class Egg {
 	    this.mother = mother;
 	    incubation(this);
 	}
+	
 	public Thread getIncubationThread() {
 		return this.incubationThread;
 	}
@@ -52,7 +53,7 @@ public class Egg {
                 while (incubationProgress < incubationTime) {
                     try {
                         Thread.sleep(1000);
-                        incubationProgress++;
+                        ++incubationProgress;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -66,13 +67,9 @@ public class Egg {
 		synchronized (this) {
 			if(getIncubationProgress()==getIncubationTime()) {
 				Random random = new Random();
-				boolean randomBoolean = random.nextBoolean();
-				int randomHeight = random.nextInt(mother.getHeightMin(), mother.getHeightMax());
-				int randomWeight = random.nextInt(mother.getWeightMin(), mother.getWeightMax());
-				Scanner scanner = new Scanner(System.in);
-			    System.out.print("Entrez un nom pour le nouveau née: ");
-			    String newbornName = scanner.nextLine();
-				Oviparous newoviparous = new Oviparous(mother.getSpecie(), newbornName, randomBoolean, randomWeight, randomHeight, 0, "Full", false, "Perfect", this.enclosure);
+				boolean randomGender = random.nextBoolean();
+				// To change
+				Oviparous newoviparous = new Oviparous(mother.getSpecie(), randomGender, 1, this.enclosure, mother.getHeightMin(), mother.getHeightMax(), mother.getWeightMin(), mother.getWeightMax());
 				this.enclosure.removeEgg(this);
 				System.out.println("An eggs as hatch a new creature is born !");
 				System.out.println("There is now : " + this.enclosure.getCurrentNumberCreatures() + " creatures in the enclosure !");

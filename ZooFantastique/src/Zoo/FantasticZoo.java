@@ -15,6 +15,7 @@ public class FantasticZoo {
 
 	public static void main(String[] args) {
 		GameEngine game = new GameEngine();
+		game.init();
 		while (true) {
 			game.showChoices();
 			try {
@@ -68,7 +69,7 @@ public class FantasticZoo {
 		return "FantasticZoo [name=" + name + ", zooMaster=" + zooMaster + ", maxNumberEnclosures="
 				+ maxNumberEnclosures + ", existingEnclosures=" + existingEnclosures + "]";
 	}
-	public int Comptcreature() {
+	public int countCreatures() {
 		int NumberAnimals = 0; 
 		for (Enclosure enclo : existingEnclosures) {
 			NumberAnimals += enclo.getCurrentNumberCreatures();
@@ -77,7 +78,7 @@ public class FantasticZoo {
 	}
 
 	public void showTotalCreatures() {
-		System.out.println("In the FantasticZoo " + this.getName() + " there is " + this.Comptcreature() + " creature");
+		System.out.println("In the FantasticZoo " + this.getName() + " there is " + this.countCreatures() + " creature");
 	} 
 	
 	public void showAllCreatures(){
@@ -111,9 +112,9 @@ public class FantasticZoo {
 		}	}
 	
 	public void removeEnclosure(Enclosure oldEnclosure) {
-		if ( oldEnclosure.getCurrentNumberCreatures() == 0) {
-			existingEnclosures.remove(oldEnclosure);
+		if ( oldEnclosure.getCurrentNumberCreatures() != 0 && ! this.existingEnclosures.remove(oldEnclosure)) {
 			System.out.println("The enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+			oldEnclosure.delete();
 			System.gc();
 		}
 		else {

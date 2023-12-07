@@ -1,6 +1,11 @@
 package Zoo;
 
+import Zoo.Prompts.Message;
 import Zoo.Prompts.Prompt;
+
+import java.util.ArrayList;
+
+import Zoo.Animals.*;
 
 public class GameEngine {
 
@@ -67,6 +72,73 @@ public class GameEngine {
 
 	public void showChoices() {
 		System.out.println(this.promptGenerator.getChoicePrompt(this));
+	}
+	
+	public void init() {
+		this.zoo = Message.zooCreation();
+		// Create 10 enclosures
+			// Enclosure 1
+		Enclosure enclosure = new Enclosure("Savanaria", 150, 10, Enclosure.CLEANNESS_STATES[0]);
+		enclosure.addCreature(new Nymphe(true, 20, enclosure));
+		enclosure.addCreature(new Nymphe(false, 24, enclosure));
+		enclosure.addCreature(new Nymphe(true, 40, enclosure));
+		enclosure.addCreature(new Nymphe(true, 31, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 0
+			// Enclosure 2
+		enclosure = new Enclosure("Babil", 175, 12, Enclosure.CLEANNESS_STATES[0]);
+		enclosure.addCreature(new Lycanthropes(true, 12, enclosure));
+		enclosure.addCreature(new Lycanthropes(false, 5, enclosure));
+		enclosure.addCreature(new Lycanthropes(false, 36, enclosure));
+		enclosure.addCreature(new Lycanthropes(true, 31, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 1
+			// Enclosure 3
+		enclosure = new Enclosure("Leon's Gate", 205, 15, Enclosure.CLEANNESS_STATES[0]);
+		enclosure.addCreature(new Dragon(true, 150, enclosure));
+		enclosure.addCreature(new Dragon(false, 200, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 2
+			// Enclosure 4
+		enclosure = new Enclosure("Well", 136, 8, Enclosure.CLEANNESS_STATES[0]);
+		enclosure.addCreature(new Licorne(true, 14, enclosure));
+		enclosure.addCreature(new Licorne(false, 13, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 3
+			// Enclosure 5
+		enclosure = new Enclosure("ArraLa", 103, 5, Enclosure.CLEANNESS_STATES[0]);
+		this.zoo.addNewEnclosure(enclosure); 			// 4
+			// Enclosure 6
+		enclosure = new Aquarium("AquaSea", 100, 10, Enclosure.CLEANNESS_STATES[0], 30, 39);
+		enclosure.addCreature(new Megalodon(true, 11, enclosure));
+		enclosure.addCreature(new Megalodon(false, 21, enclosure));
+		enclosure.addCreature(new Megalodon(true, 22, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 5
+			// Enclosure 7
+		enclosure = new Aquarium("Seallusion", 130, 16, Enclosure.CLEANNESS_STATES[0], 38, 38);
+		enclosure.addCreature(new Kraken(false, 99, enclosure));
+		enclosure.addCreature(new Kraken(true, 103, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 6
+			// Enclosure 8
+		enclosure = new Aquarium("Lake Accuity", 90, 9, Enclosure.CLEANNESS_STATES[0], 15, 10);
+		enclosure.addCreature(new Sirene(true, 45, enclosure));
+		enclosure.addCreature(new Sirene(false, 32, enclosure));
+		enclosure.addCreature(new Sirene(false, 40, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 7
+			// Enclosure 9
+		enclosure = new Aviary("Great Aviary", 150, 15, Enclosure.CLEANNESS_STATES[0], 30);
+		this.zoo.addNewEnclosure(enclosure); 			// 8
+			// Enclosure 10
+		enclosure = new Aviary("Smallviary", 60, 6, Enclosure.CLEANNESS_STATES[0], 20);
+		enclosure.addCreature(new Phenix(true, 19, enclosure));
+		enclosure.addCreature(new Phenix(false, 30, enclosure));
+		enclosure.addCreature(new Phenix(false, 15, enclosure));
+		enclosure.addCreature(new Phenix(true, 14, enclosure));
+		this.zoo.addNewEnclosure(enclosure); 			// 9
+		
+		// Start all creature threads for the zoo (threads in enclosures are already started)
+		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
+			for (Creature creatureTh : enclosureC.getPresentCreatures()) {
+				creatureTh.startLife();
+			}
+		}
+				
 	}
 	
 	/* ------------------- SET UP FOR TESTING ----------------- */

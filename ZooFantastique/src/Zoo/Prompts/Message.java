@@ -2,6 +2,7 @@ package Zoo.Prompts;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import Zoo.FantasticZoo;
 import Zoo.ZooMaster;
 
 
@@ -71,6 +72,15 @@ public class Message {
 		System.out.println();
 //		in.close();
 		return command;
+	}
+	
+	public static FantasticZoo zooCreation() {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Please name your fantastic Zoo : ");
+		String name = in.nextLine();
+		ZooMaster master = Message.characterCreation();
+		return new FantasticZoo(name, master, 15);
+		
 	}
 	
 	public static ZooMaster characterCreation() {
