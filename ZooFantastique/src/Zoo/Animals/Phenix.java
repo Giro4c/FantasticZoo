@@ -12,7 +12,7 @@ public class Phenix extends Oviparous implements CanFly, Revivable {
     public static final int maxWeight = 10;
 
     public Phenix(boolean isMale, int age, Enclosure enclosure) {
-		super(null, isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
+		super(Phenix.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight);
 		this.setSpecie(this.getClass().getName());
         
         this.setHeightMin(minHeight);
@@ -22,7 +22,7 @@ public class Phenix extends Oviparous implements CanFly, Revivable {
 	}
 
 	public Phenix(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, isMale, weight, height, age, enclosure);
+		super(Phenix.class.getSimpleName(), isMale, weight, height, age, enclosure);
 		this.setSpecie(this.getClass().getName());
         
         this.setHeightMin(minHeight);
@@ -32,7 +32,7 @@ public class Phenix extends Oviparous implements CanFly, Revivable {
 	}
 
 	public Phenix(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(null, name, isMale, weight, height, age, enclosure);
+		super(Phenix.class.getSimpleName(), name, isMale, weight, height, age, enclosure);
 		this.setSpecie(this.getClass().getName());
         
         this.setHeightMin(minHeight);

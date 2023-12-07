@@ -57,7 +57,6 @@ public class Desease {
                 	if(canBeTreatedAlone&&currentTime[0]==this.time) {break;}
                 	getAnimal().becomeMoreSick();
                     Thread.sleep(15000 / severity);
-//                    System.out.println(animal.getName() + " est malade depuis " + (currentTime[0]) + " secondes");
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
@@ -89,9 +88,9 @@ public class Desease {
      */ 
     public void remove(Creature creature) {
         if (this.canBeTreatedWithMedecine== true && !isTreated) {
-                isTreated = true;
                 deseaseThread.interrupt();
-                System.out.println(this.animal.getName() + " n'es plus malade !"); 
+                System.out.println(this.animal.getName() + " n'es plus malade !");
+                isTreated = true;
             }
         else {
             System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");

@@ -1,5 +1,7 @@
 package Zoo.Animals;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -57,7 +59,7 @@ public class Mammal extends Creature {
             public void run() {
                 while (getGestationProgress() <= getGestationTime()) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(10);
                         setGestationProgress(getGestationProgress()+1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -67,20 +69,26 @@ public class Mammal extends Creature {
             }
         });
 		incubationThread.start();
-	}
-
-
-	public Creature giveBirth() {
+	}	
+	public void giveBirth() {
 		this.getEnclosure().setCurrentNumberCreatures(this.getEnclosure().getCurrentNumberCreatures()-1);
 		this.gestationProgress = 0;
 		Random random = new Random();
 		boolean randomGender = random.nextBoolean();
 		// A changer
-	    Mammal newborn = new Mammal(this.getSpecie(), randomGender, 0, this.getEnclosure(), this.getHeightMin(), this.getHeightMax(), this.getWeightMin(), this.getWeightMax(), this.gestationTime, 0);
-		this.getEnclosure().addCreature(newborn);
+		Class<? extends Mammal> classMere = this.getClass();
+
+        try {
+            Constructor<? extends Mammal> constructeur = classMere.getConstructor(boolean.class, int.class, Enclosure.class);
+
+            Mammal newBorn = constructeur.newInstance(randomGender, 0, this.getEnclosure());
+
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+	    //Mammal newborn = new Mammal(this.getSpecie(), randomGender, 0, this.getEnclosure(), this.getHeightMin(), this.getHeightMax(), this.getWeightMin(), this.getWeightMax(), this.gestationTime, 0);
 		System.out.println("A new "+ this.getSpecie()+ " is born !");
 		System.out.println("There is now "+ this.getEnclosure().getCurrentNumberCreatures() + " creatures in the enclosure !");
-		return newborn;
 	}
 	
 	public void reproduction(){
