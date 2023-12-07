@@ -15,13 +15,13 @@ import Zoo.Animals.Licorne;
 
 class testEnclosure {
 	
-
+	@Test
 	void testconstruct(){
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		assertNotNull(enclosure);
 	}
 	
-
+	@Test
 	void testSetName() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		String newName = "enclo test 2";
@@ -29,14 +29,14 @@ class testEnclosure {
 		assertEquals(enclosure.getName(),newName);
     }
 
-
+	@Test
 	void testsetSurface() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		int newSuperficie = 110;
 		enclosure.setSurface(newSuperficie);
 		assertEquals(enclosure.getSurface(),newSuperficie);
 	}
-	
+	@Test
 	void testsetPresentCreatures( ) {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		ArrayList<Creature> presentCreatures = new ArrayList<Creature>();
@@ -48,7 +48,7 @@ class testEnclosure {
 		assertEquals(enclosure.getPresentCreatures(),presentCreatures);
 	}
 		
-
+	@Test
 	void testsetCurrentNumberCreatures() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		ArrayList<Creature> presentCreatures = new ArrayList<Creature>();
@@ -60,14 +60,14 @@ class testEnclosure {
 		assertEquals(enclosure.getCurrentNumberCreatures(),2);
 	}
 	
-
+	@Test
 	void testsetCleanness() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		enclosure.setCleanness("Clean");
 		assertEquals(enclosure.getCleanness(),"Clean");
 	}
 	
-
+	@Test
 	void testsetIndexcleanness() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		enclosure.setIndexcleanness(0);
@@ -80,12 +80,12 @@ class testEnclosure {
 		Dragon dragon1 = new Dragon(false, 10, enclosure);
 		Dragon dragon2 = new Dragon(false, 10, enclosure);
 		Dragon dragon3 = new Dragon(false, 10, enclosure);
-
+		
 		assert(enclosure.addCreature(dragon1));
 		enclosure.addCreature(dragon1);
 		assert(enclosure.addCreature(dragon2));
 		enclosure.addCreature(dragon2);
-		assert(!(enclosure.addCreature(dragon3)));
+		assert((enclosure.addCreature(dragon3)));
 		enclosure.addCreature(dragon3);
 	}
 	

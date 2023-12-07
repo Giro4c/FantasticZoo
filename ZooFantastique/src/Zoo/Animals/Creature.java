@@ -98,14 +98,7 @@ public class Creature implements Runnable{
 		this.weight = weight;
 		this.height = height;
 		this.age = age;
-		
-		if (enclosure != null && enclosure.addCreature(this)) {
-			this.enclosure = enclosure;
-		}
-		else {
-			this.enclosure = null;
-		}
-		
+		this.enclosure = enclosure;		
 		// Default values
 		this.desease = null;
 		this.isSick = false;
@@ -129,12 +122,7 @@ public class Creature implements Runnable{
 			this.weight = weight;
 			this.height = height;
 			this.age = age;
-			if (enclosure != null && enclosure.addCreature(this)) {
 			this.enclosure = enclosure;
-			}
-			else {
-				this.enclosure = null;
-			}
 			
 			// Default values
 			this.desease = null;
@@ -160,12 +148,7 @@ public class Creature implements Runnable{
 			this.name = ListNames.assignRandomNameFemale();
 		}
 		this.age = age;
-		if (enclosure != null && enclosure.addCreature(this)) {
-			this.enclosure = enclosure;
-		}
-		else {
-			this.enclosure = null;
-		}
+		this.enclosure = enclosure;
 		this.heightMin = heightMin;
 		this.heightMax = heightMax;
 		this.weightMin = weightMin;

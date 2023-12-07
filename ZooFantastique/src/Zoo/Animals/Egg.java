@@ -77,7 +77,7 @@ public class Egg {
 		            Constructor<? extends Oviparous> constructeur = classMere.getConstructor(boolean.class, int.class, Enclosure.class);
 
 		            Oviparous newBorn = constructeur.newInstance(randomGender, 0, enclosure);
-
+		            enclosure.addCreature(newBorn);
 		        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
 		            e.printStackTrace();
 		        }

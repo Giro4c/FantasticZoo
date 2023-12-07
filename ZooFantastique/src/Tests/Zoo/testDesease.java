@@ -22,6 +22,7 @@ class testDesease {
 	void testAnimalHasdesease() {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Kraken c1 = new Kraken(false, 2, enclo);
+		enclo.addCreature(c1);
 		Desease maladie = new Desease(1,2,3,c1);
 		assertTrue(c1.isSick);
 		assertEquals(c1.getDesease(), maladie);
@@ -31,6 +32,7 @@ class testDesease {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Nymphe c3 = new Nymphe(false, 3, enclo);
 		Desease maladie = new Desease(1,2,3,c3);
+		enclo.addCreature(c3);
 		assertTrue(c3.isSick);
 		assertEquals(c3.getDesease(), maladie);
 		c3.treat();
@@ -49,6 +51,7 @@ class testDesease {
 	void testAnimalBecomeMoreSick() {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Sirene c2 = new Sirene(false, 2, enclo);
+		enclo.addCreature(c2);
 		Desease maladie = new Desease(1,1,2,c2);
 		assertTrue(c2.isSick);
 		assertEquals(c2.getDesease(), maladie);
@@ -66,6 +69,7 @@ class testDesease {
 	void testSeverity3() {
 		Enclosure enclo = new Enclosure("enlo", 100, 10, "propre");
 		Dragon c2 = new Dragon(false, 2, enclo);
+		enclo.addCreature(c2);
 		Desease maladie = new Desease(1,3,1,c2);
 		assertTrue(c2.isSick);
 		assertEquals(c2.getDesease(), maladie);
