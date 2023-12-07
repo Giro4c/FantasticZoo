@@ -47,16 +47,26 @@ public class ZooMaster {
 	}
 	
 	public void cleanEnclosure(Enclosure enclosure) {
+		enclosure.clean();
 		System.out.println("The ZooMaster " + this.name + " is cleaning the " + enclosure.getName());
 	}
 	
 	public void feedCreaturesInEnclosure(Enclosure enclosure) {
+		enclosure.feedCreatures();
 		System.out.println("The ZooMaster " + this.name + " is feeding the creatures in the" + enclosure.getName());
 	}
 	
 	public void tranfertCreature(Enclosure prevEnclosure, int indexInEnclosure, Enclosure newEnclosure) {
-		System.out.println("The ZooMaster " + this.name + " is mooving a creature of the " + 
-				prevEnclosure.getName() + " to the " + newEnclosure.getName());
+		if ( newEnclosure.getMaxNumberCreatures() < newEnclosure.getCurrentNumberCreatures()) {
+			newEnclosure.addCreature(prevEnclosure.getPresentCreatures().get(indexInEnclosure));
+			prevEnclosure.getPresentCreatures().get(indexInEnclosure).delete();
+		
+			System.out.println("The ZooMaster " + this.name + " is mooving a creature of the " + 
+					prevEnclosure.getName() + " to the " + newEnclosure.getName());
+		}
+		else {
+			System.out.println("You can't transfert a creature in this enclosure beacause he is full");
+		}
 	}
 	
 	
