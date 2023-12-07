@@ -4,6 +4,7 @@ import java.util.Random;
 import Zoo.Desease;
 import Zoo.Enclosure;
 import Zoo.Animals.*;
+import Zoo.Prompts.Message;
 
 public class Creature implements Runnable{
 	
@@ -27,6 +28,8 @@ public class Creature implements Runnable{
 	
 	public void startLife() {
 		this.lifeThread.start();
+//		System.out.println(this.lifeThread.isAlive());
+//		System.out.println(this.toString());
 	}
 	private void endLife() {
 		this.lifeThread.interrupt();
@@ -98,13 +101,7 @@ public class Creature implements Runnable{
 		this.weight = weight;
 		this.height = height;
 		this.age = age;
-		
-		if (enclosure != null && enclosure.addCreature(this)) {
-			this.enclosure = enclosure;
-		}
-		else {
-			this.enclosure = null;
-		}
+		this.enclosure = enclosure;
 		
 		// Default values
 		this.desease = null;
@@ -129,12 +126,7 @@ public class Creature implements Runnable{
 			this.weight = weight;
 			this.height = height;
 			this.age = age;
-			if (enclosure != null && enclosure.addCreature(this)) {
 			this.enclosure = enclosure;
-			}
-			else {
-				this.enclosure = null;
-			}
 			
 			// Default values
 			this.desease = null;
@@ -160,12 +152,7 @@ public class Creature implements Runnable{
 			this.name = ListNames.assignRandomNameFemale();
 		}
 		this.age = age;
-		if (enclosure != null && enclosure.addCreature(this)) {
-			this.enclosure = enclosure;
-		}
-		else {
-			this.enclosure = null;
-		}
+		this.enclosure = enclosure;
 		this.heightMin = heightMin;
 		this.heightMax = heightMax;
 		this.weightMin = weightMin;
@@ -184,6 +171,7 @@ public class Creature implements Runnable{
 		this.lifeThread = new Thread(this);
 	}
 	
+	// Will be stopped when the creature is deleted or dies
 	@Override 
 	public void run() {
 	    
@@ -191,48 +179,48 @@ public class Creature implements Runnable{
 	    
 	    while(true) { 
 	        
-	        if ( HUNGER_STATES[4].equals(this.indicatorHunger) || HEALTH_STATES[4].equals(this.indicatorHealth) ) { // Checks that the creature is not dead
-	            this.die();
-	            break;
-	        }
-	        
 	        try {
 	            synchronized (this) {
-	                int randomNumberSleep = random.nextInt(15001) + 10000;
+	                int randomNumberSleep = random.nextInt(5001) + 5000;
 	                this.wait(randomNumberSleep); // Sleeps the thread between 15 and 25 seconds
 	            }
 	        } catch (InterruptedException e) {
-	            e.printStackTrace();
+	            break; // Thread only interrupted if creature dies or is deleted
+	        }
+	        this.getOlder();
+	        
+	        int RandomNumber; // Number used for the probabilities.
+	        
+	        // Determines if creature must become sick
+	        if (!this.isSick) {
+	        	RandomNumber = random.nextInt(100);
+	        	if (RandomNumber <= this.percentageSick()) { // ?% chance that the creature gets sick
+		        	this.desease = new Desease(1, random.nextInt(1, 4), random.nextInt(1, 6), this);
+		        	this.isSick = true;
+		        }
 	        }
 	        
-	        int RandomNumber = random.nextInt(100); // Generates a random number between 0 and 100
-	        
-	        if ( RandomNumber > (1 - this.percentageSick()) && !(this.isSick)) { // % chance that the creature gets sick
-	        	this.desease = new Desease(1, random.nextInt(3), random.nextInt(5), this);
-	        	this.isSick = true;
-	        }
-	        
-	        if ( RandomNumber < 5) { // 5% chance that the creature get older
-	            this.getOlder();
-	        }
-	            
-	        if ( this.isSleeping ) { // If it is sleeping
-	            if ( RandomNumber < 15) { // 15% chance that the creature wakes up
+	        // If it's sleeping, do something ?
+	        if (this.isSleeping) { // If it is sleeping
+	        	RandomNumber = random.nextInt(100);
+	        	if ( RandomNumber < 20) { // 20% chance that the creature wakes up
 	                this.wake();
+//	                System.out.println("Wake");
 	            }
 	        }
+	        // If it's awake, do something ?
 	        else { // If it is not sleeping
-	            if ( RandomNumber < 10) { // 10% chance that the creature falls asleep
+	        	RandomNumber = random.nextInt(100);
+	        	if ( RandomNumber < 8) { // 8% chance that the creature falls asleep (because 0 included)
 	                this.sleep();
+//	                System.out.println("Sleep");
 	            }
-	            if ( RandomNumber > 10 && RandomNumber < 18) { // 8% chance that the creature eats
-	                this.eat();
-	            }
-	            if ( RandomNumber > 18 && RandomNumber < 20) { // 2% chance that the creature emits a sound
+	            if ( RandomNumber >= 8 && RandomNumber < 15) { // 7% chance that the creature emits a sound
 	                this.emitSound();
 	            }
-	            if ( RandomNumber > 20 && RandomNumber < 25) { // 5% chance that the creature gets hungry
+	            if ( RandomNumber >= 15 && RandomNumber < 30) { // 15% chance that the creature gets hungry
 	                this.becomeMoreHungry();
+//	                System.out.println("Get Hungry");
 	            }
 	        }
 	    }
@@ -422,7 +410,7 @@ public class Creature implements Runnable{
 	}
 	
 	public void emitSound() {
-		System.out.println("The creature " + this.name + "emit a sound !");
+		System.out.println("The " + this.specie + " " + this.name + " emits a sound !");
 	}
 	//fonction qui permet à un animal de se soigner 
 	public void heal() {
@@ -458,19 +446,13 @@ public class Creature implements Runnable{
 	}
 	
 	public void delete() {
+		System.out.println(Message.ANSI_BLUE + this.enclosure + Message.ANSI_RESET);
 		this.enclosure.removeCreature(this);
 		this.enclosure = null;
 		this.desease = null;
 		if(this.desease!=null) {this.desease.setAnimal(null);}
 		this.endLife();
 		System.gc();
-	}
-	
-	/**
-	 * @throws CloneNotSupportedException
-	 */
-	public Creature clone() throws CloneNotSupportedException {
-		return (Creature) super.clone();
 	}
 
 

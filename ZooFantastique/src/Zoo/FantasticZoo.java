@@ -16,6 +16,11 @@ public class FantasticZoo {
 	public static void main(String[] args) {
 		GameEngine game = new GameEngine();
 		game.init();
+		System.out.println();
+		System.out.println();
+		game.getDeadCreatures();
+		System.out.println();
+		System.out.println();
 		while (true) {
 			game.showChoices();
 			try {

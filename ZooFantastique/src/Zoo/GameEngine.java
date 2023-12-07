@@ -76,6 +76,7 @@ public class GameEngine {
 	
 	public void init() {
 		this.zoo = Message.zooCreation();
+		
 		// Create 10 enclosures
 			// Enclosure 1
 		Enclosure enclosure = new Enclosure("Savanaria", 150, 10, Enclosure.CLEANNESS_STATES[0]);
@@ -134,14 +135,38 @@ public class GameEngine {
 		
 		// Start all creature threads for the zoo (threads in enclosures are already started)
 		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
-			for (Creature creatureTh : enclosureC.getPresentCreatures()) {
-				creatureTh.startLife();
+			for (int indexCreature = 0; indexCreature < enclosureC.getPresentCreatures().size(); ++indexCreature) {
+				try {
+					enclosureC.getPresentCreatures().get(indexCreature).startLife();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 		}
+		// Clear screen of all prints done by addCreature
+		// Only works on terminal. Does not work on IDE.
+		System.out.print("\033[H\033[2J");  
+	    System.out.flush();
 				
 	}
 	
 	/* ------------------- SET UP FOR TESTING ----------------- */
+	
+	public void getDeadCreatures() {
+		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
+			for (Creature creature : enclosureC.getPresentCreatures()) {
+				if (creature.getEnclosure() == null) {
+					System.out.println(creature.getSpecie() + " " + creature.getName());
+				}
+			}
+		}
+		System.out.print(Message.ANSI_CYAN);
+		for (Creature creature : this.zoo.getExistingEnclosures().get(2).getPresentCreatures()) {
+			System.out.println(creature.getSpecie() + " " + creature.getName());
+		}
+		System.out.print(Message.ANSI_RESET);
+	}
 	
 	public void initForTests() {
 		// Initialize enclosures
