@@ -193,7 +193,7 @@ public class Creature implements Runnable{
 	        
 	        // Determines if creature must become sick
 	        if (!this.isSick) {
-	        	RandomNumber = random.nextInt(100);
+	        	RandomNumber = random.nextInt(250);
 	        	if (RandomNumber <= this.percentageSick()) { // ?% chance that the creature gets sick
 		        	this.desease = new Desease(1, random.nextInt(1, 4), random.nextInt(1, 6), this);
 		        	this.isSick = true;
@@ -215,10 +215,10 @@ public class Creature implements Runnable{
 	                this.sleep();
 //	                System.out.println("Sleep");
 	            }
-	            if ( RandomNumber >= 8 && RandomNumber < 15) { // 7% chance that the creature emits a sound
+	            if ( RandomNumber >= 8 && RandomNumber < 11) { // 3% chance that the creature emits a sound
 	                this.emitSound();
 	            }
-	            if ( RandomNumber >= 15 && RandomNumber < 30) { // 15% chance that the creature gets hungry
+	            if ( RandomNumber >= 11 && RandomNumber < 26) { // 15% chance that the creature gets hungry
 	                this.becomeMoreHungry();
 //	                System.out.println("Get Hungry");
 	            }
@@ -348,6 +348,7 @@ public class Creature implements Runnable{
 	public void becomeMoreSick(){
 		if(this.indicatorHealth.equals("Very Sick")){
 			this.indicatorHealth="Dead";
+//			System.out.println("Death by sickness.");
 			this.die();
 		}
 		if(this.indicatorHealth.equals("Sick")){
@@ -446,11 +447,14 @@ public class Creature implements Runnable{
 	}
 	
 	public void delete() {
-		System.out.println(Message.ANSI_BLUE + this.enclosure + Message.ANSI_RESET);
-		this.enclosure.removeCreature(this);
-		this.enclosure = null;
-		this.desease = null;
-		if(this.desease!=null) {this.desease.setAnimal(null);}
+		if (this.enclosure != null) {
+			this.enclosure.removeCreature(this);
+			this.enclosure = null;
+		}
+		if (this.desease != null) {
+			this.desease.setAnimal(null);
+			this.desease = null;
+		}
 		this.endLife();
 		System.gc();
 	}

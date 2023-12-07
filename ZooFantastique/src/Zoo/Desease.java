@@ -49,15 +49,18 @@ public class Desease {
      * - Severity 1 heals on its own.
      */
     public void deseaseAct() {
-        final int[] currentTime = {0};
+    	final int[] currentTime = {0};
         deseaseThread = new Thread(() -> {
-            while (!isTreated && !Thread.currentThread().isInterrupted()&& this.animal.getIndicatorHealth()!="Dead") {
-                try {
+            while (!isTreated && !Thread.currentThread().isInterrupted()) {
+                if (this.animal == null) {
+                	Thread.currentThread().interrupt();
+                    break;
+                }
+            	try {
                 	currentTime[0] += 1;
-                	if(canBeTreatedAlone&&currentTime[0]==this.time) {break;}
+                	if (canBeTreatedAlone && currentTime[0] == this.time) break;
                 	getAnimal().becomeMoreSick();
                     Thread.sleep(15000 / severity);
-//                    System.out.println(animal.getName() + " est malade depuis " + (currentTime[0]) + " secondes");
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
@@ -71,7 +74,7 @@ public class Desease {
     /**
      * Destroys the disease, removing it from the affected animal.
      */
-    private void destroyDesease() {
+    public void destroyDesease() {
         if (this.animal != null) {
             this.animal.setIsSick(false);
             this.animal.removeDesease();
@@ -88,11 +91,11 @@ public class Desease {
      * @param creature The creature to remove the disease from.
      */ 
     public void remove(Creature creature) {
-        if (this.canBeTreatedWithMedecine== true && !isTreated) {
+        if (this.canBeTreatedWithMedecine == true && !isTreated) {
                 isTreated = true;
                 deseaseThread.interrupt();
                 System.out.println(this.animal.getName() + " n'es plus malade !"); 
-            }
+        }
         else {
             System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");
         }
