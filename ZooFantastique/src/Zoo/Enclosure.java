@@ -224,8 +224,9 @@ public class Enclosure implements Runnable {
     	else {
     		return false;
     	}
-    }
     
+    
+    }
     public boolean checkCompatibilité(Creature creature) {
 		if ( this.presentCreatures.size() == 0) {
 			return true;
@@ -235,7 +236,7 @@ public class Enclosure implements Runnable {
 		}
 		else {
 			return false;
-		}
+		}    
     }
 
     /**
@@ -278,11 +279,13 @@ public class Enclosure implements Runnable {
 			}
 		}
 	}
-
     /**
      * Feed the creatures in the enclosure.
      */
     public void feedCreatures() {
+    	for(Creature creature : this.presentCreatures) {
+    		creature.eat();
+    	}
         System.out.println("The creatures in the " + this.getName() + " were fed.");
     }
 
@@ -290,10 +293,15 @@ public class Enclosure implements Runnable {
      * Clean the enclosure to maintain hygiene.
      */
     public void clean() {
-        if(this.cleanness.equals("Normal")) {this.cleanness = "Clean";}
-		if(this.cleanness.equals("Dirty")) {this.cleanness = "Normal";}
-		if(this.cleanness.equals("Moundir's Room")) {this.cleanness = "Dirty";}
-	    System.out.println("The enclosure " + this.getName() + " was cleaned !");
+    	if(this.canBeCleaned()) {
+            if(this.cleanness.equals("Normal")) {this.cleanness = "Clean";}
+    		if(this.cleanness.equals("Dirty")) {this.cleanness = "Normal";}
+    		if(this.cleanness.equals("Moundir's Room")) {this.cleanness = "Dirty";}
+    	    System.out.println("The enclosure " + this.getName() + " was cleaned !");	
+    	}
+    	else {
+    		System.out.println("The enclosure " + this.getName() + " cannot be cleaned, there are animals");
+    	}
     }
 
 
@@ -326,32 +334,37 @@ public class Enclosure implements Runnable {
 					females.add(currentCreature);
 
 				}
+			}
 				//Si le nombre de femelles est strictement supérieur à 0
 				if (females.size()>0 && theresmale) {
 					int randomIndex = rand.nextInt(females.size());
 					//On récupère une femelle aléatoire dans la liste
 					Creature pregnantFemale = females.get(randomIndex);
 					//La femelle choisis aléatoirement devient enceinte
-					
+					System.out.println("ouiii");
 					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
 						Oviparous female = (Oviparous) pregnantFemale;
 						eggs.add(female.layEgg());
-						++currentNumberCreatures;
 					}
 					if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
 						Mammal female = (Mammal) pregnantFemale;
 						female.reproduction();
-						//On augmente le nombre de créatures dans l'enclos de 1
-						++currentNumberCreatures;
 					}
 				}
 			}
-		}
         else {
             System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
         }
     }
-	
+	public boolean canBeCleaned() {
+		if(this.presentCreatures.isEmpty()) {
+			return true;
+		}
+		else {
+			System.out.println("The enclosure " + this.getName() + " cannot be cleaned, there are animals");
+			return false;
+		}
+	}
 	public void becomeLessClean() {
 		if(this.cleanness.equals("Dirty")) {this.cleanness = "Moundir's Room";}
 		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}

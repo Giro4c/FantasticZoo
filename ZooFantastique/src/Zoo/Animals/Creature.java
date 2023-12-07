@@ -330,9 +330,6 @@ public class Creature implements Runnable{
 			this.indicatorHunger = "Hungry";
 		}
 		System.out.println(this.getSpecie() + " " + this.getName() + " eats.");
-		if(this.indicatorHunger.equals("Normal")) {this.indicatorHunger = "Full";}
-		if(this.indicatorHunger.equals("Hungry")) {this.indicatorHunger = "Normal";}
-		if(this.indicatorHunger.equals("Famished")) {this.indicatorHunger = "Hungry";}
 	}
 	
 	public void emitSound() {

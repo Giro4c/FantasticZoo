@@ -53,7 +53,6 @@ public class Egg {
                     try {
                         Thread.sleep(1000);
                         incubationProgress++;
-                        System.out.println("L'oeuf est à : "+incubationProgress+" temps d'incubation");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -66,8 +65,6 @@ public class Egg {
 	public Oviparous hatch() {
 		synchronized (this) {
 			if(getIncubationProgress()==getIncubationTime()) {
-				System.out.println(mother.getHeightMin()+ "  "+ mother.getHeightMax());
-				enclosure.setCurrentNumberCreatures(enclosure.getCurrentNumberCreatures()-1);
 				Random random = new Random();
 				boolean randomBoolean = random.nextBoolean();
 				int randomHeight = random.nextInt(mother.getHeightMin(), mother.getHeightMax());
@@ -77,8 +74,6 @@ public class Egg {
 			    String newbornName = scanner.nextLine();
 				Oviparous newoviparous = new Oviparous(mother.getSpecie(), newbornName, randomBoolean, randomWeight, randomHeight, 0, "Full", false, "Perfect", this.enclosure);
 				this.enclosure.removeEgg(this);
-				this.enclosure.addCreature(newoviparous);
-				//System.out.println("Un nouvelle oeuf apparait !");
 				System.out.println("An eggs as hatch a new creature is born !");
 				System.out.println("There is now : " + this.enclosure.getCurrentNumberCreatures() + " creatures in the enclosure !");
 				return newoviparous;	

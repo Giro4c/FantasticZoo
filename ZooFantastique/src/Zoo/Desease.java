@@ -22,6 +22,7 @@ public class Desease {
      */
     public Desease(int damage, int severity, int time, Creature animal) {
         this.name = "a implementer";
+
         this.damage = damage;
         this.severity = severity;
         this.time = time;
@@ -55,7 +56,7 @@ public class Desease {
                 	currentTime[0] += 1;
                 	if(canBeTreatedAlone&&currentTime[0]==this.time) {break;}
                 	getAnimal().becomeMoreSick();
-                    Thread.sleep(1500 / severity);
+                    Thread.sleep(15000 / severity);
                     System.out.println(animal.getName() + " est malade depuis " + (currentTime[0]) + " secondes");
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -81,16 +82,18 @@ public class Desease {
     public String getName() {
         return name;
     }
+    
     /**
      * Removes the disease from the creature's list of diseases.
      * @param creature The creature to remove the disease from.
      */ 
     public void remove(Creature creature) {
-        if (this.canBeTreatedWithMedecine== true&& !isTreated) {
+        if (this.canBeTreatedWithMedecine== true && !isTreated) {
                 isTreated = true;
                 deseaseThread.interrupt();
                 System.out.println(this.animal.getName() + " n'es plus malade !"); 
-        } else {
+            }
+        else {
             System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");
         }
     }
