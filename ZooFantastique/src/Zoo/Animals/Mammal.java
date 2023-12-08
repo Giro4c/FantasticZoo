@@ -82,6 +82,7 @@ public class Mammal extends Creature {
             Constructor<? extends Mammal> constructeur = classMere.getConstructor(boolean.class, int.class, Enclosure.class);
 
             Mammal newBorn = constructeur.newInstance(randomGender, 0, this.getEnclosure());
+            newBorn.startLife();
             this.getEnclosure().addCreature(newBorn);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();

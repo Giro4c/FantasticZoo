@@ -28,8 +28,6 @@ public class Creature implements Runnable{
 	
 	public void startLife() {
 		this.lifeThread.start();
-//		System.out.println(this.lifeThread.isAlive());
-//		System.out.println(this.toString());
 	}
 	private void endLife() {
 		this.lifeThread.interrupt();
@@ -461,6 +459,13 @@ public class Creature implements Runnable{
 		if (this.desease != null) {
 			this.desease.setAnimal(null);
 			this.desease = null;
+		}
+		// Put back the name in the static list for female or male creatures
+		if (this.isMale) {
+			ListNames.addNameMale(this.name);
+		}
+		else {
+			ListNames.addNameFemale(this.name);
 		}
 		this.endLife();
 		System.gc();

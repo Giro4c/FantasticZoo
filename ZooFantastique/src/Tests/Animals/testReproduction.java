@@ -14,8 +14,9 @@ import Zoo.Animals.Nymphe;
 import Zoo.Animals.Oviparous;
 
 class testReproduction {
+	
 	@Test
-	void ajoutMammalApresReproduction() {
+	void testAjoutMammalApresReproduction() {
 	    Enclosure m = new Enclosure("Test mammals enclo", 100, 10, "Clean");
 	    Nymphe m1 = new Nymphe(false, 30, m);
         Nymphe m2 = new Nymphe(true, 30, m);
@@ -35,8 +36,9 @@ class testReproduction {
 	    }
 	    assertEquals(m.getCurrentNumberCreatures(), 3);
 	}
+	
 	@Test
-	void ajoutOviparousApresReproduction() {
+	void testAjoutOviparousApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
 		Kraken oviparous1 = new Kraken(true, 50, o);
 		Kraken oviparous2 = new Kraken(false, 45, o);
@@ -64,8 +66,9 @@ class testReproduction {
 	    }
 	    assertEquals(o.getCurrentNumberCreatures(), 3);
 	}
+	
 	@Test
-	void ajoutOeufDansEnclos() {
+	void testAjoutOeufDansEnclos() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
 		Kraken oviparous1 = new Kraken(true, 50, o);
 		Kraken oviparous2 = new Kraken(false, 45, 28, 4, o);
@@ -75,7 +78,7 @@ class testReproduction {
 	    assertEquals(o.getEggs().size(), 1);
 	}
 	@Test
-	void ajoutDeLaBonneCreatureApresReproduction() {
+	void testAjoutDeLaBonneCreatureApresReproduction() {
 		Enclosure o = new Enclosure("Test oviparous Enclosure", 100, 10, "Clean");
 		Kraken oviparous1 = new Kraken(true, 50, o);
 		Kraken oviparous2 = new Kraken(false, 45, o);

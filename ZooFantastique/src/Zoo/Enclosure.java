@@ -63,11 +63,14 @@ public class Enclosure implements Runnable {
                 break; // Thread only interrupted when enclosure is deleted
             }
             int RandomNumber = random.nextInt(100);
-            if ( RandomNumber < 5) { // 5% chance that the enclosure gets dirty 
+            if (RandomNumber < 5) { // 5% chance that the enclosure gets dirty 
                 if(this.getIndexcleanness() < CLEANNESS_STATES.length-1) {
                     this.setIndexcleanness(this.getIndexcleanness()+1);
                     System.out.println("The enclosure " + this.getName() + " gets dirty !");
                 }
+            }
+            else if (RandomNumber < 10) { // 5% chance that a reproduction try to happen in the enclosure
+            	this.reproduction();
             }
         }
     }
@@ -330,7 +333,7 @@ public class Enclosure implements Runnable {
      */
     public void reproduction() {
         //Vérifie si le nombre de créatures est strictement inférieur au nombre de créatures maximum dans l'enclos.
-		if(currentNumberCreatures<maxNumberCreatures){
+		if(currentNumberCreatures < maxNumberCreatures){
 			Boolean theresmale = false;
 			ArrayList<Creature> females = new ArrayList<>();
 			Random rand = new Random();

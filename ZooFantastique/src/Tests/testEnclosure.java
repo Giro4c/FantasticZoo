@@ -16,7 +16,7 @@ import Zoo.Animals.Licorne;
 class testEnclosure {
 	
 	@Test
-	void testconstruct(){
+	void testConstruct(){
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		assertNotNull(enclosure);
 	}
@@ -30,14 +30,14 @@ class testEnclosure {
     }
 
 	@Test
-	void testsetSurface() {
+	void testSetSurface() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		int newSuperficie = 110;
 		enclosure.setSurface(newSuperficie);
 		assertEquals(enclosure.getSurface(),newSuperficie);
 	}
 	@Test
-	void testsetPresentCreatures( ) {
+	void testSetPresentCreatures( ) {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		ArrayList<Creature> presentCreatures = new ArrayList<Creature>();
 		Dragon dragon1 = new Dragon(false, 10, enclosure);
@@ -49,7 +49,7 @@ class testEnclosure {
 	}
 		
 	@Test
-	void testsetCurrentNumberCreatures() {
+	void testSetCurrentNumberCreatures() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		ArrayList<Creature> presentCreatures = new ArrayList<Creature>();
 		Dragon dragon1 = new Dragon(false, 10, enclosure);
@@ -61,21 +61,22 @@ class testEnclosure {
 	}
 	
 	@Test
-	void testsetCleanness() {
+	void testSetCleanness() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		enclosure.setCleanness("Clean");
 		assertEquals(enclosure.getCleanness(),"Clean");
 	}
 	
 	@Test
-	void testsetIndexcleanness() {
+	void testSetIndexcleanness() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		enclosure.setIndexcleanness(0);
 		assertEquals(enclosure.getCleanness(),"Clean");
 		
 	}
+	
 	@Test
-	void testaddCreature() {
+	void testAddCreature() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		Dragon dragon1 = new Dragon(false, 10, enclosure);
 		Dragon dragon2 = new Dragon(false, 10, enclosure);
@@ -90,26 +91,30 @@ class testEnclosure {
 	}
 	
 	
-
-	void becomeMoreClean() {
+	@Test
+	void testBecomeMoreClean() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Dirty");
 		enclosure.clean();
 		assertEquals(enclosure.getCleanness(), "Normal");
 	}
 	
-	void becomeMoreDirty() {
+	@Test
+	void testBecomeMoreDirty() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
 		enclosure.becomeLessClean();
 		assertEquals(enclosure.getCleanness(), "Dirty");
 	}
-	void feedingAnimals() {
+	
+	@Test
+	void testFeedingAnimals() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
 		Licorne c3 = new Licorne(false, 0, enclosure);
 		enclosure.feedCreatures();
 		assertEquals(c3.getIndicatorHunger(), "Full");
 	}
 	
-	void treatAnimals() {
+	@Test
+	void testTreatAnimals() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
 		Kraken c4 = new Kraken(false, 0, enclosure);
 		Kraken c5 = new Kraken(false, 0, enclosure);
