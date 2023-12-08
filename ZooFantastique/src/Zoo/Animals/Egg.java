@@ -39,7 +39,7 @@ public class Egg {
 
 	@Override
 	public String toString() {
-		return "Egg [incubationTime=" + incubationTime + ", incubationProgress=" + incubationProgress + "]";
+		return "The Egg of " + this.mother.getName()+" incubationTime: " + incubationTime + ", incubationProgress: " + incubationProgress + "the enclosure: ";
 	}
 	
 	public Enclosure getEnclosure(Egg egg) {

@@ -387,9 +387,16 @@ public class Creature implements Runnable{
 	
 	@Override
 	public String toString() {
-		return "Creature [specie=" + specie + ", isMale=" + isMale + ", weight=" + weight + ", height=" + height
-				+ ", age=" + age + ", indicatorHunger=" + indicatorHunger + ", isSleeping=" + isSleeping
-				+ ", indicatorHealth=" + indicatorHealth + "]";
+		String genre;
+		String sleep;
+		if (isMale==true) {genre = "Man";}
+		else {genre = "Woman";}
+		if(isSleeping==true) {sleep= "sleeping";}
+		else {sleep="not sleeping";}
+		return "The Creature " + name + ", of species " + specie + ", is a " + genre + ", weighing " + weight + ", and measuring " + height +
+		        ", at the age of " + age + " years. Its hunger indicator is " + indicatorHunger + ", and it is " + sleep +
+		        ". Its health indicator is: " + indicatorHealth;
+
 	}
 
 	//fonction qui permet à un animal d'être traité de la maladie

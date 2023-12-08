@@ -12,6 +12,7 @@ public class Desease {
     private Creature animal;
     private boolean isTreated = false;
     public Thread deseaseThread;
+    private int basicTime = 15000;
     /**
      * Initializes a new instance of the Desease class.
      * @param name The name of the disease.
@@ -59,8 +60,9 @@ public class Desease {
             	try {
                 	currentTime[0] += 1;
                 	if (canBeTreatedAlone && currentTime[0] == this.time) break;
-                	getAnimal().becomeMoreSick();
-                    Thread.sleep(15000 / severity);
+                	if(getAnimal() != null) {getAnimal().becomeMoreSick();}	
+                	//The time the disease acts decreases with the degree of severity
+                    Thread.sleep(basicTime / severity);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;

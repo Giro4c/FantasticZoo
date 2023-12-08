@@ -39,7 +39,10 @@ public class ZooMaster {
 
 	@Override
 	public String toString() {
-		return "ZooMaster [name=" + name + ", isMale=" + isMale + ", age=" + age + "]";
+		String genre;
+		if(this.isMale==true) {genre = "Man";}
+		else {genre= "Woman";}
+		return "The ZooMaster " + name + " is a " + genre + " aged " + age + " years";
 	}
 
 	public void examineEnclosure(Enclosure enclosure) {

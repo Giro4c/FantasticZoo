@@ -67,8 +67,8 @@ public class FantasticZoo {
 	
 	@Override
 	public String toString() {
-		return "FantasticZoo [name=" + name + ", zooMaster=" + zooMaster + ", maxNumberEnclosures="
-				+ maxNumberEnclosures + ", existingEnclosures=" + existingEnclosures + "]";
+		return	"The FantasticZoo is named: " + name + ", the zooMaster is " + zooMaster.getName() + ", the maximum number of enclosures is " + 
+	maxNumberEnclosures + ", and the existing enclosures are: " + existingEnclosures;
 	}
 	public int countCreatures() {
 		int NumberAnimals = 0; 
@@ -97,7 +97,7 @@ public class FantasticZoo {
 			System.out.println("The new enclosure " + newEnclosure.getName() + " was added in the FantasticZoo");
 		}
 		else {
-			System.out.println("Le nombre max d'enclo a déja était atteint (je sais pas écrire c abusé)");
+			System.out.println("The maximum number of enclosures has already been reached"); 
 		}
 	}
 	
