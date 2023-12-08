@@ -105,6 +105,18 @@ public class FantasticZoo {
     public ArrayList<Enclosure> getExistingEnclosures() {
         return existingEnclosures;
     }
+    
+    /**
+     * Counts the creatures in the zoo.
+     * @return the number of creatures in the zoo
+     */
+    public int countCreatures() {
+		int NumberAnimals = 0; 
+		for (Enclosure enclo : existingEnclosures) {
+			NumberAnimals += enclo.getCurrentNumberCreatures();
+		}
+		return NumberAnimals;
+	}
 
     /**
      * Displays the total number of creatures in the FantasticZoo.
