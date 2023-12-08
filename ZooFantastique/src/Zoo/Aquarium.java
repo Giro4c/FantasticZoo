@@ -11,8 +11,6 @@ import Zoo.Caracteristics.CanSwim;
  */
 public class Aquarium extends Enclosure implements Runnable {
     
-    public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
-    
     private int depth;
     private int salinity;
     private int startSalinity;

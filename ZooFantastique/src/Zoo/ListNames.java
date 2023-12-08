@@ -1,4 +1,4 @@
-package Zoo.Animals;
+package Zoo;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -7,6 +7,7 @@ public class ListNames {
 
 	private static ArrayList<String> namesFemales = initNamesFemales();
 	private static ArrayList<String> namesMales = initNamesMales();
+	private static ArrayList<String> namesDiseases = initNamesDiseases();
 	
 	public static ArrayList<String> getNamesFemales() {
 		return namesFemales;
@@ -133,6 +134,18 @@ public class ListNames {
 		return list;
 	}
 	
+	private static ArrayList<String> initNamesDiseases() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("COVID-19");
+		list.add("Pest");
+		list.add("Common cold");
+		list.add("Flu");
+		list.add("Conjunctivitis ");
+		list.add("Cancer");
+		list.add("Diabetes");
+		return list;
+	}
+	
 	public static String assignRandomNameFemale() {
 		if (ListNames.namesFemales.size() == 0) return null;
 		Random rand = new Random();
@@ -155,6 +168,13 @@ public class ListNames {
 	public static void addNameMale(String name) {
 		if (name == null) return;
 		ListNames.namesMales.add(name);
+	}
+	
+	public static String getRandomNameDisease() {
+		if (ListNames.namesDiseases.size() == 0) return null;
+		Random rand = new Random();
+		int indexName = rand.nextInt(0, ListNames.namesDiseases.size());
+		return ListNames.namesDiseases.get(indexName);
 	}
 	
 }

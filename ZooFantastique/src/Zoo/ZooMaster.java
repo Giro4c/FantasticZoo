@@ -42,11 +42,11 @@ public class ZooMaster {
 		String genre;
 		if(this.isMale==true) {genre = "Man";}
 		else {genre= "Woman";}
-		return "The ZooMaster " + name + " is a " + genre + " aged " + age + " years";
+		return "The ZooMaster " + name + " is a " + genre + " and " + age + " years old";
 	}
 
 	public void examineEnclosure(Enclosure enclosure) {
-		System.out.println("The ZooMaster " + this.name + " examine the " + enclosure.getName() + enclosure.toString());
+		System.out.println("The ZooMaster " + this.name + " examines the " + enclosure.getName() + enclosure.toString());
 	}
 	
 	public void cleanEnclosure(Enclosure enclosure) {
@@ -56,7 +56,7 @@ public class ZooMaster {
 	
 	public void feedCreaturesInEnclosure(Enclosure enclosure) {
 		enclosure.feedCreatures();
-		System.out.println("The ZooMaster " + this.name + " is feeding the creatures in the" + enclosure.getName());
+		System.out.println("The ZooMaster " + this.name + " is feeding the creatures in " + enclosure.getName());
 	}
 	
 	public void tranfertCreature(Enclosure prevEnclosure, int indexInEnclosure, Enclosure newEnclosure) {
@@ -64,11 +64,11 @@ public class ZooMaster {
 			newEnclosure.addCreature(prevEnclosure.getPresentCreatures().get(indexInEnclosure));
 			prevEnclosure.getPresentCreatures().get(indexInEnclosure).delete();
 		
-			System.out.println("The ZooMaster " + this.name + " is mooving a creature of the " + 
-					prevEnclosure.getName() + " to the " + newEnclosure.getName());
+			System.out.println("The ZooMaster " + this.name + " is moving a creature from " + 
+					prevEnclosure.getName() + " to " + newEnclosure.getName());
 		}
 		else {
-			System.out.println("You can't transfert a creature in this enclosure beacause he is full");
+			System.out.println("You can't transfert a creature in this enclosure because it is full");
 		}
 	}
 	

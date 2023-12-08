@@ -83,10 +83,10 @@ public class FantasticZoo {
 	} 
 	
 	public void showAllCreatures(){
-		System.out.println("All creature atribute :");
+		System.out.println("All creatures atributes :");
 		for (Enclosure enclo : existingEnclosures) {
-			for (Creature creatur : enclo.getPresentCreatures()) {
-				System.out.println(creatur.toString());
+			for (Creature creature : enclo.getPresentCreatures()) {
+				System.out.println('\t' + creature.toString());
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public class FantasticZoo {
 	public void addNewEnclosure(Enclosure newEnclosure) {
 		if ( existingEnclosures.size() < this.getMaxNumberEnclosures()) {
 			this.existingEnclosures.add(newEnclosure);
-			System.out.println("The new enclosure " + newEnclosure.getName() + " was added in the FantasticZoo");
+			System.out.println("The new " + newEnclosure.getClass().getSimpleName() + " " + newEnclosure.getName() + " was added in the FantasticZoo");
 		}
 		else {
 			System.out.println("The maximum number of enclosures has already been reached"); 
@@ -105,21 +105,21 @@ public class FantasticZoo {
 		Enclosure oldEnclosure = existingEnclosures.get(oldEnclosureIndex);
 		if ( oldEnclosure.getCurrentNumberCreatures() == 0) {
 			existingEnclosures.remove(oldEnclosure);
-			System.out.println("The enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+			System.out.println("The " + oldEnclosure.getClass().getSimpleName() + " " + oldEnclosure.getName() + " was removed from the FantasticZoo");
 			System.gc();
 		}
 		else {
-			System.out.println("The enclosure " + oldEnclosure.getName() + " cannot be remove, creature still live in !");
+			System.out.println("The " + oldEnclosure.getClass().getSimpleName() + " " + oldEnclosure.getName() + " cannot be removed, creature still live in !");
 		}	}
 	
 	public void removeEnclosure(Enclosure oldEnclosure) {
-		if ( oldEnclosure.getCurrentNumberCreatures() != 0 && ! this.existingEnclosures.remove(oldEnclosure)) {
-			System.out.println("The enclosure " + oldEnclosure.getName() + " was remove from the FantasticZoo");
+		if (oldEnclosure.getCurrentNumberCreatures() != 0 && ! this.existingEnclosures.remove(oldEnclosure)) {
+			System.out.println("The " + oldEnclosure.getClass().getSimpleName() + " " + oldEnclosure.getName() + " was removed from the FantasticZoo");
 			oldEnclosure.delete();
 			System.gc();
 		}
 		else {
-			System.out.println("The enclosure " + oldEnclosure.getName() + " cannot be remove, creature still live in !");
+			System.out.println("The enclosure " + oldEnclosure.getName() + " cannot bed remove, creature still live in !");
 		}
 	}
 	

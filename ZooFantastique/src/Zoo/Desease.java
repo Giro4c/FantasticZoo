@@ -3,6 +3,7 @@ package Zoo;
 import Zoo.Animals.Creature;
 
 public class Desease {
+	
     private String name;
     private int damage;
     private int time;
@@ -13,8 +14,9 @@ public class Desease {
     private boolean isTreated = false;
     public Thread deseaseThread;
     private int basicTime = 15000;
+    
     /**
-     * Initializes a new instance of the Desease class.
+     * Initializes a new instance of the Disease class.
      * @param name The name of the disease.
      * @param damage The damage caused by the disease.
      * @param severity The severity level of the disease.
@@ -22,7 +24,7 @@ public class Desease {
      * @param animal The animal affected by the disease.
      */
     public Desease(int damage, int severity, int time, Creature animal) {
-        this.name = "a implementer";
+        this.name = ListNames.getRandomNameDisease();
 
         this.damage = damage;
         this.severity = severity;
@@ -84,6 +86,10 @@ public class Desease {
     }
 
 
+    /**
+     * Get the name of the disease
+     * @return the name of the disease
+     */
     public String getName() {
         return name;
     }
@@ -95,11 +101,11 @@ public class Desease {
     public void remove(Creature creature) {
         if (this.canBeTreatedWithMedecine== true && !isTreated) {
                 deseaseThread.interrupt();
-                System.out.println(this.animal.getName() + " n'es plus malade !");
+                System.out.println(this.animal.getNameFull() + " is no longer sick !");
                 isTreated = true;
             }
         else {
-            System.err.println("L'animal " + this.animal.getName() + " a une maladie incurable...");
+            System.err.println("The " + this.animal.getNameFull() + " has a terminal illness...");
         }
     }
 

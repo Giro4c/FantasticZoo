@@ -75,6 +75,9 @@ public class GameEngine {
 		System.out.println(this.promptGenerator.getChoicePrompt(this));
 	}
 	
+	/**
+	 * Initialize the zoo for the game with enclosures of every type and creatures of every species.
+	 */
 	public void init() {
 		this.zoo = Message.zooCreation();
 		

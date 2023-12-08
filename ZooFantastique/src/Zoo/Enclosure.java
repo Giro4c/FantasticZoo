@@ -102,11 +102,26 @@ public class Enclosure implements Runnable {
         this.name = name;
     }
     
+    @Override
     public String toString () {
-    	return "The enclosure " + name + " has an area of " + surface + " square meters, it can accommodate " + maxNumberCreatures +
+    	return "The " + this.getClass().getSimpleName() + " " + name + " has an area of " + surface + " square meters, it can accommodate " + maxNumberCreatures +
     	        " creatures inside. Currently, there are " + currentNumberCreatures + " creatures inside. The enclosure is currently " +
     	        cleanness;
     }
+    
+    /**
+     * Get the complete string of the enclosure including the listing of all creatures inside
+     * @return
+     */
+    public String toStringDetails() {
+    	String str = this.toString();
+    	str = str + "\nCreatures in enclosure :";
+    	for (Creature creature : this.presentCreatures) {
+    		str = str + "\n\t" + creature.toString();
+    	}
+    	return str;
+    }
+    
     /**
      * Get the index of cleanliness of the enclosure.
      *
@@ -239,16 +254,28 @@ public class Enclosure implements Runnable {
     
     
     }
-	 public boolean checkCompatibility(Creature creature) {
-			if ( this.presentCreatures.size() == 0) {
-				return true;
-			}
-			else if ( this.presentCreatures.get(0).getSpecie().equals(creature.getSpecie())){
-				return true;
-			}
-			else {
-				return false;
-			}
+    
+    /**
+     * Checks if a creature can be added to the enclosure by first checking the current number of creatures in the enclosure and then
+     * checks if the species is compatible with the enclosure.
+     * @param creature the creature we might want to add to the enclosure
+     * @return True if the creature is compatible with the enclosure and can be added, False if not enclosure is full or creature is not of the same species.
+     */
+	public boolean checkCompatibility(Creature creature) {
+		// Verifications with size
+		if ( this.presentCreatures.size() == 0) {
+			return true;
+		}
+		else if (this.presentCreatures.size() == this.maxNumberCreatures) {
+			return false;
+		}
+		// Verification with species
+		if (this.presentCreatures.get(0).getSpecie().equals(creature.getSpecie())){
+			return true;
+		}
+		else {
+			return false;
+		}
 	 }
 
     /**
@@ -293,6 +320,7 @@ public class Enclosure implements Runnable {
 			}
 		}
 	}
+    
     /**
      * Feed the creatures in the enclosure.
      */
@@ -332,39 +360,39 @@ public class Enclosure implements Runnable {
      * Handle the reproduction process in the enclosure.
      */
     public void reproduction() {
-        //Vérifie si le nombre de créatures est strictement inférieur au nombre de créatures maximum dans l'enclos.
-		if(currentNumberCreatures < maxNumberCreatures){
+    	// Verifies if the number of creatures is strictly inferior to the max number of creatures in the enclosure
+		if(currentNumberCreatures < maxNumberCreatures) {
 			Boolean theresmale = false;
 			ArrayList<Creature> females = new ArrayList<>();
 			Random rand = new Random();
-			//On parcours toutes les créatures dans l'enclos
+			// Go through the array of present creatures in the enclosure
 			for (Creature currentCreature : presentCreatures) {
-				//Si dans les créatures il y a minimum 1 male
+				// If in the enclosure, there is at least one male
 				if (currentCreature.isMale()==true) {
 					theresmale = true;
 				}
-				//Met toutes les femelles dans une liste
+				// Put all the females in a list
 				if(currentCreature.isMale()==false){
 					females.add(currentCreature);
 
 				}
 			}
-				//Si le nombre de femelles est strictement supérieur à 0
-				if (females.size()>0 && theresmale) {
-					int randomIndex = rand.nextInt(females.size());
-					//On récupère une femelle aléatoire dans la liste
-					Creature pregnantFemale = females.get(randomIndex);
-					//La femelle choisis aléatoirement devient enceinte
-					if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
-						Oviparous female = (Oviparous) pregnantFemale;
-						eggs.add(female.layEgg());
-					}
-					if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
-						Mammal female = (Mammal) pregnantFemale;
-						female.reproduction();
-					}
+			// If the number of female is strictly positive and not zero
+			if (females.size()>0 && theresmale) {
+				int randomIndex = rand.nextInt(females.size());
+				// Randomly chose a female in the list from before
+				Creature pregnantFemale = females.get(randomIndex);
+				// The chosen female either lay an egg or become pregnant
+				if(Oviparous.class.isAssignableFrom(pregnantFemale.getClass())){
+					Oviparous female = (Oviparous) pregnantFemale;
+					eggs.add(female.layEgg());
+				}
+				if(Mammal.class.isAssignableFrom(pregnantFemale.getClass())){
+					Mammal female = (Mammal) pregnantFemale;
+					female.reproduction();
 				}
 			}
+		}
         else {
             System.out.println("Too many animals in the enclosure, reproduction cannot take place!");
         }
@@ -379,6 +407,7 @@ public class Enclosure implements Runnable {
 			return false;
 		}
 	}
+	
 	public void becomeLessClean() {
 		if(this.cleanness.equals("Dirty")) {this.cleanness = "Moundir's Room";}
 		if(this.cleanness.equals("Normal")) {this.cleanness = "Dirty";}

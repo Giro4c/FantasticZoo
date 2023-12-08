@@ -3,6 +3,7 @@ package Zoo.Animals;
 import java.util.Random;
 import Zoo.Desease;
 import Zoo.Enclosure;
+import Zoo.ListNames;
 import Zoo.Animals.*;
 import Zoo.Prompts.Message;
 
@@ -79,6 +80,7 @@ public class Creature implements Runnable{
 	private int heightMax;
 	private int weightMin;
 	private int weightMax;
+	
 	public void setHeightMin(int min){
 		this.heightMin = min;
 	}
@@ -91,6 +93,7 @@ public class Creature implements Runnable{
 	public void setWeightMax(int max) {
 		this.weightMax = max;
 	}
+	
 	public Creature(String specie, String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
 		super();
 		this.specie = specie;
@@ -203,7 +206,7 @@ public class Creature implements Runnable{
 	        	RandomNumber = random.nextInt(100);
 	        	if ( RandomNumber < 20) { // 20% chance that the creature wakes up
 	                this.wake();
-//	                System.out.println("Wake");
+	                System.out.println(this.getNameFull() + " wakes up.");
 	            }
 	        }
 	        // If it's awake, do something ?
@@ -211,7 +214,7 @@ public class Creature implements Runnable{
 	        	RandomNumber = random.nextInt(100);
 	        	if ( RandomNumber < 8) { // 8% chance that the creature falls asleep (because 0 included)
 	                this.sleep();
-//	                System.out.println("Sleep");
+	                System.out.println(this.getNameFull() + " falls asleep.");
 	            }
 	            if ( RandomNumber >= 8 && RandomNumber < 11) { // 3% chance that the creature emits a sound
 	                this.emitSound();
@@ -264,6 +267,10 @@ public class Creature implements Runnable{
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getNameFull() {
+		return this.getClass().getSimpleName() + " " + this.getName();
 	}
 
 	public void setName(String name) {
@@ -342,11 +349,12 @@ public class Creature implements Runnable{
 	}
 
 	//NE PAS MODIFIER L'ORDRE !!!
-	//l'animal devient de plus en plus malade
+	/**
+	 * The animal become more sick, its health decreases.
+	 */
 	public void becomeMoreSick(){
 		if(this.indicatorHealth.equals("Very Sick")){
 			this.indicatorHealth="Dead";
-//			System.out.println("Death by sickness.");
 			this.die();
 		}
 		if(this.indicatorHealth.equals("Sick")){
@@ -359,6 +367,7 @@ public class Creature implements Runnable{
 			this.indicatorHealth="Normal";
 		}
 	}
+	
 	public Desease getDesease() {
 		return this.desease;
 	}
@@ -398,10 +407,15 @@ public class Creature implements Runnable{
 	}
 
 	//fonction qui permet à un animal d'être traité de la maladie
+	/**
+	 * Treats an creature's desease
+	 */
 	public void treat(){
-		System.out.println("L'animal " + this.getName()+ " à reçu un remède contre la maladie "+ this.desease.getName());
+		if (this.desease == null) return;
+		System.out.println(this.getNameFull()+ " gets treated against the illness "+ this.desease.getName());
 		this.desease.remove(this);
 	}
+	
 	public void eat() {
 		if (this.indicatorHunger.equals("Normal")) {
 			this.indicatorHunger = "Full";
@@ -445,7 +459,9 @@ public class Creature implements Runnable{
 		this.setAge(this.getAge()+ 1);
 	}
 
-	//méthode qui permet de faire en sorte qu'un animal meurt
+	/**
+	 * Makes a creature die.
+	 */
 	public void die() {
 		System.out.println("The creature " + this.getName() + " is dead !");
 		this.delete();

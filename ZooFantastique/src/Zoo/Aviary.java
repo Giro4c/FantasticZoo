@@ -11,8 +11,6 @@ import Zoo.Caracteristics.CanSwim;
  */
 public class Aviary extends Enclosure implements Runnable {
 
-    public static final String[] CLEANNESS_STATES = {"Clean", "Normal", "Dirty", "Moundir's Room"};
-
     private int height;
 
     /**
