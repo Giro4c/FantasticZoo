@@ -53,6 +53,10 @@ public class Aviary extends Enclosure implements Runnable {
             }
         }
     }
+    
+    public String toString () {
+    	return super.toString();
+    }
 
     
     /**

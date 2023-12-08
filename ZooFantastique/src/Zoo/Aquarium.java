@@ -62,6 +62,10 @@ public class Aquarium extends Enclosure implements Runnable {
             }
         }
     }
+    
+    public String toString () {
+    	return super.toString()+" salinity level is " + salinity + " G/L";
+    }
 
     /**
      * Get the depth of the aquarium.
