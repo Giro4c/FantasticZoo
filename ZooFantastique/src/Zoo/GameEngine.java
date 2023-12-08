@@ -22,7 +22,7 @@ public class GameEngine {
 	 * 	<li>3 -> Transfer interface</li>
 	 * 	<li>4 -> Remove creature interface</li>
 	 * 	<li>5 -> Heal creature interface</li>
-	 * 	<li>6 -> New enclosure interface</li>
+	 * 	<li>6 -> New creature interface</li>
 	 * 	<li>7 -> </li>
 	 * </ul>
 	 * </p>

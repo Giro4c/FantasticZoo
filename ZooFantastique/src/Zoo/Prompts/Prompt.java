@@ -38,9 +38,9 @@ public class Prompt {
 		else if (game.getSituationIndicator() == 5) {
 			promptChoice = this.getSubSituationString(this.getPromptHeal(game.getCurrentEnclosure()), game.getSubSituationIndicator());
 		}
-//		else if (game.getSituationIndicator() == 6) {
-////			promptChoice = this.getSubSituationString(this.getPromptNewEnclosure(), game.getSubSituationIndicator());
-//		}
+		else if (game.getSituationIndicator() == 6) {
+			promptChoice = this.getSubSituationString(this.getPromptCreateCreature(game.getZoo()), game.getSubSituationIndicator());
+		}
 		return promptChoice;
 	}
 	
@@ -77,6 +77,19 @@ public class Prompt {
 		}
 		prompt.add(actionPrompt);
 		actionPrompt = "Send to which enclosure ?\nAvailable :";
+		for (Enclosure enclosure : zoo.getExistingEnclosures()) {
+			actionPrompt = actionPrompt + "\n\t- " + enclosure.getName();
+		}
+		prompt.add(actionPrompt);
+		prompt.add("Cancel");
+		return prompt;
+	}
+	
+	public ArrayList<String> getPromptCreateCreature(FantasticZoo zoo){
+		ArrayList<String> prompt = new ArrayList<String>();
+		prompt.add("What specie do you want the creature to be ?");
+		prompt.add("What gender ? M / F");
+		String actionPrompt = "Send to which enclosure ?\nExisting enclosures :";
 		for (Enclosure enclosure : zoo.getExistingEnclosures()) {
 			actionPrompt = actionPrompt + "\n\t- " + enclosure.getName();
 		}
