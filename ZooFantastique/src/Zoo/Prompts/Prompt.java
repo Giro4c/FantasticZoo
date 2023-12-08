@@ -38,9 +38,6 @@ public class Prompt {
 		else if (game.getSituationIndicator() == 5) {
 			promptChoice = this.getSubSituationString(this.getPromptHeal(game.getCurrentEnclosure()), game.getSubSituationIndicator());
 		}
-		else if (game.getSituationIndicator() == 6) {
-			promptChoice = this.getSubSituationString(this.getPromptCreateCreature(game.getZoo()), game.getSubSituationIndicator());
-		}
 		return promptChoice;
 	}
 	

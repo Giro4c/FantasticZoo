@@ -67,7 +67,7 @@ public class Egg {
 	}
 	public void hatch() {
 		synchronized (this) {
-			if(getIncubationProgress()==getIncubationTime()) {
+			if(getIncubationProgress() == getIncubationTime()) {
 				Random random = new Random();
 				boolean randomGender = random.nextBoolean();
 				// To change
@@ -77,6 +77,7 @@ public class Egg {
 		            Constructor<? extends Oviparous> constructeur = classMere.getConstructor(boolean.class, int.class, Enclosure.class);
 
 		            Oviparous newBorn = constructeur.newInstance(randomGender, 0, enclosure);
+		            newBorn.startLife();
 		            enclosure.addCreature(newBorn);
 		        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
 		            e.printStackTrace();
@@ -84,7 +85,7 @@ public class Egg {
 			    //Mammal newborn = new Mammal(this.getSpecie(), randomGender, 0, this.getEnclosure(), this.getHeightMin(), this.getHeightMax(), this.getWeightMin(), this.getWeightMax(), this.gestationTime, 0);
 				//Oviparous newoviparous = new Oviparous(mother.getSpecie(), randomGender, 1, this.enclosure, mother.getHeightMin(), mother.getHeightMax(), mother.getWeightMin(), mother.getWeightMax());
 				this.enclosure.removeEgg(this);
-				System.out.println("An eggs as hatch a new creature is born !");
+				System.out.println("An eggs is hatched, a new creature is born !");
 				System.out.println("There is now : " + this.enclosure.getCurrentNumberCreatures() + " creatures in the enclosure !");	
 			}
 		}
