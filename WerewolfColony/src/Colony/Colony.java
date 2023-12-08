@@ -49,6 +49,8 @@ public class Colony {
         			
         			AlphaCouple newCouple = new AlphaCouple(strongestLonerMale, strongestLonerFemale, null);
                 	Pack newPack = new Pack(newCouple.getCouple(), territory);
+                	newPack.packMemberJoins(strongestLonerMale);
+                    newPack.packMemberJoins(strongestLonerFemale);
                 	System.out.println("Une nouvelle meute est née naturellement au : " + territory.getId());
         		       	}
         }
