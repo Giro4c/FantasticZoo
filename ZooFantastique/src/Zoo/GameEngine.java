@@ -3,8 +3,6 @@ package Zoo;
 import Zoo.Prompts.Message;
 import Zoo.Prompts.Prompt;
 
-import java.util.ArrayList;
-
 import Zoo.Animals.*;
 
 public class GameEngine {

@@ -2,8 +2,6 @@ package Zoo.Prompts;
 
 import java.util.ArrayList;
 
-import Zoo.Aquarium;
-import Zoo.Aviary;
 import Zoo.Enclosure;
 import Zoo.FantasticZoo;
 import Zoo.GameEngine;
