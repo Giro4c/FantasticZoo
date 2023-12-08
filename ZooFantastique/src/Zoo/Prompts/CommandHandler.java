@@ -125,7 +125,6 @@ public class CommandHandler {
 	
 	private static boolean handleTransfert(GameEngine gameEngine) {
 		gameEngine.setSituationIndicator(3);
-		System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 		Scanner in = new Scanner(System.in);
 		// Necessary variables to memorize
 		int transfertCreatureIndex = 0;
@@ -137,6 +136,7 @@ public class CommandHandler {
 		String singleCommand = "";
 		boolean validCommand = false;
 		while(true) {
+			System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 			singleCommand = in.nextLine();
 			if (singleCommand.toLowerCase().equals("cancel")) {
 				gameEngine.setSituationIndicator(2);
@@ -151,7 +151,6 @@ public class CommandHandler {
 			}
 			if (!validCommand) {
 				System.out.println(Message.incorrectEntry());
-				System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 			}
 			else {
 				gameEngine.setSubSituationIndicator(gameEngine.getSubSituationIndicator() + 1);
@@ -160,9 +159,10 @@ public class CommandHandler {
 		}
 		
 		// Handle second command --> Enclosure selection
-		singleCommand = "";
+//		singleCommand = "";
 		validCommand = false;
 		while(true) {
+			System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 			singleCommand = in.nextLine();
 			if (singleCommand.toLowerCase().equals("cancel")) {
 				gameEngine.setSituationIndicator(2);
@@ -182,7 +182,6 @@ public class CommandHandler {
 			}
 			if (!validCommand) {
 				System.out.println(Message.incorrectEntry());
-				System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 			}
 			else {
 				gameEngine.setSubSituationIndicator(gameEngine.getSubSituationIndicator() + 1);
@@ -200,12 +199,13 @@ public class CommandHandler {
 	
 	private static boolean handleRemove(GameEngine gameEngine) {
 		gameEngine.setSituationIndicator(4);
-		System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 		Scanner in = new Scanner(System.in);
 		
 		// Handle first command --> Creature selection
 		String singleCommand = "";
+		boolean invalidCommand = true;
 		while(true) {
+			System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 			singleCommand = in.nextLine();
 			if (singleCommand.toLowerCase().equals("cancel")) {
 				gameEngine.setSituationIndicator(2);
@@ -218,30 +218,33 @@ public class CommandHandler {
 					
 					// Handle second command --> validation selection
 					singleCommand = in.nextLine();
-					if (singleCommand.toLowerCase().equals("yes")) {
-						gameEngine.getCurrentEnclosure().removeCreature(indexC);
+					if (singleCommand.toLowerCase().equals("yes") || singleCommand.toLowerCase().equals("y")) {
+						gameEngine.getCurrentEnclosure().removeCreature(indexC).delete();;
 						gameEngine.setSituationIndicator(2);
 						return true;
 					}
 					else {
-						return false;
+						gameEngine.setSubSituationIndicator(gameEngine.getSubSituationIndicator() - 1);
+						invalidCommand = false;
+						break;
 					}
 				}
 			}
-			System.out.println(Message.incorrectEntry());
-			System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
+			if (invalidCommand) {
+				System.out.println(Message.incorrectEntry());
+			}
+			
 		}
 		
 	}
 	private static boolean handleHeal(GameEngine gameEngine) {
 		gameEngine.setSituationIndicator(5);
-		System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 		Scanner in = new Scanner(System.in);
 		
 		// Handle first command --> Creature selection
 		String singleCommand = "";
-		boolean validCommand = false;
 		while(true) {
+			System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 			singleCommand = in.nextLine();
 			if (singleCommand.toLowerCase().equals("cancel")) {
 				gameEngine.setSituationIndicator(2);
@@ -256,7 +259,6 @@ public class CommandHandler {
 			}
 			// Creature name not correct
 			System.out.println(Message.incorrectEntry());
-			System.out.println(gameEngine.getPromptGenerator().getChoicePrompt(gameEngine));
 		}
 		
 	}

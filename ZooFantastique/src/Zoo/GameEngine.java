@@ -135,15 +135,15 @@ public class GameEngine {
 		this.zoo.addNewEnclosure(enclosure); 			// 9
 		
 		// Start all creature threads for the zoo (threads in enclosures are already started)
-//		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
-//			for (int indexCreature = 0; indexCreature < enclosureC.getPresentCreatures().size(); ++indexCreature) {
-//				try {
-//					enclosureC.getPresentCreatures().get(indexCreature).startLife();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
+		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
+			for (int indexCreature = 0; indexCreature < enclosureC.getPresentCreatures().size(); ++indexCreature) {
+				try {
+					enclosureC.getPresentCreatures().get(indexCreature).startLife();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		// Clear screen of all prints done by addCreature
 		// Only works on terminal. Does not work on IDE.
