@@ -13,6 +13,7 @@ public class AlphaCouple {
 	 * ------------------------------------------------- *
 	 * ------------------------------------------------- */
 	
+	private ArrayList<Werewolf> couple;
 	private Werewolf male;
 	private Werewolf female;
 	private Pack pack;
@@ -23,6 +24,10 @@ public class AlphaCouple {
 	 * 					GETTERS / SETTERS
 	 * ------------------------------------------------- *
 	 * ------------------------------------------------- */
+	
+	public ArrayList<Werewolf> getCouple (){
+		return this.couple;
+	}
 	
 	public Werewolf getMale() {
 		return male;
@@ -55,6 +60,9 @@ public class AlphaCouple {
 		this.female = female;
 		this.pack = pack;
 		this.childrens = new ArrayList<>();
+		this.couple = new ArrayList<>();
+		this.couple.add(male);
+		this.couple.add(female);
 	}
 	
 	/* ------------------------------------------------- *
@@ -68,7 +76,7 @@ public class AlphaCouple {
 	 */
 	@Override
 	public String toString() {
-	    return "AlphaCouple [male=" + male + ", female=" + female + ", pack=" + (pack != null ? pack.toStringWithoutAlphaCouple() : "null") + "]";
+	    return "AlphaCouple [male=" + male + ", female=" + female;
 	}
 
 	
@@ -87,16 +95,8 @@ public class AlphaCouple {
 				Random rand = new Random();
 				int newWolfNb = rand.nextInt(1,7);
 				for(int i=0; i<newWolfNb; i++) {
-					boolean sex = ThreadLocalRandom.current().nextBoolean();
-					Scanner sc = new Scanner(System.in);
-		        	System.out.println("Veuillez saisir un nom pour le loup " + (i+1) + " : ");
-		        	String str = sc.nextLine();
-		        	int randomH = rand.nextInt(140, 150);
-		        	int randomW = rand.nextInt(30, 45);
-					Werewolf newWolf = new Werewolf(str, sex, randomW, randomH, 1,
-							"Young", false, this.male.getStrength()/2, this.male.getDominationFactor()/2, 
-							this.pack);
-					this.pack.packMemberJoins(newWolf);
+					Werewolf newWolf = new Werewolf(this.getPack());
+					newWolf.setAge(0);
 					childrens.add(newWolf);
 				}
 				System.out.println(newWolfNb+ " nouveaux loups sont nées !");

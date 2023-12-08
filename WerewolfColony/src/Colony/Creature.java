@@ -1,5 +1,7 @@
 package Colony;
 
+import java.util.Random;
+
 public class Creature {
 	
 	public static final String[] AGE_RANGES = {"Young", "Adult", "Elder"};
@@ -13,7 +15,7 @@ public class Creature {
 	/**
 	 * The name of the creature's species.
 	 */
-	private String specie;
+	private String specie = "Lycanthrope";
 	
 	/**
 	 * The name of the creature.
@@ -53,7 +55,7 @@ public class Creature {
 	/**
 	 * Indicates whether the creature is sleeping or not.
 	 */
-	private boolean isSleeping;
+	private boolean isSleeping = false;
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
@@ -136,16 +138,33 @@ public class Creature {
 	 * ------------------------------------------------- */
 	
 	
-	public Creature(String name, boolean isMale, int weight, int height, int age, String ageRange,
-			boolean isSleeping) {
+	public Creature() {
 		super();
-		this.name = name;
-		this.isMale = isMale;
-		this.weight = weight;
-		this.height = height;
-		this.age = age;
-		this.ageRange = ageRange;
-		this.isSleeping = isSleeping;
+		
+        this.name = Utils.randomWolfName();
+		
+		Random randomage = new Random();
+        this.age = randomage.nextInt(101);
+		
+        Random randomsex = new Random();
+        this.isMale = randomsex.nextBoolean();
+        
+		Random randomweight = new Random();
+		int randomWeight = randomweight.nextInt(151) + 50;
+		this.weight = randomWeight;
+		
+
+	    Random random = new Random();
+		int randomHeight = random.nextInt(151) + 100;
+		this.height = randomHeight;
+		
+		
+		if (this.age < 20) 
+			this.ageRange = "Young";
+		else if (this.age >= 30 || this.age < 70)
+			this.ageRange = "Adult";
+		else
+			this.ageRange = "Elder";
 	}
 
 	/* ------------------------------------------------- *
@@ -157,7 +176,7 @@ public class Creature {
 
 	@Override
 	public String toString() {
-		return "Creature [specie=" + specie + ", name=" + name + ", isMale=" + isMale + ", weight=" + weight
+		return "specie=" + specie + ", name=" + name + ", isMale=" + isMale + ", weight=" + weight
 				+ ", height=" + height + ", age=" + age + ", ageRange=" + ageRange + ", isSleeping=" + isSleeping + "]";
 	}
 
@@ -185,11 +204,9 @@ public class Creature {
 	}
 	
 	public void getOlder() {
-		System.out.println("The creature " + this.name + " is getting older" );
+		this.age += 1;
 	}
 	
-	public void die() {
-		System.out.println("The creature " + this.name + " is dead ahahahahaha he suck" );
-	}
+
 
 }

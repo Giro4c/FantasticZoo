@@ -1,5 +1,7 @@
 package Colony;
+import java.util.Random;
 import Colony.Utils;
+
 /**
  * A class representing a werewolf and its behavior
  * @author Giro4c
@@ -13,6 +15,7 @@ public class Werewolf extends Creature {
 	 * ------------------------------------------------- *
 	 * ------------------------------------------------- */
 	
+	private Territory territory;
 	/**
 	 * The strength of the werewolf. 
 	 * from 0 to 10
@@ -66,6 +69,14 @@ public class Werewolf extends Creature {
 	 * ------------------------------------------------- *
 	 * ------------------------------------------------- */
 
+	public Territory getTerritory() {
+		return this.territory;
+	}
+	
+	public void setTerritory (Territory territory) {
+		this.territory = territory;
+	}
+	
 	public int getStrength() {
 		return strength;
 	}
@@ -129,14 +140,39 @@ public class Werewolf extends Creature {
 	 * ------------------------------------------------- */
 	
 	
-	public Werewolf(String name, boolean isMale, int weight, int height, int age, String ageRange,
-			boolean isSleeping, int strength, int arroganceFactor,
-			Pack pack) {
-		super(name, isMale, weight, height, age, ageRange, isSleeping);
-		this.strength = strength;
-		this.arroganceFactor = arroganceFactor;
+	public Werewolf(Pack pack) {
+		super();
+		
+	    Random random = new Random();
+	    int randomStrength = random.nextInt(11);
+	    this.strength = randomStrength;
+	    
+        Random randomArrog = new Random();
+        int randomArrogFactor = randomArrog.nextInt(11);
+        this.arroganceFactor = randomArrogFactor;
+        
 		this.pack = pack;
-		this.level = Utils.calculateLevel(ageRange, strength, arroganceFactor, rank); 
+		
+		
+		this.level = Utils.calculateLevel(this.getAgeRange(), strength, arroganceFactor, rank); 
+	}
+	
+	public Werewolf(Territory territory) {
+		super();
+		
+	    Random random = new Random();
+	    int randomStrength = random.nextInt(11);
+	    this.strength = randomStrength;
+	    
+        Random randomArrog = new Random();
+        int randomArrogFactor = randomArrog.nextInt(11);
+        this.arroganceFactor = randomArrogFactor;
+
+		this.pack = null;
+		this.territory = territory;
+		this.territory.addWolf(this);
+		
+		this.level = Utils.calculateLevel(this.getAgeRange(), strength, arroganceFactor, rank); 
 	}
 
 	
@@ -152,7 +188,7 @@ public class Werewolf extends Creature {
 	@Override
 	public String toString() {
 		return "Werewolf [strength=" + strength + ", dominationFactor=" + dominationFactor + ", rank=" + rank
-				+ ", level=" + level + ", arroganceFactor=" + arroganceFactor + ", pack=" + pack + ", toString()="
+				+ ", level=" + level + ", arroganceFactor=" + arroganceFactor
 				+ super.toString() + "]";
 	}
 	
@@ -217,6 +253,7 @@ public class Werewolf extends Creature {
 	public void leavePack() {
 		System.out.println(this.getName() + " leaves its pack.");
 		this.getPack().packMemberLeaves(this);
+		this.pack = null;
 	}
 	
 	/**
@@ -225,6 +262,7 @@ public class Werewolf extends Creature {
 	public void joinPack(Pack newPack) {
 		System.out.println(this.getName() + " joins a pack.");
 		newPack.packMemberJoins(this);
+		this.pack = newPack;
 	}
 	
 	/**
@@ -248,8 +286,10 @@ public class Werewolf extends Creature {
 		}
 		w.setDominationFactor(w.getDominationFactor()-1);
 	}
+	
 	public void loseDomination(Werewolf w) {
 		System.out.println(this.getName()+ " perd la domination !");
+		w.aggress(this);
 		this.dominationFactor -=1;
 		if(Utils.isDominant(this.rank, w.getRank())) {
 			char tmp = w.getRank();
@@ -257,7 +297,14 @@ public class Werewolf extends Creature {
 			this.setRank(tmp);
 		}
 		w.setDominationFactor(w.getDominationFactor()+1);
+		
+		// a few chance to quit its pack after losing a domination
+		Random random = new Random();
+        int randomNumber = random.nextInt(8) + 1;
+        if (randomNumber == 1)
+        	this.leavePack();
 	}
+	
 	/* 
 	 * Ces fonctions peuvent etre utiles.
 	 * Je les laisse là vous pouvez les remplir ou non. 
@@ -272,27 +319,31 @@ public class Werewolf extends Creature {
 	 * @param target
 	 * @return
 	 */
-	public boolean canDominate(Werewolf target, Pack pack) {
+	public boolean canDominate(Werewolf target) {
 	    boolean candominate = false;
 	    
-    	if (this.strength >= target.strength && pack.getAlphaCouple().getFemale() != target) {
-
-    		if (this.getArroganceFactor() > 4) {
+	    if (this.getPack() != null) {
+    	if (this.strength >= target.strength && this.getPack().getAlphaCouple().getFemale() != target) {
+    		
+    		if (target == target.getPack().getAlphaCouple().getMale() && this.getAgeRange() != "Adult")
+    			return candominate;
+    		else
+    			if (this.getArroganceFactor() > 4) {
     			candominate = true;
-    		}
-    		else if (this.getArroganceFactor() == 4) {
+    			}
+    			else if (this.getArroganceFactor() == 4) {
     			candominate = Math.random() < 3 / 4;
-    		}
-    		else if (this.getArroganceFactor() == 3) {
+    			}
+    			else if (this.getArroganceFactor() == 3) {
     			candominate = Math.round(Math.random()) == 0; }
     		
-    		else if (this.getArroganceFactor() == 2) {
+    			else if (this.getArroganceFactor() == 2) {
     			candominate = Math.random() < 1 / 3;
     			}
-    		else if (this.getArroganceFactor() == 1) {
+    			else if (this.getArroganceFactor() == 1) {
     			candominate = Math.random() < 1 / 4;
-    		}
-	    }
+    			}
+	    } }
 
 	    return candominate;
 	}
@@ -319,18 +370,54 @@ public class Werewolf extends Creature {
 			}
 	}
 	
-	public void aggress() {
-		System.out.println(super.getName() + " se montre agressif !");
+	public void aggress(Werewolf wolfTarget) {
+		System.out.println(super.getName() + " se montre agressif ! envers : " + wolfTarget.getName());
 	}
 	
 	/**
 	 * Check if the wolf have to be deranked (if his dominating factor is less than the threshold)
 	 */
 	public void naturalRankDecrease() {
-	        if (this.dominationFactor < THRESHOLD_DOMINATING_FACTOR && this.getRank() != 'ω') {
-                this.rank++; 
-                this.dominationFactor = 0;
+	    if (this.dominationFactor < THRESHOLD_DOMINATING_FACTOR && this.getRank() != 'ω') {
+	        boolean isLastOfSexWithCurrentRank = true;
+
+	        for (Werewolf wolf : this.getPack().getMembers()) {
+	            if (this.getRank() == wolf.getRank() && this != wolf && this.isMale() == wolf.isMale()) {
+	                isLastOfSexWithCurrentRank = false;
+	                break;
+	            }
 	        }
-	    } 
+
+	        if (isLastOfSexWithCurrentRank) {
+	            this.rank++;
+	            this.dominationFactor = 0;
+	        }
+	    }
+	}
 	
-}
+	public boolean isLoner () {
+		return this.getPack() == null;
+	}
+	
+	/**
+	 * Chances of omegas wolfes leaving pack
+	 */
+	public void chancesOmegaLeaving () {
+		if (this.getRank() == 'ω') {
+			Random random = new Random();
+			int randomNumber = random.nextInt(5) + 1;
+			if (randomNumber == 1) 
+				this.leavePack(); 	
+	}
+		}
+	
+	public void die() {   
+		if (this.getPack() != null)	
+			this.getPack().packMemberLeaves(this);
+		if (this.territory != null) {
+	        this.territory.removeWolf(this);
+	}
+	}
+	
+	
+	}

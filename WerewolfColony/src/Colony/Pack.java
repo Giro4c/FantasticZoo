@@ -12,15 +12,24 @@ public class Pack {
 	 * ------------------------------------------------- *
 	 * ------------------------------------------------- */
 	
+	private static int idPack = 0;
 	private ArrayList<Werewolf> members;
 	private Territory territory;
 	private AlphaCouple alphaCouple;
+
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
 	 * 					GETTERS / SETTERS
 	 * ------------------------------------------------- *
 	 * ------------------------------------------------- */
+	
+	public int getId() {
+		return this.idPack;
+	}
+	
+	public void setId(int id) {
+		this.idPack = id; }
 	
 	public ArrayList<Werewolf> getMembers() {
 		return members;
@@ -54,16 +63,26 @@ public class Pack {
 	
 	public Pack(ArrayList<Werewolf> members, Territory territory) {
 		super();
+		
+		if (members.size() < 2 || !Utils.containsMaleAndFemale(members)) 
+	        throw new IllegalArgumentException("Le pack doit avoir au moins un mâle et une femelle.");
+		
+		if (territory.getCurrentPack() != null)
+	        throw new IllegalArgumentException("Un territoire ne peut contenir qu'une seule meute");
+
+		if (!Utils.containsMaleAndFemale(members))
+	        throw new IllegalArgumentException("La meute ne peut être créer sans qu'il y ai au minimum un male et une femelle");
+		
 		this.members = members;
 		this.territory = territory;
+		this.territory.setCurrentPack(this);
+		this.idPack += 1;
+		
+        createNewHierarchy(this);
+		
 		// Faire appel aux fonctions de mise à jour de hierarchie après avoir choisi un male alpha (le plus fort lors de la création)
 	}
-	public Pack(Territory territory) {
-		super();
-		this.territory = territory;
-		this.members = new ArrayList<>();
-		// Faire appel aux fonctions de mise à jour de hierarchie après avoir choisi un male alpha (le plus fort lors de la création)
-	}
+	
 	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
@@ -113,8 +132,41 @@ public class Pack {
 	 * Modifies the rank hierarchy of a wolf pack by changing/setting the rank of each wolf.
 	 * @param pack the pack whose hierarchy is changed
 	 */
-	public static void createNewHierarchy(Pack pack) {
-		// A REMPLIR
+	public void createNewHierarchy(Pack pack) {
+		constituteAlphaCouple(pack.getStrongestMale());
+		
+	    Werewolf alphaMale = pack.getAlphaCouple().getMale();
+	    Werewolf alphaFemale = pack.getAlphaCouple().getFemale();
+
+	    // Pour les autres loups, on les classe et on leur attribue un rang
+	    ArrayList<Werewolf> nonAlphas = new ArrayList<>(pack.getMembers());
+	    nonAlphas.remove(alphaMale);
+	    nonAlphas.remove(alphaFemale);
+
+	    Collections.sort(nonAlphas, Comparator.comparingInt(Werewolf::getStrength).reversed().thenComparingInt(Werewolf::getLevel));
+
+	    char currentRank = 'β'; // On commence avec le rang après Alpha
+
+	    for (Werewolf wolf : nonAlphas) {
+
+	        // Si le loup est le même niveau que le précédent, on ne change pas de rang
+	        if (nonAlphas.indexOf(wolf) > 0) {
+	            Werewolf previousWolf = nonAlphas.get(nonAlphas.indexOf(wolf) - 1);
+	            if (wolf.getStrength() == previousWolf.getStrength() && wolf.getLevel() == previousWolf.getLevel()) {
+	                wolf.setRank(previousWolf.getRank());
+	            }
+	        }
+
+	        // Si on atteint Omega, on met tous dans le rang avant omega (pour omega ca sera apres)
+	        if (currentRank == 'ω') {
+	            currentRank = 'β';
+	            wolf.setRank(currentRank);
+	        } else {
+	        	wolf.setRank(currentRank);
+	            currentRank++;
+	        }
+	    }
+	    declareOmegas();
 	}
 	
 	/**
@@ -127,77 +179,118 @@ public class Pack {
 	    
 	    if (this.alphaCouple.getMale().getRank() != 'α') {
 	    	this.alphaCouple.setMale(null);
-	    	constituteAlphaCouple()
+	    	constituteAlphaCouple(this.getStrongestMale());
 	    }
-	    
-
-
-
 		}
 	
 	
-	 public Werewolf getStrongestMale() {
-	        ArrayList<Werewolf> males = new ArrayList<>();
-	        for (Werewolf member : members) {
-	            if (member.isMale()) {
-	                males.add(member);
-	            }
-	        }
-	        Collections.sort(males, Comparator.comparingInt(Werewolf::getStrength).reversed());
-	        Werewolf strongestMale = males.get(0);
-	        
-	        for (int i = 1; i < males.size(); i++) {
-	            Werewolf currentMale = males.get(i);
-
-	            if (currentMale.getStrength() == strongestMale.getStrength()) {
-	                if (currentMale.getLevel() > strongestMale.getLevel()) {
-	                    strongestMale = currentMale;
-	                }
-	                else if (currentMale.getLevel() == strongestMale.getLevel() && Utils.isDominant(currentMale.getRank(), strongestMale.getRank())) {
-	                    strongestMale = currentMale;
-	                }
-	                else if (currentMale.getLevel() == strongestMale.getLevel() && currentMale.getRank() == strongestMale.getRank()) {
-	                    if (Math.random() < 0.5) {
-	                        strongestMale = currentMale;
-	                    }
-	                }
-	            }
-	        }
-	        return strongestMale;
+	
+	public Werewolf getStrongestWolf() {
+	    if (members.isEmpty()) {
+	    	System.out.print("la meute est vide");
+	        return null; 
 	    }
+
+
+	    Collections.sort(members, Comparator.comparingInt(Werewolf::getStrength).reversed());
+	    Werewolf strongestWolf = members.get(0);
+
+	    for (int i = 1; i < members.size(); i++) {
+	        Werewolf currentWolf = members.get(i);
+
+	        if (currentWolf.getStrength() == strongestWolf.getStrength()) {
+	            if (currentWolf.getLevel() > strongestWolf.getLevel()) {
+	                strongestWolf = currentWolf;
+	            } else if (currentWolf.getLevel() == strongestWolf.getLevel()) {
+	            	if (Math.random() < 0.5) {
+	                    strongestWolf = currentWolf;	      
+	                
+	                }
+	            }
+	        }
+	    }
+	    return strongestWolf;
+	}
+	
+	
+	public Werewolf getStrongestMale() {
+	    if (members.isEmpty()) {
+	    	System.out.print("la meute est vide");
+	        return null; 
+	    }
+
+	    ArrayList<Werewolf> males = new ArrayList<>();
+	    for (Werewolf member : members) {
+	        if (member.isMale()) {
+	            males.add(member);
+	        }
+	    }
+
+	    if (males.isEmpty()) {
+	    	System.out.print("Aucun male trouvé dans la meute");
+	        return null; 
+	    }
+
+	    Collections.sort(males, Comparator.comparingInt(Werewolf::getStrength).reversed());
+	    Werewolf strongestMale = males.get(0);
+
+	    for (int i = 1; i < males.size(); i++) {
+	        Werewolf currentMale = males.get(i);
+
+	        if (currentMale.getStrength() == strongestMale.getStrength()) {
+	            if (currentMale.getLevel() > strongestMale.getLevel()) {
+	                strongestMale = currentMale;
+	            } else if (currentMale.getLevel() == strongestMale.getLevel()) {
+	            	if (Math.random() < 0.5) {
+	                    strongestMale = currentMale;	      
+	                
+	                }
+	            }
+	        }
+	    }
+	    return strongestMale;
+	}
+
 	 
 	 
-	 public Werewolf getStrongestFemale() {
-	        ArrayList<Werewolf> females = new ArrayList<>();
-	        for (Werewolf member : members) {
-	            if (!member.isMale()) {
-	                females.add(member);
-	            }
-	        }
-
-	        Collections.sort(females, Comparator.comparingInt(Werewolf::getStrength).reversed());
-	        Werewolf strongestFemale = females.get(0);
-
-	        for (int i = 1; i < females.size(); i++) {
-	            Werewolf currentFemale = females.get(i);
-
-	            if (currentFemale.getStrength() == strongestFemale.getStrength()) {
-	                if (currentFemale.getLevel() > strongestFemale.getLevel()) {
-	                    strongestFemale = currentFemale;
-	                }
-	                else if (currentFemale.getLevel() == strongestFemale.getLevel() && Utils.isDominant(currentFemale.getRank(), strongestFemale.getRank())) {
-	                    strongestFemale = currentFemale;
-	                }
-	                else if (currentFemale.getLevel() == strongestFemale.getLevel() && currentFemale.getRank() == strongestFemale.getRank()) {
-	                    if (Math.random() < 0.5) {
-	                        strongestFemale = currentFemale;
-	                    }
-	                }
-	            }
-	        }
-
-	        return strongestFemale;
+	public Werewolf getStrongestFemale() {
+	    if (members.isEmpty()) {
+	    	System.out.print("la meute est vide");
+	        return null; 
 	    }
+
+	    ArrayList<Werewolf> females = new ArrayList<>();
+	    for (Werewolf member : members) {
+	        if (!member.isMale()) {
+	            females.add(member);
+	        }
+	    }
+
+	    if (females.isEmpty()) {
+	    	System.out.print("Aucune femelle trouvée dans la meute");
+	        return null; 
+	    }
+
+	    Collections.sort(females, Comparator.comparingInt(Werewolf::getStrength).reversed());
+	    Werewolf strongestFemale = females.get(0);
+
+	    for (int i = 1; i < females.size(); i++) {
+	        Werewolf currentFemale = females.get(i);
+
+	        if (currentFemale.getStrength() == strongestFemale.getStrength()) {
+	            if (currentFemale.getLevel() > strongestFemale.getLevel()) {
+	                strongestFemale = currentFemale;
+	            } else if (currentFemale.getLevel() == strongestFemale.getLevel()) {
+	            	if (Math.random() < 0.5) {
+	                    strongestFemale = currentFemale;	
+	                }
+	            }
+	        }
+	    }
+
+	    return strongestFemale;
+	}
+
 	
 	
 	/**
@@ -225,6 +318,7 @@ public class Pack {
 		
 		// Constituer nouveau couple alpha
 		if (strongestFemale != null) {
+			maleAlpha.setRank('α');
 			strongestFemale.setRank('α');
 	        this.alphaCouple = new AlphaCouple(maleAlpha, strongestFemale, this);
 	        this.alphaCouple.setPack(this);
@@ -238,10 +332,28 @@ public class Pack {
 	 * Change the werewolves' rank to omega (lowest rank) for any werewolf with lower than pack average strength.
 	 */
 	public void declareOmegas() {
-		// Calculer force moyenne dans la meute
-		// Parcourir la liste de loup et changer le rang quand la force est strictement inférieure à la moyenne.
-		// Attention, cas particulier : tous les loups ont la meme force -> un des loups qui n'est pas alpha devient omega
+	    if (members.isEmpty()) {
+	        System.out.println("La meute est vide.");
+	        return;
+	    }
+
+	    int totalStrength = 0;
+	    int countWolfs = 0;
+
+	    for (Werewolf wolf : members) {
+	        totalStrength += wolf.getStrength();
+	        countWolfs++;
+	    }
+
+	    int averageStrength = totalStrength / countWolfs;
+
+	    for (Werewolf wolf : members) {
+	        if (wolf.getStrength() < averageStrength && wolf != this.alphaCouple.getMale() && wolf != this.alphaCouple.getFemale()) {
+	            wolf.setRank('ω');
+	        }
+	    }
 	}
+
 	
 	/**
 	 * Add a previously lone werewolf to the pack.
@@ -279,7 +391,7 @@ public class Pack {
 	public void launchDominations (){
 	    for (Werewolf agressor : members) {
 	        for (Werewolf target : members) {
-	            if (agressor != target && agressor.canDominate(target, this)) {
+	            if (agressor != target && agressor.canDominate(target)) {
 	            	agressor.dominate(target);
 	            }
 	        }
