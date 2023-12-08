@@ -93,6 +93,7 @@ public class Message {
 		if (age <= 0) {
 			age = 10;
 		}
+		in.nextLine(); // If not used then gender will use age input as string for gender input
 		System.out.print("Is the ZooMaster Male (M) or Female (F) : ");
 		String gender = in.nextLine();
 		boolean isMale;

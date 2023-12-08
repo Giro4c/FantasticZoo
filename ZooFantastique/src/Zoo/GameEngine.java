@@ -145,7 +145,7 @@ public class GameEngine {
 			}
 		}
 		
-		// Clear screen of all prints done by addCreature
+		// Clear screen of all prints done by addCreature during initialization
 		// Only works on terminal. Does not work on IDE.
 		System.out.print("\033[H\033[2J");  
 	    System.out.flush();
