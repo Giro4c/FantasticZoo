@@ -60,7 +60,7 @@ public class Enclosure implements Runnable {
                     this.wait(randomNumberSleep);
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                break; // Thread only interrupted when enclosure is deleted
             }
             int RandomNumber = random.nextInt(100);
             if ( RandomNumber < 5) { // 5% chance that the enclosure gets dirty 

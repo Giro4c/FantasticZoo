@@ -18,6 +18,7 @@ public class FantasticZoo {
 		game.init();
 		while (true) {
 			game.showChoices();
+			System.out.println();
 			try {
 				CommandHandler.executeCommand(Message.registerCommand(4), game);
 			} catch (Exception e) {
