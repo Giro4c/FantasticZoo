@@ -98,7 +98,12 @@ public class Enclosure implements Runnable {
     public void setName(String name) {
         this.name = name;
     }
+    public String String () {
+    	return "The enclosure " + name + " has an area of " + surface + " square meters, it can accommodate " + maxNumberCreatures +
+    	        " creatures inside. Currently, there are " + currentNumberCreatures + " creatures inside. The enclosure is currently " +
+    	        cleanness + ".";
 
+    }
     /**
      * Get the index of cleanliness of the enclosure.
      *
