@@ -22,7 +22,8 @@ public class GameEngine {
 	 * 	<li>3 -> Transfer interface</li>
 	 * 	<li>4 -> Remove creature interface</li>
 	 * 	<li>5 -> Heal creature interface</li>
-	 * 	<li>6 -> </li>
+	 * 	<li>6 -> New enclosure interface</li>
+	 * 	<li>7 -> </li>
 	 * </ul>
 	 * </p>
 	 */
@@ -134,16 +135,16 @@ public class GameEngine {
 		this.zoo.addNewEnclosure(enclosure); 			// 9
 		
 		// Start all creature threads for the zoo (threads in enclosures are already started)
-		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
-			for (int indexCreature = 0; indexCreature < enclosureC.getPresentCreatures().size(); ++indexCreature) {
-				try {
-					enclosureC.getPresentCreatures().get(indexCreature).startLife();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}
+//		for (Enclosure enclosureC : this.zoo.getExistingEnclosures()){
+//			for (int indexCreature = 0; indexCreature < enclosureC.getPresentCreatures().size(); ++indexCreature) {
+//				try {
+//					enclosureC.getPresentCreatures().get(indexCreature).startLife();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+		
 		// Clear screen of all prints done by addCreature
 		// Only works on terminal. Does not work on IDE.
 		System.out.print("\033[H\033[2J");  

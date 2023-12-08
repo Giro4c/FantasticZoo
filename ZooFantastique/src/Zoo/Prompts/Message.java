@@ -66,9 +66,9 @@ public class Message {
 		String action = in.nextLine();
 		
 		String[] command = action.split(" ", nbWords);
-		for (int i = 0; i < command.length; ++i) {
-			command[i] = command[i].toLowerCase();
-		}
+//		for (int i = 0; i < command.length; ++i) {
+//			command[i] = command[i].toLowerCase();
+//		}
 		System.out.println();
 //		in.close();
 		return command;

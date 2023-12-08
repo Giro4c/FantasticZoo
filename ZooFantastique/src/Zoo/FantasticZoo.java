@@ -16,7 +16,6 @@ public class FantasticZoo {
 	public static void main(String[] args) {
 		GameEngine game = new GameEngine();
 		game.init();
-		
 		while (true) {
 			game.showChoices();
 			System.out.println();

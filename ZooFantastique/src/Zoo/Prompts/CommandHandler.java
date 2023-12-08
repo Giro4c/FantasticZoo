@@ -3,6 +3,8 @@ package Zoo.Prompts;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Zoo.Aquarium;
+import Zoo.Aviary;
 import Zoo.Enclosure;
 import Zoo.GameEngine;
 import Zoo.Animals.Creature;
@@ -31,9 +33,9 @@ public class CommandHandler {
 
 		if (command.length == 2) {
 			if (command[0].toLowerCase().equals("new")) {
-				if(command[1].toLowerCase().equals("enclosure") 
-						|| command[1].toLowerCase().equals("aquarium") 
-						|| command[1].toLowerCase().equals("aviary")) {
+				if(command[1].toLowerCase().equals(Enclosure.class.getSimpleName().toLowerCase()) 
+						|| command[1].toLowerCase().equals(Aquarium.class.getSimpleName().toLowerCase()) 
+						|| command[1].toLowerCase().equals(Aviary.class.getSimpleName().toLowerCase())) {
 					return handleNewEnclosure(gameEngine, command[1].toLowerCase());					
 				}
 				else throw new Exception(Message.notExists("New element type"));
@@ -138,7 +140,7 @@ public class CommandHandler {
 			singleCommand = in.nextLine();
 			if (singleCommand.toLowerCase().equals("cancel")) {
 				gameEngine.setSituationIndicator(2);
-				return true;
+				return false;
 			}
 			for (int indexC = 0 ; indexC < gameEngine.getCurrentEnclosure().getPresentCreatures().size() ; ++indexC) {
 				if (singleCommand.equals(gameEngine.getCurrentEnclosure().getPresentCreatures().get(indexC).getName())) {
@@ -164,12 +166,17 @@ public class CommandHandler {
 			singleCommand = in.nextLine();
 			if (singleCommand.toLowerCase().equals("cancel")) {
 				gameEngine.setSituationIndicator(2);
-				return true;
+				return false;
 			}
 			for (int indexE = 0 ; indexE < gameEngine.getZoo().getExistingEnclosures().size() ; ++indexE) {
 				if (singleCommand.equals(gameEngine.getZoo().getExistingEnclosures().get(indexE).getName())) {
-					transfertEnclosureIndex = indexE;
-					validCommand = true;
+//					if (!gameEngine.getZoo().getExistingEnclosures().get(indexE).checkCompatibilité()) {
+//						System.out.println("Creature not compatible with this enclosure");
+//					}
+//					else {
+						transfertEnclosureIndex = indexE;
+						validCommand = true;
+//					}
 					break;
 				}
 			}
@@ -185,6 +192,7 @@ public class CommandHandler {
 		
 		// Execute transfer
 		gameEngine.getZoo().getExistingEnclosures().get(transfertEnclosureIndex).addCreature(gameEngine.getCurrentEnclosure().removeCreature(transfertCreatureIndex));
+		gameEngine.setSituationIndicator(2);
 		
 		return true;
 	}
@@ -212,6 +220,7 @@ public class CommandHandler {
 					singleCommand = in.nextLine();
 					if (singleCommand.toLowerCase().equals("yes")) {
 						gameEngine.getCurrentEnclosure().removeCreature(indexC);
+						gameEngine.setSituationIndicator(2);
 						return true;
 					}
 					else {
@@ -241,6 +250,7 @@ public class CommandHandler {
 			for (Creature creature : gameEngine.getCurrentEnclosure().getPresentCreatures()) {
 				if (singleCommand.equals(creature.getName())) {
 					creature.heal();
+					gameEngine.setSituationIndicator(2);
 					return true;
 				}
 			}
@@ -251,7 +261,69 @@ public class CommandHandler {
 		
 	}
 	private static boolean handleNewEnclosure(GameEngine gameEngine, String enclosureClass) {
+//		gameEngine.setSituationIndicator(-1);
+		Scanner in = new Scanner(System.in);
 		
+		// Name the enclosure
+		String command = "";
+		String name = "";
+		boolean valid = false;
+		while (!valid) {
+			System.out.println("Name the new " + enclosureClass + " : ");
+			name = in.nextLine();
+			if (name.toLowerCase().equals("cancel")) return false;
+			valid = true;
+			for (Enclosure enclosure : gameEngine.getZoo().getExistingEnclosures()) {
+				if (name.equals(enclosure.getName())) {
+					valid = false;
+					System.out.println("Name " + name + " is already taken.");
+					break;
+				}
+			}
+		}
+		
+		// Determine max number creatures
+		System.out.println("Indicate the maximum number of creatures : ");
+		command = in.nextLine();
+		if (command.toLowerCase().equals("cancel")) return false;
+		int maxCreatures = Integer.valueOf(command);
+		
+		// Surface
+		System.out.println("Indicate the surface : ");
+		command = in.nextLine();
+		if (command.toLowerCase().equals("cancel")) return false;
+		int surface = Integer.valueOf(command);
+		
+		// For Aquarium
+		if (enclosureClass.equals(Aquarium.class.getSimpleName().toLowerCase())) {
+			// Depth
+			System.out.println("Indicate the depth : ");
+			command = in.nextLine();
+			if (command.toLowerCase().equals("cancel")) return false;
+			int depth = Integer.valueOf(command);
+			
+			// Salinity
+			System.out.println("Indicate the salinity : ");
+			command = in.nextLine();
+			if (command.toLowerCase().equals("cancel")) return false;
+			int salinity = Integer.valueOf(command);
+			
+			gameEngine.getZoo().addNewEnclosure(new Aquarium(name, surface, maxCreatures, Enclosure.CLEANNESS_STATES[0], depth, salinity));
+		}
+		// For Aviary
+		else if (enclosureClass.equals(Aviary.class.getSimpleName().toLowerCase())) {
+			// Height
+			System.out.println("Indicate the height : ");
+			command = in.nextLine();
+			if (command.toLowerCase().equals("cancel")) return false;
+			int height = Integer.valueOf(command);
+			
+			gameEngine.getZoo().addNewEnclosure(new Aviary(name, surface, maxCreatures, Enclosure.CLEANNESS_STATES[0], height));
+		}
+		// For normal enclosure
+		else {
+			gameEngine.getZoo().addNewEnclosure(new Enclosure(name, surface, maxCreatures, Enclosure.CLEANNESS_STATES[0]));
+		}
 		return true;
 	}
 	

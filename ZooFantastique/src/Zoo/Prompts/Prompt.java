@@ -2,6 +2,8 @@ package Zoo.Prompts;
 
 import java.util.ArrayList;
 
+import Zoo.Aquarium;
+import Zoo.Aviary;
 import Zoo.Enclosure;
 import Zoo.FantasticZoo;
 import Zoo.GameEngine;
@@ -36,9 +38,9 @@ public class Prompt {
 		else if (game.getSituationIndicator() == 5) {
 			promptChoice = this.getSubSituationString(this.getPromptHeal(game.getCurrentEnclosure()), game.getSubSituationIndicator());
 		}
-		else if (game.getSituationIndicator() == 6) {
-			
-		}
+//		else if (game.getSituationIndicator() == 6) {
+////			promptChoice = this.getSubSituationString(this.getPromptNewEnclosure(), game.getSubSituationIndicator());
+//		}
 		return promptChoice;
 	}
 	
@@ -107,6 +109,23 @@ public class Prompt {
 		return prompt;
 	}
 	
+	public ArrayList<String> getPromptNewEnclosure(){
+		ArrayList<String> prompt = new ArrayList<String>();
+		String actionPrompt = "Name the new enclosure : "; // 0
+		prompt.add(actionPrompt);
+		actionPrompt = "Indicate the surface : "; // 1
+		prompt.add(actionPrompt);
+		actionPrompt = "Indicate the depth : "; // 2
+		prompt.add(actionPrompt);
+		actionPrompt = "Indicate the salinity : "; // 3
+		prompt.add(actionPrompt);
+		actionPrompt = "Indicate the height : "; // 4
+		prompt.add(actionPrompt);
+		
+		prompt.add("Cancel");
+		return prompt;
+	}
+	
 	private String getSubSituationString(ArrayList<String> promptList, int subSituationIndicator) {
 		String str = "";
 		if (subSituationIndicator < promptList.size()-1) {
@@ -115,7 +134,7 @@ public class Prompt {
 		else {
 			str = promptList.get(promptList.size()-2);
 		}
-		str = str + promptList.get(promptList.size()-1);
+		str = str + '\n' + Message.ANSI_CYAN + promptList.get(promptList.size()-1) + Message.ANSI_RESET;
 		return str;
 	}
 
