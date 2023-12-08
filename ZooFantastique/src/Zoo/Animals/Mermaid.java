@@ -3,7 +3,7 @@ package Zoo.Animals;
 import Zoo.Enclosure;
 import Zoo.Caracteristics.CanSwim;
 
-public class Sirene extends Mammal implements CanSwim {
+public class Mermaid extends Mammal implements CanSwim {
 
     public static final int minHeight = 120;
     public static final int maxHeight = 160;
@@ -11,12 +11,12 @@ public class Sirene extends Mammal implements CanSwim {
     public static final int maxWeight = 80;
     public static final int GESTATION_TIME = 5;
 
-    public Sirene(boolean isMale, int age, Enclosure enclosure) {
-		super(Sirene.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
+    public Mermaid(boolean isMale, int age, Enclosure enclosure) {
+		super(Mermaid.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
 	}
 
-	public Sirene(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(Sirene.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
+	public Mermaid(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
+		super(Mermaid.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
 
         
         this.setHeightMin(minHeight);
@@ -25,8 +25,8 @@ public class Sirene extends Mammal implements CanSwim {
         this.setWeightMax(maxWeight);
 	}
 
-	public Sirene(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(Sirene.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
+	public Mermaid(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
+		super(Mermaid.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);

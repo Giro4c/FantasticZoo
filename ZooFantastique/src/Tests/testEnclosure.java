@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import Zoo.Desease;
+import Zoo.Disease;
 import Zoo.Enclosure;
 import Zoo.Animals.Creature;
 import Zoo.Animals.Dragon;
 import Zoo.Animals.Kraken;
-import Zoo.Animals.Licorne;
+import Zoo.Animals.Unicorn;
 
 class testEnclosure {
 	
@@ -108,7 +108,7 @@ class testEnclosure {
 	@Test
 	void testFeedingAnimals() {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
-		Licorne c3 = new Licorne(false, 0, enclosure);
+		Unicorn c3 = new Unicorn(false, 0, enclosure);
 		enclosure.feedCreatures();
 		assertEquals(c3.getIndicatorHunger(), "Full");
 	}
@@ -118,8 +118,8 @@ class testEnclosure {
 		Enclosure enclosure = new Enclosure("enclo test 1", 100, 10, "Normal");
 		Kraken c4 = new Kraken(false, 0, enclosure);
 		Kraken c5 = new Kraken(false, 0, enclosure);
-		Desease maladie = new Desease(1,2,3,c4);
-		Desease maladie2 = new Desease(1,2,3,c5);
+		Disease maladie = new Disease(1,2,3,c4);
+		Disease maladie2 = new Disease(1,2,3,c5);
 		System.out.println(c4.toString());
 		System.out.println(c5.toString());
 		assertTrue(c4.isSick);

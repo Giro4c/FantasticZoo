@@ -84,17 +84,17 @@ public class GameEngine {
 		// Create 10 enclosures
 			// Enclosure 1
 		Enclosure enclosure = new Enclosure("Savanaria", 150, 10, Enclosure.CLEANNESS_STATES[0]);
-		enclosure.addCreature(new Nymphe(true, 20, enclosure));
-		enclosure.addCreature(new Nymphe(false, 24, enclosure));
-		enclosure.addCreature(new Nymphe(true, 40, enclosure));
-		enclosure.addCreature(new Nymphe(true, 31, enclosure));
+		enclosure.addCreature(new Nymph(true, 20, enclosure));
+		enclosure.addCreature(new Nymph(false, 24, enclosure));
+		enclosure.addCreature(new Nymph(true, 40, enclosure));
+		enclosure.addCreature(new Nymph(true, 31, enclosure));
 		this.zoo.addNewEnclosure(enclosure); 			// 0
 			// Enclosure 2
 		enclosure = new Enclosure("Babil", 175, 12, Enclosure.CLEANNESS_STATES[0]);
-		enclosure.addCreature(new Lycanthropes(true, 12, enclosure));
-		enclosure.addCreature(new Lycanthropes(false, 5, enclosure));
-		enclosure.addCreature(new Lycanthropes(false, 36, enclosure));
-		enclosure.addCreature(new Lycanthropes(true, 31, enclosure));
+		enclosure.addCreature(new Werewolf(true, 12, enclosure));
+		enclosure.addCreature(new Werewolf(false, 5, enclosure));
+		enclosure.addCreature(new Werewolf(false, 36, enclosure));
+		enclosure.addCreature(new Werewolf(true, 31, enclosure));
 		this.zoo.addNewEnclosure(enclosure); 			// 1
 			// Enclosure 3
 		enclosure = new Enclosure("Leon's Gate", 205, 15, Enclosure.CLEANNESS_STATES[0]);
@@ -103,8 +103,8 @@ public class GameEngine {
 		this.zoo.addNewEnclosure(enclosure); 			// 2
 			// Enclosure 4
 		enclosure = new Enclosure("Well", 136, 8, Enclosure.CLEANNESS_STATES[0]);
-		enclosure.addCreature(new Licorne(true, 14, enclosure));
-		enclosure.addCreature(new Licorne(false, 13, enclosure));
+		enclosure.addCreature(new Unicorn(true, 14, enclosure));
+		enclosure.addCreature(new Unicorn(false, 13, enclosure));
 		this.zoo.addNewEnclosure(enclosure); 			// 3
 			// Enclosure 5
 		enclosure = new Enclosure("ArraLa", 103, 5, Enclosure.CLEANNESS_STATES[0]);
@@ -122,9 +122,9 @@ public class GameEngine {
 		this.zoo.addNewEnclosure(enclosure); 			// 6
 			// Enclosure 8
 		enclosure = new Aquarium("Lake Accuity", 90, 9, Enclosure.CLEANNESS_STATES[0], 15, 10);
-		enclosure.addCreature(new Sirene(true, 45, enclosure));
-		enclosure.addCreature(new Sirene(false, 32, enclosure));
-		enclosure.addCreature(new Sirene(false, 40, enclosure));
+		enclosure.addCreature(new Mermaid(true, 45, enclosure));
+		enclosure.addCreature(new Mermaid(false, 32, enclosure));
+		enclosure.addCreature(new Mermaid(false, 40, enclosure));
 		this.zoo.addNewEnclosure(enclosure); 			// 7
 			// Enclosure 9
 		enclosure = new Aviary("Great Aviary", 150, 15, Enclosure.CLEANNESS_STATES[0], 30);

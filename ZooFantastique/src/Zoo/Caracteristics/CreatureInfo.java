@@ -4,5 +4,6 @@ public interface CreatureInfo {
 
 	public String getSpecie();
 	public String getName();
+	public String getNameFull();
 	
 }

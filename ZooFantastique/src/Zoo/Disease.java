@@ -2,7 +2,7 @@ package Zoo;
 
 import Zoo.Animals.Creature;
 
-public class Desease {
+public class Disease {
 	
     private String name;
     private int damage;
@@ -23,7 +23,7 @@ public class Desease {
      * @param time The time duration of the disease in sleep iterations.
      * @param animal The animal affected by the disease.
      */
-    public Desease(int damage, int severity, int time, Creature animal) {
+    public Disease(int damage, int severity, int time, Creature animal) {
         this.name = ListNames.getRandomNameDisease();
 
         this.damage = damage;

@@ -3,7 +3,7 @@ package Zoo.Animals;
 import Zoo.Enclosure;
 import Zoo.Caracteristics.Revivable;
 
-public class Nymphe extends Mammal implements Revivable {
+public class Nymph extends Mammal implements Revivable {
 
     public static final int minHeight = 30;
     public static final int maxHeight = 50;
@@ -12,13 +12,13 @@ public class Nymphe extends Mammal implements Revivable {
     public static final int GESTATION_TIME = 5;
     
     
-    public Nymphe(boolean isMale, int age, Enclosure enclosure) {
-		super(Nymphe.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
+    public Nymph(boolean isMale, int age, Enclosure enclosure) {
+		super(Nymph.class.getSimpleName(), isMale, age, enclosure, minHeight, maxHeight, minWeight, maxWeight, GESTATION_TIME, 0);
 
 	}
 
-	public Nymphe(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(Nymphe.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
+	public Nymph(boolean isMale, int weight, int height, int age, Enclosure enclosure) {
+		super(Nymph.class.getSimpleName(), isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);
@@ -26,8 +26,8 @@ public class Nymphe extends Mammal implements Revivable {
         this.setWeightMax(maxWeight);
 	}
 
-	public Nymphe(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
-		super(Nymphe.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
+	public Nymph(String name, boolean isMale, int weight, int height, int age, Enclosure enclosure) {
+		super(Nymph.class.getSimpleName(), name, isMale, weight, height, age, enclosure, GESTATION_TIME, 0);
         
         this.setHeightMin(minHeight);
         this.setHeightMax(maxHeight);

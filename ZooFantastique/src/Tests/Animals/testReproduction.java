@@ -10,7 +10,7 @@ import Zoo.Animals.Creature;
 import Zoo.Animals.Egg;
 import Zoo.Animals.Kraken;
 import Zoo.Animals.Mammal;
-import Zoo.Animals.Nymphe;
+import Zoo.Animals.Nymph;
 import Zoo.Animals.Oviparous;
 
 class testReproduction {
@@ -18,8 +18,8 @@ class testReproduction {
 	@Test
 	void testAjoutMammalApresReproduction() {
 	    Enclosure m = new Enclosure("Test mammals enclo", 100, 10, "Clean");
-	    Nymphe m1 = new Nymphe(false, 30, m);
-        Nymphe m2 = new Nymphe(true, 30, m);
+	    Nymph m1 = new Nymph(false, 30, m);
+        Nymph m2 = new Nymph(true, 30, m);
         m.addCreature(m2);
         m.addCreature(m1);
 	    m.reproduction();

@@ -1,7 +1,7 @@
 package Zoo.Animals;
 
 import java.util.Random;
-import Zoo.Desease;
+import Zoo.Disease;
 import Zoo.Enclosure;
 import Zoo.ListNames;
 import Zoo.Animals.*;
@@ -23,7 +23,7 @@ public class Creature implements Runnable{
 	private boolean isSleeping;
 	private String indicatorHealth;
 	private Enclosure enclosure;
-	private Desease desease;
+	private Disease disease;
 	// Thread will run until creature dies or is deleted
 	private Thread lifeThread;
 	
@@ -56,21 +56,21 @@ public class Creature implements Runnable{
 	public int getWeightMax() {
 		return weightMax;
 	}
-	public void setDesease(Desease desease) {
-		this.desease = desease;
+	public void setDesease(Disease disease) {
+		this.disease = disease;
 	}
 	public boolean isSick;
 
 	public String getSpecie() {
 			return specie;
 	}
-	public void becomeSick(Desease d){
-		this.desease = d;
+	public void becomeSick(Disease d){
+		this.disease = d;
 		this.isSick = true;
 	}
 
 	public void removeDesease() {
-		this.desease =null;
+		this.disease =null;
     }
 	public void setSpecie(String specie) {
 		this.specie = specie;
@@ -105,7 +105,7 @@ public class Creature implements Runnable{
 		this.enclosure = enclosure;	
 		
 		// Default values
-		this.desease = null;
+		this.disease = null;
 		this.isSick = false;
 		this.isSleeping = false;
 		this.indicatorHealth = HEALTH_STATES[0];
@@ -130,7 +130,7 @@ public class Creature implements Runnable{
 			this.enclosure = enclosure;
 			
 			// Default values
-			this.desease = null;
+			this.disease = null;
 			this.isSick = false;
 			this.isSleeping = false;
 			this.indicatorHealth = HEALTH_STATES[0];
@@ -160,7 +160,7 @@ public class Creature implements Runnable{
 		this.weightMax = weightMax;
 		
 		// Default values
-		this.desease = null;
+		this.disease = null;
 		this.isSick = false;
 		this.isSleeping = false;
 		Random rand = new Random();
@@ -196,7 +196,7 @@ public class Creature implements Runnable{
 	        if (!this.isSick) {
 	        	RandomNumber = random.nextInt(250);
 	        	if (RandomNumber <= this.percentageSick()) { // ?% chance that the creature gets sick
-		        	this.desease = new Desease(1, random.nextInt(1, 4), random.nextInt(1, 6), this);
+		        	this.disease = new Disease(1, random.nextInt(1, 4), random.nextInt(1, 6), this);
 		        	this.isSick = true;
 		        }
 	        }
@@ -368,8 +368,8 @@ public class Creature implements Runnable{
 		}
 	}
 	
-	public Desease getDesease() {
-		return this.desease;
+	public Disease getDesease() {
+		return this.disease;
 	}
 
 
@@ -408,12 +408,12 @@ public class Creature implements Runnable{
 
 	//fonction qui permet à un animal d'être traité de la maladie
 	/**
-	 * Treats an creature's desease
+	 * Treats an creature's disease
 	 */
 	public void treat(){
-		if (this.desease == null) return;
-		System.out.println(this.getNameFull()+ " gets treated against the illness "+ this.desease.getName());
-		this.desease.remove(this);
+		if (this.disease == null) return;
+		System.out.println(this.getNameFull()+ " gets treated against the illness "+ this.disease.getName());
+		this.disease.remove(this);
 	}
 	
 	public void eat() {
@@ -472,9 +472,9 @@ public class Creature implements Runnable{
 			this.enclosure.removeCreature(this);
 			this.enclosure = null;
 		}
-		if (this.desease != null) {
-			this.desease.setAnimal(null);
-			this.desease = null;
+		if (this.disease != null) {
+			this.disease.setAnimal(null);
+			this.disease = null;
 		}
 		// Put back the name in the static list for female or male creatures
 		if (this.isMale) {

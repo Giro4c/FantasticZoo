@@ -1,19 +1,19 @@
 package Zoo.Caracteristics;
 
-import Zoo.Desease;
+import Zoo.Disease;
 import Zoo.Animals.Creature;
 
 public interface Revivable extends CreatureInfo {
 
 	public void setSick(boolean isSick);
-	public void setDesease(Desease desease);
-	public Desease getDesease();
+	public void setDesease(Disease disease);
+	public Disease getDesease();
 	public void setAge(int age);
 	public void setIndicatorHunger(String indicatorHunger);
 	public void setIndicatorHealth(String indicatorHealth);
 	
 	public default void die() {
-		System.out.println("The creature "+ this.getName() +" is dead !");
+		System.out.println(this.getNameFull() +" is dead !");
 		this.revive();
 	}
 	
