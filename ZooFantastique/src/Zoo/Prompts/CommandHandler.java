@@ -1,6 +1,5 @@
 package Zoo.Prompts;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import Zoo.Aquarium;
@@ -170,13 +169,13 @@ public class CommandHandler {
 			}
 			for (int indexE = 0 ; indexE < gameEngine.getZoo().getExistingEnclosures().size() ; ++indexE) {
 				if (singleCommand.equals(gameEngine.getZoo().getExistingEnclosures().get(indexE).getName())) {
-//					if (!gameEngine.getZoo().getExistingEnclosures().get(indexE).checkCompatibilité()) {
-//						System.out.println("Creature not compatible with this enclosure");
-//					}
-//					else {
+					if (!gameEngine.getZoo().getExistingEnclosures().get(indexE).checkCompatibility(gameEngine.getCurrentEnclosure().getPresentCreatures().get(transfertCreatureIndex))) {
+						System.out.println("Creature not compatible with this enclosure");
+					}
+					else {
 						transfertEnclosureIndex = indexE;
 						validCommand = true;
-//					}
+					}
 					break;
 				}
 			}
@@ -190,7 +189,8 @@ public class CommandHandler {
 		}
 		
 		// Execute transfer
-		gameEngine.getZoo().getExistingEnclosures().get(transfertEnclosureIndex).addCreature(gameEngine.getCurrentEnclosure().removeCreature(transfertCreatureIndex));
+		gameEngine.getZoo().getZooMaster().tranfertCreature(gameEngine.getCurrentEnclosure(), transfertCreatureIndex, gameEngine.getZoo().getExistingEnclosures().get(transfertEnclosureIndex));
+//		gameEngine.getZoo().getExistingEnclosures().get(transfertEnclosureIndex).addCreature(gameEngine.getCurrentEnclosure().removeCreature(transfertCreatureIndex));
 		gameEngine.setSituationIndicator(2);
 		
 		return true;

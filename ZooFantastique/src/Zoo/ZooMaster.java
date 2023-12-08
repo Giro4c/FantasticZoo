@@ -61,14 +61,13 @@ public class ZooMaster {
 	
 	public void tranfertCreature(Enclosure prevEnclosure, int indexInEnclosure, Enclosure newEnclosure) {
 		if ( newEnclosure.getMaxNumberCreatures() < newEnclosure.getCurrentNumberCreatures()) {
-			newEnclosure.addCreature(prevEnclosure.getPresentCreatures().get(indexInEnclosure));
-			prevEnclosure.getPresentCreatures().get(indexInEnclosure).delete();
+			newEnclosure.addCreature(prevEnclosure.getPresentCreatures().remove(indexInEnclosure));
 		
 			System.out.println("The ZooMaster " + this.name + " is moving a creature from " + 
 					prevEnclosure.getName() + " to " + newEnclosure.getName());
 		}
 		else {
-			System.out.println("You can't transfert a creature in this enclosure because it is full");
+			System.out.println("You can't transfer a creature in this enclosure because it is full");
 		}
 	}
 	
