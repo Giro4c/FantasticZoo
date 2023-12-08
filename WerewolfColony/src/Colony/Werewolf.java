@@ -63,6 +63,8 @@ public class Werewolf extends Creature {
 	 */
 	private final int THRESHOLD_DOMINATING_FACTOR = -5;
 	
+	private boolean isDead = false;
+	
 	/* ------------------------------------------------- *
 	 * ------------------------------------------------- *
 	 * 					GETTERS / SETTERS
@@ -131,6 +133,14 @@ public class Werewolf extends Creature {
 
 	public void setCurrentlyHuman(boolean currentlyHuman) {
 		this.currentlyHuman = currentlyHuman;
+	}
+	
+	public boolean getIsDead() {
+		return this.isDead;
+	}
+	
+	public void setIsDead (boolean isdead) {
+		this.isDead = isdead;
 	}
 		
 	/* ------------------------------------------------- *
@@ -416,8 +426,12 @@ public class Werewolf extends Creature {
 			this.getPack().packMemberLeaves(this);
 		if (this.territory != null) {
 	        this.territory.removeWolf(this);
+	    this.setIsDead(true);
 	}
 	}
 	
+	public boolean isDead() {
+		return this.isDead;
+	}
 	
 	}

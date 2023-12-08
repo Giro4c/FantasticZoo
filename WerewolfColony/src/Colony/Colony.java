@@ -91,6 +91,8 @@ public class Colony {
 	}
 	
 	
+	
+	
 	/**
 	 * Check if wolfs are too old and kill the ones too old (after 100year)
 	 */
@@ -98,19 +100,17 @@ public class Colony {
 	    for (Territory territory : territories) {
 	        if (territory.getCurrentPack() != null) {
 	            for (Werewolf wolf : territory.getCurrentPack().getMembers()) {
-	                if (wolf.getAge() > 100) {
+	                if (wolf.getAge() > 100 && wolf.isDead() != true) {
 	                    System.out.println(wolf.getName() + " is dead, he was too old");
 	                    wolf.die();
-	                    territory.removeWolf(wolf);
 	                }
 	            }
 	        }
 	        if (territory.getLoners() != null) {
 	            for (Werewolf wolf : territory.getLoners()) {
-	                if (wolf.getAge() > 100) {
+	                if (wolf.getAge() > 100 && wolf.isDead() != true) {
 	                    System.out.println(wolf.getName() + " is dead, he was too old");
 	                    wolf.die();
-	                    territory.removeWolf(wolf);
 	                }
 	            }
 	        }
@@ -138,78 +138,105 @@ public class Colony {
 	
 	
 
-	 public void runColonySimulation() {
-		 Scanner scanner = new Scanner(System.in);
-		 
-		/*.out.println("WELCOME TO YOUR COLONY !");
-		 System.out.println("Press Enter to continue...");
-		 scanner.nextLine();
-		 
-		 System.out.println("AT FIRST, CREATE YOUT COLONY MASTER : ");
-		 System.out.println("Tape the name of your colony master : ");
-		 String name = scanner.nextLine();
-		 System.out.println("Now his sex : ");
-		 boolean isMale = scanner.nextBoolean();
-		 System.out.println("Finally his age : ");
-		 int age = scanner.nextInt();
-		 
-		 this.colonymaster = new ColonyMaster(name, isMale, age);*/
-		 Territory cage = new Territory();
-		 this.addTerritory(cage);
-		 Werewolf wolf1 = new Werewolf(cage);
-		 Werewolf wolf2 = new Werewolf(cage);
-		 Werewolf wolf3 = new Werewolf(cage);
-		 Werewolf wolf4 = new Werewolf(cage);
-		 Werewolf wolf5 = new Werewolf(cage);
-		 Werewolf wolf6 = new Werewolf(cage);
-		 Werewolf wolf7 = new Werewolf(cage);
-		 Werewolf wolf8 = new Werewolf(cage);
-		 Werewolf wolf9 = new Werewolf(cage);
-		 
-		 while (true) {
-			 
-			 
-			 
-	         // Perform periodic actions
-	         /* if (matingSeason()) {
-	                generateRandomHowls();
-	                updateAllPackHierarchies();
-	            }*/
+	public void runColonySimulation() {
+        Scanner scanner = new Scanner(System.in);
 
-	         //   transformWerewolves();
+        
+    	Territory territory = new Territory();
+    	this.addTerritory(territory);
+    	Territory territory2 = new Territory();
+    	this.addTerritory(territory2);
+    	Territory territory3 = new Territory();
+    	this.addTerritory(territory3);
+        
+        while (true) {
+        	updateAllPackHierarchies();
+        	
+            // Display main menu
+            System.out.println("=========== Main Menu ===========");
+            System.out.println("1. Continue");
+            System.out.println("2. Stop Simulation");
+            System.out.println("3. Show Territories");
 
-			 
-	         // Check and create new packs
-	         canNewPackBeCreated();
-	            
-	         // launch randoms dominations of a pack
-	         for (Territory territory : territories) {
-	         	if (territory.getCurrentPack() != null) {
-	            	territory.getCurrentPack().launchDominations();
-	            }
-	            }
-	            
-	         System.out.println("caca");
+            // Prompt user for choice
+            System.out.print("Enter the number of your choice: ");
+            String choice = scanner.nextLine();
 
-	            
-	         // Display information
-	         // showAllWerewolves();
+            // Process user choice
+            switch (choice) {
+            	case "1":
+            		System.out.println("what will happen this year...");
+            		break;
+                case "2":
+                    System.out.println("Stopping simulation...");
+                    System.exit(0);
+                    break;
+                case "3":
+                    showTerritoriesMenu(scanner);
+                    break;
+                // Add more cases for additional options
 
-	         // Pause to simulate time passing (adjust sleep duration as needed)
-	         try {
-	             Thread.sleep(500);
-	         } catch (InterruptedException e) {
-	             e.printStackTrace();
-	         }
-	         
-			 // grow older
-	         ageWerewolves();
-	         //check if too old and kill this ones
-	         oldAgeDeath();
-	         
-	        }
-	    
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            
+            canNewPackBeCreated();
+            
 
+            // Simulate time passing
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            ageWerewolves();
+        }
+    }
 
-	 }
+    private void showTerritoriesMenu(Scanner scanner) {
+        // Display Territories menu
+        System.out.println("=========== Territories ===========");
+        for (int i = 0; i < territories.size(); i++) {
+            System.out.println((i + 1) + ". " + "Territory " + territories.get(i).getId());
+        }
+        System.out.println("0. Back to Main Menu");
+
+        // Prompt user for territory choice
+        System.out.print("Enter territory number (0 to go back): ");
+        int territoryChoice = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        if (territoryChoice == 0) {
+            return;  // Go back to the main menu
+        }
+
+        // Process selected territory
+        Territory selectedTerritory = territories.get(territoryChoice - 1);
+
+        // Display Territory submenu
+        System.out.println("=========== " + selectedTerritory.getId() + " ===========");
+        System.out.println("1. Show All Wolves");
+        System.out.println("2. Show All Packs");
+        // Add more options as needed
+
+        // Prompt user for territory action
+        System.out.print("Enter your choice: ");
+        String territoryAction = scanner.nextLine();
+
+        // Process user choice for the selected territory
+        switch (territoryAction) {
+            case "1":
+                // Implement logic to show all wolves in the selected territory
+                break;
+            case "2":
+                // Implement logic to show all packs in the selected territory
+                break;
+            // Add more cases for additional options
+
+            default:
+                System.out.println("Invalid choice. Returning to Territories menu.");
+        }
+    }
+
+    // ... (other methods)
 }

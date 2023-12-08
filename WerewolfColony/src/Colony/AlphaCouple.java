@@ -91,7 +91,7 @@ public class AlphaCouple {
 	 */
 	public void reproduce() {
 		if(this.male.getRank() == 'α' && this.female.getRank() == 'α') {
-			if(!Colony.matingSeason()) {
+			if(Colony.matingSeason()) {
 				Random rand = new Random();
 				int newWolfNb = rand.nextInt(1,7);
 				for(int i=0; i<newWolfNb; i++) {
