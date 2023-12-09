@@ -12,7 +12,21 @@ import Zoo.Animals.Creature;
  */
 public class FantasticZoo {
     
-    // Fields
+	public static void main(String[] args) {
+		GameEngine game = new GameEngine();
+		game.init();
+		while (true) {
+			game.showChoices();
+			System.out.println();
+			try {
+				CommandHandler.executeCommand(Message.registerCommand(4), game);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+	// Fields
     
     /**
      * The name of the FantasticZoo.
