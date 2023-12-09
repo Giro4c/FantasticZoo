@@ -63,6 +63,12 @@ public class FantasticZoo {
         this.maxNumberEnclosures = maxNumberEnclosures;
         this.existingEnclosures = new ArrayList<Enclosure>();
     }
+    
+    @Override
+	public String toString() {
+		return	"The FantasticZoo is named: " + name + ", the zooMaster is " + zooMaster.getName() + ", the maximum number of enclosures is " + 
+	maxNumberEnclosures + ", and the existing enclosures are: " + existingEnclosures;
+	}
 
     // Accessor Methods
     
